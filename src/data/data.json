@@ -12,6 +12,9 @@
     { "name": "SASS", "icon": "sass" },
     { "name": "Bootstrap", "icon": "bootstrap" },
     { "name": "Tailwind", "icon": "tailwindcss" },
-    { "name": "Solidity", "icon": "solidity" }
+    { "name": "MaterialUI", "icon": "materialui" },
+    { "name": "Solidity", "icon": "solidity" },
+    { "name": "GraphQL", "icon": "graphql" },
+    { "name": "Redux", "icon": "redux" }
   ]
 }
