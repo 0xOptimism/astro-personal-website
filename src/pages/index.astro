@@ -1,8 +1,17 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Header from '../components/Header.astro';
+import Skills from '../components/Skills.astro';
 ---
 
+<link
+  rel='stylesheet'
+  href='https://cdn.jsdelivr.net/gh/devicons/devicon@v2.15.1/devicon.min.css'
+/>
+<script src='https://unpkg.com/flowbite@1.5.5/dist/flowbite.js'></script>
 <Layout title='Yannis Bouacida | Software Engineer.'>
-  <main class='m-auto p-6 max-w-xl'><Header /></main>
+  <main class='m-auto p-6 max-w-xl'>
+    <Header />
+    <Skills />
+  </main>
 </Layout>
