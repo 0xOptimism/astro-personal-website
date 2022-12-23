@@ -1,0 +1,14 @@
+---
+import data from '../data/data.json';
+import SkillItem from './SkillItem.astro';
+
+const title = `Tech I enjoy building with`;
+const { skills } = data;
+---
+
+<section class='py-4'>
+  <p class='text-lg font-semibold'>{title}</p>
+  <div class='grid grid-cols-4 my-3'>
+    {skills.map((item: any) => <SkillItem item={item} />)}
+  </div>
+</section>

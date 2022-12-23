@@ -1,0 +1,20 @@
+{
+  "skills": [
+    { "name": "HTML5", "icon": "html5" },
+    { "name": "CSS3", "icon": "css3" },
+    { "name": "JavaScript", "icon": "javascript" },
+    { "name": "TypeScript", "icon": "typescript" },
+    { "name": "React", "icon": "react" },
+    { "name": "Next.js", "icon": "nextjs" },
+    { "name": "Node.js", "icon": "nodejs" },
+    { "name": "Git", "icon": "git" },
+    { "name": "MySQL", "icon": "mysql" },
+    { "name": "SASS", "icon": "sass" },
+    { "name": "Bootstrap", "icon": "bootstrap" },
+    { "name": "Tailwind", "icon": "tailwindcss" },
+    { "name": "MaterialUI", "icon": "materialui" },
+    { "name": "Solidity", "icon": "solidity" },
+    { "name": "GraphQL", "icon": "graphql" },
+    { "name": "Redux", "icon": "redux" }
+  ]
+}
