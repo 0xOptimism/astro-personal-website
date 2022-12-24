@@ -16,5 +16,49 @@
     { "name": "Solidity", "icon": "solidity" },
     { "name": "GraphQL", "icon": "graphql" },
     { "name": "Redux", "icon": "redux" }
-  ]
+  ],
+  "timeline": {
+    "2022": [
+      {
+        "title": "Launched Pre-Alpha version of Bonsai Finance.",
+        "description": "As a personal project to learn more about NextJS and Web3 development, I launched app.bonsai.finance, a project that i had fun building and growing. Bonsai is a Web3 dashboard to monitor any assets on the Ethereum network; for now, it only supports mainnet and NFTs, but some cool features are coming."
+      }
+    ],
+    "2019": [
+      {
+        "title": "Salt Programming Bootcamp.",
+        "description": "After learning the basics of Web Development, I found a hobby I wanted to take seriously, so I applied to a Stockholm-based Javascript full-stack developer Bootcamp. After three months of intense MOB programming courses, I graduated from SALT."
+      },
+      {
+        "title": "Redmind developer internship.",
+        "description": "In the spring of 2019, I got my first internship as a developer at a company called Redmind. We built a React Native app and got interested in mobile development."
+      },
+      {
+        "title": "PodME developer internship.",
+        "description": "Summer 2019 was enjoyable. I built an admin panel for an app called PodME, the vibe at the office was great, and we had so much fun implementing the tech from scratch."
+      },
+      {
+        "title": "First developer job.",
+        "description": "After the summer, I reached a significant milestone and got my first developer job at Mindler. We were four full-time developers and a CTO to build this fantastic med-tech app. Mindler now has more than 15 developers and continues to grow. I have been working in most of the tech stack, including the app with React-Native, frontend with React, and backend with NodeJS."
+      }
+    ],
+    "2018": [
+      {
+        "title": "OnChain-Jobs",
+        "description": "I co-founded Onchain Jobs with one of my childhood friends to help blockchain companies find developers, as there needed more talent. I built the website while learning Javascript on the side at the same time."
+      }
+    ],
+    "2017": [
+      {
+        "title": "Smart-Contract rabbit hole",
+        "description": "In 2017, i really understood the power of smart-contract on Ethereum after buying my first NFT and decided to learn programming by myself and built a small website called HashDrop that referenced all the tokens launch."
+      }
+    ],
+    "1990": [
+      {
+        "title": "My birth",
+        "description": "I was born in January 1990 in the Antibes beautiful town of Antibes, on the French Riviera."
+      }
+    ]
+  }
 }
