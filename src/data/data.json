@@ -26,20 +26,20 @@
     ],
     "2019": [
       {
-        "title": "Salt Programming Bootcamp.",
-        "description": "After learning the basics of Web Development, I found a hobby I wanted to take seriously, so I applied to a Stockholm-based Javascript full-stack developer Bootcamp. After three months of intense MOB programming courses, I graduated from SALT."
-      },
-      {
-        "title": "Redmind developer internship.",
-        "description": "In the spring of 2019, I got my first internship as a developer at a company called Redmind. We built a React Native app and got interested in mobile development."
+        "title": "First developer job.",
+        "description": "After the summer, I reached a significant milestone and got my first developer job at Mindler. We were four full-time developers and a CTO to build this fantastic med-tech app. Mindler now has more than 15 developers and continues to grow. I have been working in most of the tech stack, including the app with React-Native, frontend with React, and backend with NodeJS."
       },
       {
         "title": "PodME developer internship.",
         "description": "Summer 2019 was enjoyable. I built an admin panel for an app called PodME, the vibe at the office was great, and we had so much fun implementing the tech from scratch."
       },
       {
-        "title": "First developer job.",
-        "description": "After the summer, I reached a significant milestone and got my first developer job at Mindler. We were four full-time developers and a CTO to build this fantastic med-tech app. Mindler now has more than 15 developers and continues to grow. I have been working in most of the tech stack, including the app with React-Native, frontend with React, and backend with NodeJS."
+        "title": "Redmind developer internship.",
+        "description": "In the spring of 2019, I got my first internship as a developer at a company called Redmind. We built a React Native app and got interested in mobile development."
+      },
+      {
+        "title": "Salt Programming Bootcamp.",
+        "description": "After learning the basics of Web Development, I found a hobby I wanted to take seriously, so I applied to a Stockholm-based Javascript full-stack developer Bootcamp. After three months of intense MOB programming courses, I graduated from SALT."
       }
     ],
     "2018": [
