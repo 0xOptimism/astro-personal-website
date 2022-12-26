@@ -6,7 +6,9 @@ const { item } = Astro.props;
   class='flex flex-col justify-center items-center bg-white p-2.5 m-1.5 rounded-md focus:ring-4 focus:outline-none rounded-lg text-xl px-5 py-2.5 text-center'
 >
   <div>
-    <i class={`devicon-${item.icon}-${item.type ? item.type : 'plain'}`}></i>
+    <i
+      style={{ color: item.color }}
+      class={`devicon-${item.icon}-${item.type ? item.type : 'plain'}`}></i>
   </div>
   <p class='text-sm'>
     {item.name}
