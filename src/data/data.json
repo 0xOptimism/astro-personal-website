@@ -1,21 +1,21 @@
 {
   "skills": [
-    { "name": "HTML5", "icon": "html5" },
-    { "name": "CSS3", "icon": "css3" },
-    { "name": "JavaScript", "icon": "javascript" },
-    { "name": "TypeScript", "icon": "typescript" },
-    { "name": "React", "icon": "react" },
-    { "name": "Next.js", "icon": "nextjs" },
-    { "name": "Node.js", "icon": "nodejs" },
-    { "name": "Git", "icon": "git" },
-    { "name": "MySQL", "icon": "mysql" },
-    { "name": "SASS", "icon": "sass" },
-    { "name": "Bootstrap", "icon": "bootstrap" },
-    { "name": "Tailwind", "icon": "tailwindcss" },
-    { "name": "MaterialUI", "icon": "materialui" },
-    { "name": "Solidity", "icon": "solidity" },
-    { "name": "GraphQL", "icon": "graphql" },
-    { "name": "Redux", "icon": "redux" }
+    { "name": "HTML5", "icon": "html5", "color": "#FF5733" },
+    { "name": "CSS3", "icon": "css3", "color": "#264de4" },
+    { "name": "JavaScript", "icon": "javascript", "color": "#F0DB4F" },
+    { "name": "TypeScript", "icon": "typescript", "color": "#007acc" },
+    { "name": "React", "icon": "react", "color": "#61DBFB" },
+    { "name": "Next.js", "icon": "nextjs", "color": "#45ce05" },
+    { "name": "Node.js", "icon": "nodejs", "color": "#68a063" },
+    { "name": "Git", "icon": "git", "color": "#3E2C00" },
+    { "name": "MySQL", "icon": "mysql", "color": "#00758f" },
+    { "name": "SASS", "icon": "sass", "color": "#CD6799" },
+    { "name": "Bootstrap", "icon": "bootstrap", "color": "#563d7c" },
+    { "name": "Tailwind", "icon": "tailwindcss", "color": "#36B3EC" },
+    { "name": "MaterialUI", "icon": "materialui", "color": "#0379F3" },
+    { "name": "Solidity", "icon": "solidity", "color": "#1C1C1C" },
+    { "name": "GraphQL", "icon": "graphql", "color": "#e535ab" },
+    { "name": "Redux", "icon": "redux", "color": "#764abc" }
   ],
   "timeline": {
     "2022": [
