@@ -4,11 +4,17 @@ import SkillItem from './SkillItem.astro';
 
 const title = `Tech I enjoy building with`;
 const { skills } = data;
+
+interface Item {
+  name: string;
+  icon: string;
+  color?: string;
+}
 ---
 
 <section class='py-4'>
   <p class='text-lg font-semibold'>{title}</p>
   <div class='grid grid-cols-4 my-3'>
-    {skills.map((item: any) => <SkillItem item={item} />)}
+    {skills.map((item: Item) => <SkillItem item={item} />)}
   </div>
 </section>
