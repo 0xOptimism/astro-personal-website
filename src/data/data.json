@@ -17,6 +17,31 @@
     { "name": "GraphQL", "icon": "graphql", "color": "#e535ab" },
     { "name": "Redux", "icon": "redux", "color": "#764abc" }
   ],
+  "interest": [
+    {
+      "title": "Spending time with my Kid",
+      "description": "I love spending time with my kid Bonnie when I'm not coding. She is full of energy and positivity.",
+      "image": "/assets/bonnie.jpg"
+    },
+    {
+      "title": "Bonsai Finance",
+      "description": "As a side project, I'm building Bonsai Finance, a Web3 dashboard to monitor and follow Ethereum wallets.",
+      "image": "/assets/bonsai.png",
+      "link": "https://app.bonsai.finance/"
+    },
+    {
+      "title": "Photography",
+      "description": "Spending time in the nature taking photography.",
+      "image": "/assets/photography.jpg",
+      "link": "https://foundation.app/@Yanneth"
+    },
+    {
+      "title": "Mindler",
+      "description": "As a full-time job i'm building Mindler.",
+      "image": "/assets/mindler.jpg",
+      "link": "https://mindler.se/"
+    }
+  ],
   "timeline": {
     "2022": [
       {
