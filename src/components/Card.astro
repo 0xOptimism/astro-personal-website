@@ -5,7 +5,11 @@ const { item } = Astro.props;
 <div
   class='md:w-11/12 sm:w-full h-auto bg-white border border-gray-200 mb-2.5 rounded-lg shadow-md'
 >
-  <img class='rounded-t-lg object-cover h-48 w-full' src={item.image} alt='' />
+  <img
+    class='rounded-t-lg object-cover md:h-48 sm:h80 w-full'
+    src={item.image}
+    alt=''
+  />
   <div class='p-5'>
     <h5 class='mb-2 text-2xl font-bold tracking-tight text-gray-900'>
       {item.title}
