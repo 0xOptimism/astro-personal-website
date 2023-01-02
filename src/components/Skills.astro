@@ -1,6 +1,6 @@
 ---
 import data from '../data/data.json';
-import SkillItem from './SkillItem.astro';
+import Icon from './Icon.astro';
 
 const title = `Tech I enjoy building with`;
 const { skills } = data;
@@ -15,6 +15,15 @@ interface Item {
 <section class='py-4'>
   <p class='text-lg font-semibold'>{title}</p>
   <div class='grid grid-cols-4 my-3'>
-    {skills.map((item: Item) => <SkillItem item={item} />)}
+    {
+      skills.map((item: Item) => (
+        <div class='flex flex-col justify-center items-center bg-white p-2.5 m-1.5 rounded-md focus:ring-4 focus:outline-none rounded-lg text-xl px-5 py-2.5 text-center'>
+          <div>
+            <Icon item={item} />
+          </div>
+          <p class='text-sm'>{item.name}</p>
+        </div>
+      ))
+    }
   </div>
 </section>

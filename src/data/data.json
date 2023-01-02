@@ -85,5 +85,12 @@
         "description": "I was born in January 1990 in the beautiful town of Antibes, on the French Riviera."
       }
     ]
-  }
+  },
+  "socials": [
+    {
+      "icon": "linkedin",
+      "link": "https://www.linkedin.com/in/yannis-b-713090179/"
+    },
+    { "icon": "github", "link": "https://github.com/0xOptimism" }
+  ]
 }

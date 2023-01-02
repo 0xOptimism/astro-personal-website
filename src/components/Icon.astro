@@ -1,0 +1,7 @@
+---
+const { item } = Astro.props;
+---
+
+<i
+  style={{ color: item.color }}
+  class={`devicon-${item.icon}-${item.type ? item.type : 'plain'}`}></i>
