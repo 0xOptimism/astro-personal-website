@@ -1,0 +1,25 @@
+---
+import data from '../data/data.json';
+import Icon from './Icon.astro';
+
+const { socials } = data;
+
+interface SocialItem {
+  icon: string;
+  link: string;
+}
+---
+
+<section class='py-4'>
+  <div class='flex justify-center'>
+    {
+      socials.map((item: SocialItem) => (
+        <a href={item.link} target='_blank'>
+          <div class='mr-1 cursor-pointer'>
+            <Icon item={item} />
+          </div>
+        </a>
+      ))
+    }
+  </div>
+</section>
