@@ -43,6 +43,16 @@
     }
   ],
   "timeline": {
+    "2023": [
+      {
+        "title": "ETH Denver final and DAO & Community track winner",
+        "description": "While participating in the ETH Denver hackathon (the biggest Ethereum hackathon), I won the DAO and community track with the project denoted.xyz."
+      },
+      {
+        "title": "Full-time web3",
+        "description": "End of January 2023, I decided to start working full-time with web3. I'm building anotherblock with a fantastic team of developers."
+      }
+    ],
     "2022": [
       {
         "title": "Launched Pre-Alpha version of Bonsai Finance.",
