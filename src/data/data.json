@@ -27,7 +27,7 @@
       "title": "Bonsai Finance",
       "description": "As a side project, I'm building Bonsai Finance, a Web3 dashboard to monitor and follow Ethereum wallets.",
       "image": "/assets/bonsai.png",
-      "link": "https://app.bonsai.finance/"
+      "link": "https://bonsai.finance/"
     },
     {
       "title": "Photography",
@@ -36,10 +36,10 @@
       "link": "https://opensea.io/collection/yanneth-photography"
     },
     {
-      "title": "Mindler",
-      "description": "As a full-time job i'm building Mindler.",
-      "image": "/assets/mindler.jpg",
-      "link": "https://mindler.se/"
+      "title": "Anotherblock",
+      "description": "As a full-time job i'm building Anotherblock.",
+      "image": "/assets/Anotherblock.jpg",
+      "link": "https://anotherblock.io/"
     }
   ],
   "timeline": {
