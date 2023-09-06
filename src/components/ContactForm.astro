@@ -1,6 +1,7 @@
 ---
 const title: string = `Contact Me`;
-const getInTouch: string = `Get in touch via this form or contact me directly at yannis182@outlook.fr`;
+const getInTouchStart: string = `Get in touch via this form or contact me directly at `;
+const email: string = `hello@yannis.dev`;
 const emailLabel: string = `Your email:`;
 const messageLabel: string = `Your message:`;
 const nameLabel: string = `Your name`;
@@ -8,7 +9,10 @@ const nameLabel: string = `Your name`;
 
 <section class='py-4'>
   <p class='text-lg font-semibold'>{title}</p>
-  <p class='text-md'>{getInTouch}</p>
+  <p class='text-md'>
+    {getInTouchStart}
+    <a class='text-gray-900 underline' href={`mailto:${email}`}>{email}</a>
+  </p>
   <form
     action='https://formspree.io/f/xnqyqnbl'
     method='POST'
