@@ -25,7 +25,7 @@
     },
     {
       "title": "Bonsai Finance",
-      "description": "As a side project, I'm building Bonsai Finance, a Web3 dashboard to monitor and follow Ethereum wallets.",
+      "description": "As a side project, I'm building Bonsai Finance.",
       "image": "/assets/bonsai.png",
       "link": "https://bonsai.finance/"
     },
@@ -37,7 +37,7 @@
     },
     {
       "title": "Anotherblock",
-      "description": "As a full-time job i'm building Anotherblock.",
+      "description": "My last professional assignment was at Anotherblock in Stockholm.",
       "image": "/assets/Anotherblock.jpg",
       "link": "https://anotherblock.io/"
     }
@@ -50,7 +50,7 @@
       },
       {
         "title": "Full-time web3",
-        "description": "End of January 2023, I decided to start working full-time with web3. I'm building anotherblock with a fantastic team of developers."
+        "description": "End of January 2023, I started a new position at Anotherblock working with frontend development"
       }
     ],
     "2022": [
