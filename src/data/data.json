@@ -1,56 +1,128 @@
 {
   "skills": [
-    { "name": "HTML5", "icon": "html5", "color": "#FF5733" },
-    { "name": "CSS3", "icon": "css3", "color": "#264de4" },
-    { "name": "JavaScript", "icon": "javascript", "color": "#F0DB4F" },
-    { "name": "TypeScript", "icon": "typescript", "color": "#007acc" },
-    { "name": "React", "icon": "react", "color": "#61DBFB" },
-    { "name": "Next.js", "icon": "nextjs", "color": "#45ce05" },
-    { "name": "Node.js", "icon": "nodejs", "color": "#68a063" },
-    { "name": "Git", "icon": "git", "color": "#3E2C00" },
-    { "name": "MySQL", "icon": "mysql", "color": "#00758f" },
-    { "name": "SASS", "icon": "sass", "color": "#CD6799" },
-    { "name": "Bootstrap", "icon": "bootstrap", "color": "#563d7c" },
-    { "name": "Tailwind", "icon": "tailwindcss", "color": "#36B3EC" },
-    { "name": "MaterialUI", "icon": "materialui", "color": "#0379F3" },
-    { "name": "Solidity", "icon": "solidity", "color": "#1C1C1C" },
-    { "name": "GraphQL", "icon": "graphql", "color": "#e535ab" },
-    { "name": "Redux", "icon": "redux", "color": "#764abc" }
+    {
+      "name": "HTML5",
+      "icon": "html5",
+      "color": "#FF5733"
+    },
+    {
+      "name": "CSS3",
+      "icon": "css3",
+      "color": "#264de4"
+    },
+    {
+      "name": "JavaScript",
+      "icon": "javascript",
+      "color": "#F0DB4F"
+    },
+    {
+      "name": "TypeScript",
+      "icon": "typescript",
+      "color": "#007acc"
+    },
+    {
+      "name": "React",
+      "icon": "react",
+      "color": "#61DBFB"
+    },
+    {
+      "name": "Next.js",
+      "icon": "nextjs",
+      "color": "#45ce05"
+    },
+    {
+      "name": "Node.js",
+      "icon": "nodejs",
+      "color": "#68a063"
+    },
+    {
+      "name": "Git",
+      "icon": "git",
+      "color": "#3E2C00"
+    },
+    {
+      "name": "MySQL",
+      "icon": "mysql",
+      "color": "#00758f"
+    },
+    {
+      "name": "SASS",
+      "icon": "sass",
+      "color": "#CD6799"
+    },
+    {
+      "name": "Bootstrap",
+      "icon": "bootstrap",
+      "color": "#563d7c"
+    },
+    {
+      "name": "Tailwind",
+      "icon": "tailwindcss",
+      "color": "#36B3EC"
+    },
+    {
+      "name": "MaterialUI",
+      "icon": "materialui",
+      "color": "#0379F3"
+    },
+    {
+      "name": "Solidity",
+      "icon": "solidity",
+      "color": "#1C1C1C"
+    },
+    {
+      "name": "GraphQL",
+      "icon": "graphql",
+      "color": "#e535ab"
+    },
+    {
+      "name": "Redux",
+      "icon": "redux",
+      "color": "#764abc"
+    }
   ],
   "interest": [
     {
       "title": "Spending time with my Kid",
-      "description": "I love spending time with my kid Bonnie when I'm not coding. She is full of energy and positivity.",
-      "image": "/assets/bonnie.jpg"
+      "description": "I love spending time with my kid when I'm not coding. She is full of energy and positivity.",
+      "image": "/assets/bonnie.jpg",
+      "alts": "my kid"
     },
     {
-      "title": "Bonsai Finance",
-      "description": "As a side project, I'm building Bonsai Finance.",
-      "image": "/assets/bonsai.png",
-      "link": "https://bonsai.finance/"
+      "title": "Bonsai 🌳",
+      "description": "As a side project, I'm building Bonsai Finance, an account abstraction yield optimizer on top of Arbitrum.",
+      "image": "/assets/bonsai.jpg",
+      "link": "https://bonsai.finance/",
+      "alts": "bonsai website"
     },
     {
       "title": "Photography",
       "description": "Spending time in the nature taking photography.",
       "image": "/assets/photography.jpg",
-      "link": "https://opensea.io/collection/yanneth-photography"
+      "link": "https://opensea.io/collection/yanneth-photography",
+      "alts": "photography website"
     },
     {
       "title": "Anotherblock",
-      "description": "My last professional assignment was at Anotherblock in Stockholm.",
+      "description": "Previously, I worked on the Frontend at Anotherblock.",
       "image": "/assets/Anotherblock.jpg",
-      "link": "https://anotherblock.io/"
+      "link": "https://anotherblock.io/",
+      "alts": "anotherblock website"
     }
   ],
   "timeline": {
     "2023": [
+      {
+        "title": "Bonsai",
+        "description": "I reoriented Bonsai's focus to develop a Yield Optimizer on the Arbitrum platform, leveraging modern technologies like Account Abstraction and Batched Transactions."
+      },
       {
         "title": "ETH Denver final and DAO & Community track winner",
         "description": "While participating in the ETH Denver hackathon (the biggest Ethereum hackathon), I won the DAO and community track with the project denoted.xyz."
       },
       {
         "title": "Full-time web3",
-        "description": "End of January 2023, I started a new position at Anotherblock working with frontend development"
+        "description": "In January 2023, I started a new assignment at Anotherblock."
       }
     ],
     "2022": [
@@ -101,6 +173,9 @@
       "icon": "linkedin",
       "link": "https://www.linkedin.com/in/yannis-b-713090179/"
     },
-    { "icon": "github", "link": "https://github.com/0xOptimism" }
+    {
+      "icon": "github",
+      "link": "https://github.com/0xOptimism"
+    }
   ]
 }
