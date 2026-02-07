@@ -2,13 +2,22 @@
 import data from '../data/data.json';
 import Card from './Card.astro';
 
-const title = `The things i enjoy the most`;
+const title = "The things I enjoy the most";
 const { interest } = data;
 ---
 
-<section class='py-4'>
-  <p class='text-lg font-semibold'>{title}</p>
-  <div class='grid md:grid-cols-2 sm:grid-cols-1 my-4 py-px'>
-    {interest.map((item) => <Card item={item} />)}
+<section>
+  <h2 id="interests-heading" class="reveal font-display text-2xl font-bold tracking-tight sm:text-3xl">
+    {title}
+  </h2>
+  <div class="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-2">
+    {interest.map((item, i) => (
+      <div
+        class="reveal"
+        style={`animation-delay: ${0.15 + i * 0.1}s`}
+      >
+        <Card item={item} />
+      </div>
+    ))}
   </div>
 </section>

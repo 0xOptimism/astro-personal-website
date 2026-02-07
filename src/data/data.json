@@ -79,6 +79,31 @@
       "name": "Redux",
       "icon": "redux",
       "color": "#764abc"
+    },
+    {
+      "name": "Gatsby",
+      "icon": "gatsby",
+      "color": "#663399"
+    },
+    {
+      "name": "Azure",
+      "icon": "azure",
+      "color": "#0089D6"
+    },
+    {
+      "name": "Supabase",
+      "icon": "supabase",
+      "color": "#3ECF8E"
+    },
+    {
+      "name": "Vercel",
+      "icon": "vercel",
+      "color": "#000000"
+    },
+    {
+      "name": "Claude",
+      "icon": "claude",
+      "color": "#CC785C"
     }
   ],
   "interest": [

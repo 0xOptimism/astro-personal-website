@@ -1,1 +1,91 @@
 @import "tailwindcss";
+
+/* --- Design tokens (SKILL: cohesive aesthetic, CSS variables) --- */
+:root {
+  --color-bg: #0a0a0a;
+  --color-surface: #121212;
+  --color-surface-elevated: #1a1a1a;
+  --color-text: #f2ede5;
+  --color-text-muted: #8c8780;
+  --color-accent: #e4a02b;
+  --color-accent-dim: rgba(228, 160, 43, 0.25);
+  --font-display: "Syne", system-ui, sans-serif;
+  --font-body: "Source Serif 4", Georgia, serif;
+  --space-section: clamp(4rem, 10vw, 8rem);
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+/* --- Base --- */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* --- Grain overlay for atmosphere (SKILL: texture, depth) --- */
+.grain::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 9999;
+}
+
+/* --- Staggered reveal (SKILL: high-impact page load) --- */
+.reveal {
+  opacity: 0;
+  transform: translateY(1.25rem);
+  animation: reveal 0.8s var(--ease-out-expo) forwards;
+}
+
+.reveal-delay-1 { animation-delay: 0.1s; }
+.reveal-delay-2 { animation-delay: 0.2s; }
+.reveal-delay-3 { animation-delay: 0.3s; }
+.reveal-delay-4 { animation-delay: 0.45s; }
+.reveal-delay-5 { animation-delay: 0.6s; }
+.reveal-delay-6 { animation-delay: 0.75s; }
+.reveal-delay-7 { animation-delay: 0.9s; }
+.reveal-delay-8 { animation-delay: 1.05s; }
+
+@keyframes reveal {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* --- Typography utilities --- */
+.font-display {
+  font-family: var(--font-display);
+}
+
+/* --- Link underline animation (SKILL: micro-interactions) --- */
+.link-accent {
+  color: var(--color-accent);
+  text-decoration: none;
+  background: linear-gradient(var(--color-accent), var(--color-accent)) no-repeat;
+  background-size: 0 2px;
+  background-position: 0 100%;
+  transition: background-size 0.4s var(--ease-in-out), color 0.2s;
+}
+
+.link-accent:hover {
+  background-size: 100% 2px;
+  color: var(--color-text);
+}
+
+/* --- Focus visible for accessibility --- */
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 4px;
+}

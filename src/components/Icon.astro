@@ -1,9 +1,23 @@
 ---
 const { item, size } = Astro.props;
+const colorStyle = item.color ? { color: item.color } : {};
+// Devicons may not include every icon (e.g. vercel, claude in older versions)
+const useFallback = ['vercel', 'claude'].includes(item.icon);
+const initial = item.name?.charAt(0) ?? '?';
 ---
 
-<i
-  style={{ color: item.color }}
-  class={`${size === 'lg' ? 'text-2xl' : 'text-md'} devicon-${item.icon}-${
-    item.type ? item.type : 'plain'
-  }`}></i>
+{useFallback ? (
+  <span
+    class={`inline-flex size-6 items-center justify-center rounded font-display font-bold ${size === 'lg' ? 'text-lg' : 'text-sm'}`}
+    style={colorStyle}
+    aria-hidden="true"
+  >
+    {initial}
+  </span>
+) : (
+  <i
+    style={colorStyle}
+    class={`inline-block ${size === 'lg' ? 'text-2xl' : 'text-lg'} devicon-${item.icon}-${item.type ?? 'plain'}`}
+    aria-hidden="true"
+  ></i>
+)}
