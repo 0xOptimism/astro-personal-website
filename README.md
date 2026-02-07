@@ -1,50 +1,61 @@
-# Welcome to [Astro](https://astro.build)
+# Yannis — Personal Portfolio
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/withastro/astro/tree/latest/examples/basics)
-[![Open with CodeSandbox](https://assets.codesandbox.io/github/button-edit-lime.svg)](https://codesandbox.io/s/github/withastro/astro/tree/latest/examples/basics)
+A personal portfolio site built with [Astro](https://astro.build). Single-page layout with hero, skills, career timeline, contact form, and social links.
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+## Overview
 
-![basics](https://user-images.githubusercontent.com/4677417/186188965-73453154-fdec-4d6b-9c34-cb35c248ae5b.png)
+- **Hero** — Name, role (Full-Stack Developer), and short bio
+- **Skills** — Tech stack with icons (e.g. React, TypeScript, Node.js, Tailwind)
+- **Timeline** — Career and education milestones (from 1990 to present)
+- **Contact** — Form for getting in touch
+- **Footer** — Links to LinkedIn and GitHub
 
+Content is driven by `src/data/data.json` (skills, timeline, interests, socials). Styling uses Tailwind CSS v4 and custom CSS variables; typography is Source Serif 4 and Syne.
 
-## 🚀 Project Structure
+## Tech Stack
 
-Inside of your Astro project, you'll see the following folders and files:
+- [Astro](https://astro.build) 5
+- [React](https://react.dev) (via `@astrojs/react`)
+- [Tailwind CSS](https://tailwindcss.com) v4
+- TypeScript
+
+## Project Structure
 
 ```
 /
 ├── public/
-│   └── favicon.svg
+│   ├── assets/          # Images (e.g. interests, projects)
+│   └── favicon.ico
 ├── src/
-│   ├── components/
-│   │   └── Card.astro
+│   ├── components/      # Header, Skills, Timeline, ContactForm, Social, etc.
+│   ├── data/
+│   │   └── data.json    # Skills, timeline, interests, social links
 │   ├── layouts/
 │   │   └── Layout.astro
-│   └── pages/
-│       └── index.astro
+│   ├── pages/
+│   │   └── index.astro
+│   └── styles/
+│       └── global.css
+├── astro.config.mjs
 └── package.json
 ```
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+Routes come from `.astro` and `.md` files in `src/pages/`. Static assets live in `public/`.
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+## Commands
 
-Any static assets, like images, can be placed in the `public/` directory.
+From the project root:
 
-## 🧞 Commands
+| Command           | Action                                      |
+| ----------------- | ------------------------------------------- |
+| `npm install`     | Install dependencies                        |
+| `npm run dev`     | Start dev server at `http://localhost:4321` |
+| `npm run build`   | Build for production to `./dist/`           |
+| `npm run preview` | Preview the production build locally        |
 
-All commands are run from the root of the project, from a terminal:
+Use `yarn` instead of `npm` if your project uses Yarn.
 
-| Command                | Action                                             |
-| :--------------------- | :------------------------------------------------- |
-| `npm install`          | Installs dependencies                              |
-| `npm run dev`          | Starts local dev server at `localhost:3000`        |
-| `npm run build`        | Build your production site to `./dist/`            |
-| `npm run preview`      | Preview your build locally, before deploying       |
-| `npm run astro ...`    | Run CLI commands like `astro add`, `astro preview` |
-| `npm run astro --help` | Get help using the Astro CLI                       |
+## Learn More
 
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+- [Astro docs](https://docs.astro.build)
+- [Astro Discord](https://astro.build/chat)
