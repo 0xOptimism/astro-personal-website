@@ -9,17 +9,47 @@ import Social from '../components/Social.astro';
 ---
 
 <link
-  rel='stylesheet'
-  href='https://cdn.jsdelivr.net/gh/devicons/devicon@v2.15.1/devicon.min.css'
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.15.1/devicon.min.css"
 />
-<script src='https://unpkg.com/flowbite@1.5.5/dist/flowbite.js'></script>
-<Layout title='Yannis | Software Engineer.'>
-  <main class='m-auto p-6 max-w-xl'>
-    <Header />
-    <Skills />
-    <Interests />
-    <Timeline />
-    <ContactForm />
-    <Social />
+<Layout title="Yannis | Software Engineer">
+  <main class="min-h-screen">
+    <!-- Asymmetric layout: hero full-bleed, content with varied widths -->
+    <header class="px-6 pt-[var(--space-section)] pb-12 md:px-12 lg:px-16">
+      <div class="mx-auto max-w-4xl">
+        <Header />
+      </div>
+    </header>
+
+    <section class="px-6 py-[var(--space-section)] md:px-12 lg:px-16" aria-labelledby="skills-heading">
+      <div class="mx-auto max-w-5xl">
+        <Skills />
+      </div>
+    </section>
+
+    <section class="px-6 py-[var(--space-section)] md:px-12 lg:px-16" aria-labelledby="interests-heading">
+      <!-- Grid-breaking: interests stretch wider -->
+      <div class="mx-auto max-w-6xl">
+        <Interests />
+      </div>
+    </section>
+
+    <section class="px-6 py-[var(--space-section)] md:px-12 lg:px-16" aria-labelledby="timeline-heading">
+      <div class="mx-auto max-w-2xl">
+        <Timeline />
+      </div>
+    </section>
+
+    <section class="px-6 py-[var(--space-section)] md:px-12 lg:px-16" aria-labelledby="contact-heading">
+      <div class="mx-auto max-w-xl">
+        <ContactForm />
+      </div>
+    </section>
+
+    <footer class="px-6 py-12 md:px-12 lg:px-16">
+      <div class="mx-auto max-w-4xl">
+        <Social />
+      </div>
+    </footer>
   </main>
 </Layout>

@@ -10,16 +10,18 @@ interface SocialItem {
 }
 ---
 
-<section class='py-4'>
-  <div class='flex justify-center'>
-    {
-      socials.map((item: SocialItem) => (
-        <a href={item.link} target='_blank'>
-          <div class='mr-4 cursor-pointer'>
-            <Icon item={item} size='lg' />
-          </div>
-        </a>
-      ))
-    }
-  </div>
-</section>
+<footer class="flex flex-wrap items-center justify-center gap-8 border-t border-[var(--color-surface-elevated)] pt-8">
+  {
+    socials.map((item: SocialItem) => (
+      <a
+        href={item.link}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="flex h-12 w-12 items-center justify-center rounded-full border border-[var(--color-surface-elevated)] text-[var(--color-text-muted)] transition-all hover:border-[var(--color-accent)] hover:text-[var(--color-accent)] hover:scale-110"
+        aria-label={item.icon === 'linkedin' ? 'LinkedIn' : 'GitHub'}
+      >
+        <Icon item={item} size="lg" />
+      </a>
+    ))
+  }
+</footer>

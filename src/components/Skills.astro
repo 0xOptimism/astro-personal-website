@@ -2,7 +2,7 @@
 import data from '../data/data.json';
 import Icon from './Icon.astro';
 
-const title = `Tech I enjoy building with`;
+const title = "Tech I enjoy building with";
 const { skills } = data;
 
 interface Item {
@@ -12,18 +12,26 @@ interface Item {
 }
 ---
 
-<section class='py-4'>
-  <p class='text-lg font-semibold'>{title}</p>
-  <div class='grid grid-cols-4 my-3'>
+<section>
+  <h2 id="skills-heading" class="reveal font-display text-2xl font-bold tracking-tight sm:text-3xl">
+    {title}
+  </h2>
+  <div class="mt-8 flex flex-wrap gap-3">
     {
-      skills.map((item: Item) => (
-        <div class='flex flex-col justify-center items-center bg-white p-2.5 m-1.5 rounded-md focus:ring-4 focus:outline-none rounded-lg text-xl px-5 py-2.5 text-center'>
-          <div>
-            <Icon item={item} />
+      skills.map((item: Item, i: number) => {
+        const delay = Math.min(i * 0.05 + 0.2, 0.9);
+        return (
+          <div
+            class="reveal flex items-center gap-2.5 rounded-[var(--radius-md)] border border-[var(--color-surface-elevated)] bg-[var(--color-surface)] px-4 py-3 transition-all duration-300 hover:scale-[1.02] hover:border-[var(--color-accent-dim)] hover:shadow-[0_0_24px_var(--color-accent-dim)]"
+            style={`animation-delay: ${delay}s`}
+          >
+            <span class="flex items-center justify-center">
+              <Icon item={item} />
+            </span>
+            <span class="font-body text-sm font-medium text-[var(--color-text)]">{item.name}</span>
           </div>
-          <p class='text-sm'>{item.name}</p>
-        </div>
-      ))
+        );
+      })
     }
   </div>
 </section>

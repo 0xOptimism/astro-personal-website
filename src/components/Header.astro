@@ -1,11 +1,20 @@
 ---
-const title: string = `👋 Hey I'm Yannis, a Software Engineer.`;
-const description: string = `I'm a front-end developer, building with NextJS and TypeScript. I am curious and enjoy building with new technologies. Originally from Antibes, France 🇫🇷, I now call Stockholm, Sweden 🇸🇪 my home.`;
+const title = "Yannis";
+const role = "Software Engineer";
+const description = "I'm a front-end developer, building with NextJS and TypeScript. I am curious and enjoy building with new technologies. Originally from Antibes, France, I now call Stockholm, Sweden my home.";
 ---
 
-<p class='text-4xl font-extrabold'>{title}</p>
-<div class='py-8'>
-  <p class='tracking-wider'>
+<div class="font-display">
+  <p class="reveal text-(--color-text-muted) text-sm uppercase tracking-[0.2em]">
+    Hey, I'm
+  </p>
+  <h1 class="reveal reveal-delay-1 mt-2 text-5xl font-extrabold tracking-tight sm:text-6xl md:text-7xl lg:text-8xl">
+    {title}
+  </h1>
+  <p class="reveal reveal-delay-2 mt-3 text-2xl font-medium text-(--color-accent) sm:text-3xl md:text-4xl">
+    {role}
+  </p>
+  <p class="reveal reveal-delay-3 mt-8 max-w-xl font-body text-lg font-normal leading-relaxed text-(--color-text-muted)">
     {description}
   </p>
 </div>
