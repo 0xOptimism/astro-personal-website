@@ -3,7 +3,7 @@ import Layout from '../layouts/Layout.astro';
 import Header from '../components/Header.astro';
 import Skills from '../components/Skills.astro';
 import Timeline from '../components/Timeline.astro';
-import Interests from '../components/Interests.astro';
+// import Interests from '../components/Interests.astro';
 import ContactForm from '../components/ContactForm.astro';
 import Social from '../components/Social.astro';
 ---
@@ -15,24 +15,26 @@ import Social from '../components/Social.astro';
 <Layout title="Yannis | Software Engineer">
   <main class="min-h-screen">
     <!-- Asymmetric layout: hero full-bleed, content with varied widths -->
-    <header class="px-6 pt-[var(--space-section)] pb-12 md:px-12 lg:px-16">
+    <header class="px-6 pt-(--space-section) pb-12 md:px-12 lg:px-16">
       <div class="mx-auto max-w-4xl">
         <Header />
       </div>
     </header>
 
-    <section class="px-6 py-[var(--space-section)] md:px-12 lg:px-16" aria-labelledby="skills-heading">
+    <section class="px-6 py-(--space-section) md:px-12 lg:px-16" aria-labelledby="skills-heading">
       <div class="mx-auto max-w-5xl">
         <Skills />
       </div>
     </section>
 
+    <!-- Interests: commented out for now, rebuild later -->
+    <!--
     <section class="px-6 py-[var(--space-section)] md:px-12 lg:px-16" aria-labelledby="interests-heading">
-      <!-- Grid-breaking: interests stretch wider -->
       <div class="mx-auto max-w-6xl">
         <Interests />
       </div>
     </section>
+    -->
 
     <section class="px-6 py-[var(--space-section)] md:px-12 lg:px-16" aria-labelledby="timeline-heading">
       <div class="mx-auto max-w-2xl">
@@ -40,7 +42,7 @@ import Social from '../components/Social.astro';
       </div>
     </section>
 
-    <section class="px-6 py-[var(--space-section)] md:px-12 lg:px-16" aria-labelledby="contact-heading">
+    <section class="px-6 py-(--space-section) md:px-12 lg:px-16" aria-labelledby="contact-heading">
       <div class="mx-auto max-w-xl">
         <ContactForm />
       </div>

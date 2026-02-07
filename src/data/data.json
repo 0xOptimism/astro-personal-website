@@ -115,7 +115,7 @@
     },
     {
       "title": "Bonsai 🌳",
-      "description": "As a side project, I'm building Bonsai Finance, an account abstraction yield optimizer on top of Arbitrum.",
+      "description": "Personal project: Bonsai is a portfolio dashboard to track your entire net worth in one place—crypto, stocks, real estate, and collectibles. Automated tracking, real-time data, and read-only connections so you stop juggling spreadsheets and multiple apps.",
       "image": "/assets/bonsai.jpg",
       "link": "https://bonsai.finance/",
       "alts": "bonsai website"
@@ -136,60 +136,66 @@
     }
   ],
   "timeline": {
+    "2024": [
+      {
+        "title": "BabyBjörn — Fullstack Developer (2024 – now)",
+        "description": "Full-stack development for the e-commerce platform: backend APIs, serverless architecture, and frontend features. Organized and led a company-wide hackathon. Tech: React, TypeScript, Node.js, Next.js, Gatsby, Azure Functions, Adyen, Express, REST APIs."
+      }
+    ],
     "2023": [
       {
-        "title": "Bonsai",
-        "description": "I reoriented Bonsai's focus to develop a Yield Optimizer on the Arbitrum platform, leveraging modern technologies like Account Abstraction and Batched Transactions."
+        "title": "Anotherblock",
+        "description": "Built the frontend for a music NFT marketplace—integrating Ethereum smart contracts with ethers.js and GraphQL for real-time on-chain data."
       },
       {
-        "title": "ETH Denver final and DAO & Community track winner",
-        "description": "While participating in the ETH Denver hackathon (the biggest Ethereum hackathon), I won the DAO and community track with the project denoted.xyz."
+        "title": "ETH Denver — DAO & Community track winner",
+        "description": "Won the DAO & Community track at ETH Denver (600+ teams). Built a knowledge management tool with Notion-like commands for on-chain data."
       },
       {
-        "title": "Full-time web3",
-        "description": "In January 2023, I started a new assignment at Anotherblock."
+        "title": "Bonsai pivot to portfolio tracking",
+        "description": "Pivoted Bonsai into a unified portfolio dashboard: track crypto, stocks, real estate, and collectibles in one place with automated sync and real-time insights."
       }
     ],
     "2022": [
       {
-        "title": "Launched Pre-Alpha version of Bonsai Finance.",
-        "description": "As a personal project to learn more about NextJS and Web3 development, I launched app.bonsai.finance, a project that i had fun building and growing. Bonsai is a Web3 dashboard to monitor any assets on the Ethereum network; for now, it only supports mainnet and NFTs, but some cool features are coming."
+        "title": "Bonsai Finance pre-alpha",
+        "description": "Launched app.bonsai.finance as a Web3 dashboard for Ethereum assets and NFTs. Later evolved into Bonsai—a portfolio tracker for crypto, stocks, real estate, and collectibles at bonsai.finance."
       }
     ],
     "2019": [
       {
-        "title": "First developer job.",
-        "description": "After the summer, I reached a significant milestone and got my first developer job at Mindler. We were four full-time developers and a CTO to build this fantastic med-tech app. Mindler now has more than 15 developers and continues to grow. I have been working in most of the tech stack, including the app with React-Native, frontend with React, and backend with NodeJS."
+        "title": "SALT Full-Stack Bootcamp",
+        "description": "3-month full-stack JavaScript bootcamp in Stockholm—mob programming, modern frameworks, agile—graduated ready for production."
       },
       {
-        "title": "PodME developer internship.",
-        "description": "Summer 2019 was enjoyable. I built an admin panel for an app called PodME, the vibe at the office was great, and we had so much fun implementing the tech from scratch."
+        "title": "Podme internship",
+        "description": "Built a React/Redux admin dashboard for podcast analytics so creators could track listener stats and engagement."
       },
       {
-        "title": "Redmind developer internship.",
-        "description": "In the spring of 2019, I got my first internship as a developer at a company called Redmind. We built a React Native app and got interested in mobile development."
+        "title": "Redmind internship",
+        "description": "First dev internship: built a React Native app and got hooked on mobile development."
       },
       {
-        "title": "Salt Programming Bootcamp.",
-        "description": "After learning the basics of Web Development, I found a hobby I wanted to take seriously, so I applied to a Stockholm-based Javascript full-stack developer Bootcamp. After three months of intense MOB programming courses, I graduated from SALT."
+        "title": "Mindler — first full-time role",
+        "description": "Joined as one of the first three developers at the med-tech startup. Worked across React, Node.js, and React Native; led the psychologist dashboard for 200+ professionals; helped scale the team to 20+ engineers."
       }
     ],
     "2018": [
       {
-        "title": "OnChain-Jobs",
-        "description": "I co-founded Onchain Jobs with one of my childhood friends to help blockchain companies find developers, as there needed more talent. I built the website while learning Javascript on the side at the same time."
+        "title": "OnChain Jobs",
+        "description": "Co-founded OnChain Jobs with a childhood friend to connect blockchain companies with developers. Built the product while learning JavaScript."
       }
     ],
     "2017": [
       {
-        "title": "Smart-Contract rabbit hole",
-        "description": "In 2017, i really understood the power of smart-contract on Ethereum after buying my first NFT and decided to learn programming by myself and built a small website called HashDrop that referenced all the tokens launch."
+        "title": "Smart contracts & first steps in code",
+        "description": "After buying my first NFT, I saw the potential of Ethereum and smart contracts. Taught myself programming and built HashDrop, a site that tracked token launches."
       }
     ],
     "1990": [
       {
-        "title": "My birth",
-        "description": "I was born in January 1990 in the beautiful town of Antibes, on the French Riviera."
+        "title": "Born in Antibes",
+        "description": "I was born in January 1990 on the French Riviera."
       }
     ]
   },
