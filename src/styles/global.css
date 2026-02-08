@@ -7,8 +7,10 @@
   --color-surface-elevated: #1a1a1a;
   --color-text: #f2ede5;
   --color-text-muted: #8c8780;
-  --color-accent: #e4a02b;
-  --color-accent-dim: rgba(228, 160, 43, 0.25);
+  --color-accent: #0f766e;
+  --color-accent-dim: rgba(15, 118, 110, 0.25);
+  --color-accent-warm: #e4a02b;
+  --color-accent-warm-dim: rgba(228, 160, 43, 0.25);
   --font-display: "Syne", system-ui, sans-serif;
   --font-body: "Source Serif 4", Georgia, serif;
   --space-section: clamp(4rem, 10vw, 8rem);

@@ -29,7 +29,7 @@ const nameLabel = "Your name";
         name="name"
         required
         aria-required="true"
-        class="w-full rounded-[var(--radius-sm)] border border-[var(--color-surface-elevated)] bg-[var(--color-surface)] px-4 py-3 font-body text-[var(--color-text)] placeholder:text-[var(--color-text-muted)] transition-colors focus:border-[var(--color-accent)] focus:outline-none focus:ring-1 focus:ring-[var(--color-accent)]"
+        class="w-full rounded-sm border border-[var(--color-surface-elevated)] bg-[var(--color-surface)] px-4 py-3 font-body text-[var(--color-text)] placeholder:text-[var(--color-text-muted)] transition-colors focus:border-[var(--color-accent)] focus:outline-none focus:ring-1 focus:ring-[var(--color-accent)]"
         placeholder="Your name"
       />
     </label>
@@ -41,7 +41,7 @@ const nameLabel = "Your name";
         type="email"
         name="email"
         required
-        class="w-full rounded-[var(--radius-sm)] border border-[var(--color-surface-elevated)] bg-[var(--color-surface)] px-4 py-3 font-body text-[var(--color-text)] placeholder:text-[var(--color-text-muted)] transition-colors focus:border-[var(--color-accent)] focus:outline-none focus:ring-1 focus:ring-[var(--color-accent)]"
+        class="w-full rounded-sm border border-[var(--color-surface-elevated)] bg-[var(--color-surface)] px-4 py-3 font-body text-[var(--color-text)] placeholder:text-[var(--color-text-muted)] transition-colors focus:border-[var(--color-accent)] focus:outline-none focus:ring-1 focus:ring-[var(--color-accent)]"
         placeholder="you@example.com"
       />
     </label>
@@ -52,13 +52,13 @@ const nameLabel = "Your name";
       <textarea
         name="message"
         rows={5}
-        class="w-full resize-y rounded-[var(--radius-sm)] border border-[var(--color-surface-elevated)] bg-[var(--color-surface)] px-4 py-3 font-body text-[var(--color-text)] placeholder:text-[var(--color-text-muted)] transition-colors focus:border-[var(--color-accent)] focus:outline-none focus:ring-1 focus:ring-[var(--color-accent)]"
+        class="w-full resize-y rounded-sm border border-[var(--color-surface-elevated)] bg-[var(--color-surface)] px-4 py-3 font-body text-[var(--color-text)] placeholder:text-[var(--color-text-muted)] transition-colors focus:border-[var(--color-accent)] focus:outline-none focus:ring-1 focus:ring-[var(--color-accent)]"
         placeholder="Your message..."
       />
     </label>
     <button
       type="submit"
-      class="mt-4 rounded-[var(--radius-md)] bg-[var(--color-accent)] px-6 py-3 font-display text-sm font-semibold text-[var(--color-bg)] transition-transform hover:scale-[1.02] active:scale-[0.98]"
+      class="mt-4 rounded-md bg-(--color-accent-warm) px-6 py-3 font-display text-sm font-semibold text-[var(--color-bg)] transition-transform hover:scale-[1.02] active:scale-[0.98]"
     >
       Send
     </button>
