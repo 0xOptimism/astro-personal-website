@@ -11,7 +11,7 @@ const nameLabel = "Your name";
   <h2 id="contact-heading" class="reveal font-display text-2xl font-bold tracking-tight sm:text-3xl">
     {title}
   </h2>
-  <p class="reveal reveal-delay-1 mt-4 font-body text-[var(--color-text-muted)]">
+  <p class="reveal reveal-delay-1 mt-4 font-body text-(--color-text-muted)">
     {getInTouchStart}
     <a class="link-accent" href={`mailto:${email}`}>{email}</a>
   </p>
@@ -21,7 +21,7 @@ const nameLabel = "Your name";
     class="reveal reveal-delay-2 mt-8 space-y-6"
   >
     <label class="block">
-      <span class="mb-2 block font-display text-sm font-medium text-[var(--color-text-muted)]">
+      <span class="mb-2 block font-display text-sm font-medium text-(--color-text-muted)">
         {nameLabel}
       </span>
       <input
@@ -29,36 +29,36 @@ const nameLabel = "Your name";
         name="name"
         required
         aria-required="true"
-        class="w-full rounded-[var(--radius-sm)] border border-[var(--color-surface-elevated)] bg-[var(--color-surface)] px-4 py-3 font-body text-[var(--color-text)] placeholder:text-[var(--color-text-muted)] transition-colors focus:border-[var(--color-accent)] focus:outline-none focus:ring-1 focus:ring-[var(--color-accent)]"
+        class="w-full rounded-sm border border-(--color-surface-elevated) bg-(--color-surface) px-4 py-3 font-body text-(--color-text) placeholder:text-(--color-text-muted) transition-colors focus:border-(--color-accent) focus:outline-none focus:ring-1 focus:ring-(--color-accent)"
         placeholder="Your name"
       />
     </label>
     <label class="block">
-      <span class="mb-2 block font-display text-sm font-medium text-[var(--color-text-muted)]">
+      <span class="mb-2 block font-display text-sm font-medium text-(--color-text-muted)">
         {emailLabel}
       </span>
       <input
         type="email"
         name="email"
         required
-        class="w-full rounded-[var(--radius-sm)] border border-[var(--color-surface-elevated)] bg-[var(--color-surface)] px-4 py-3 font-body text-[var(--color-text)] placeholder:text-[var(--color-text-muted)] transition-colors focus:border-[var(--color-accent)] focus:outline-none focus:ring-1 focus:ring-[var(--color-accent)]"
+        class="w-full rounded-sm border border-(--color-surface-elevated) bg-(--color-surface) px-4 py-3 font-body text-(--color-text) placeholder:text-(--color-text-muted) transition-colors focus:border-(--color-accent) focus:outline-none focus:ring-1 focus:ring-(--color-accent)"
         placeholder="you@example.com"
       />
     </label>
     <label class="block">
-      <span class="mb-2 block font-display text-sm font-medium text-[var(--color-text-muted)]">
+      <span class="mb-2 block font-display text-sm font-medium text-(--color-text-muted)">
         {messageLabel}
       </span>
       <textarea
         name="message"
         rows={5}
-        class="w-full resize-y rounded-[var(--radius-sm)] border border-[var(--color-surface-elevated)] bg-[var(--color-surface)] px-4 py-3 font-body text-[var(--color-text)] placeholder:text-[var(--color-text-muted)] transition-colors focus:border-[var(--color-accent)] focus:outline-none focus:ring-1 focus:ring-[var(--color-accent)]"
+        class="w-full resize-y rounded-sm border border-(--color-surface-elevated) bg-(--color-surface) px-4 py-3 font-body text-(--color-text) placeholder:text-(--color-text-muted) transition-colors focus:border-(--color-accent) focus:outline-none focus:ring-1 focus:ring-(--color-accent)"
         placeholder="Your message..."
       />
     </label>
     <button
       type="submit"
-      class="mt-4 rounded-[var(--radius-md)] bg-[var(--color-accent)] px-6 py-3 font-display text-sm font-semibold text-[var(--color-bg)] transition-transform hover:scale-[1.02] active:scale-[0.98]"
+      class="mt-4 rounded-md bg-(--color-accent-warm) px-6 py-3 font-display text-sm font-semibold text-(--color-bg) transition-transform hover:scale-[1.02] active:scale-[0.98]"
     >
       Send
     </button>
