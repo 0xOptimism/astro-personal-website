@@ -22,13 +22,13 @@ interface Item {
         const delay = Math.min(i * 0.05 + 0.2, 0.9);
         return (
           <div
-            class="reveal flex items-center gap-2.5 rounded-[var(--radius-md)] border border-[var(--color-surface-elevated)] bg-[var(--color-surface)] px-4 py-3 transition-all duration-300 hover:scale-[1.02] hover:border-[var(--color-accent-dim)] hover:shadow-[0_0_24px_var(--color-accent-dim)]"
+            class="reveal flex items-center gap-2.5 rounded-md border border-(--color-surface-elevated) bg-(--color-surface) px-4 py-3 transition-all duration-300 hover:scale-[1.02] hover:border-(--color-accent-dim) hover:shadow-[0_0_24px_var(--color-accent-dim)]"
             style={`animation-delay: ${delay}s`}
           >
             <span class="flex items-center justify-center">
               <Icon item={item} />
             </span>
-            <span class="font-body text-sm font-medium text-[var(--color-text)]">{item.name}</span>
+            <span class="font-body text-sm font-medium text-(--color-text)">{item.name}</span>
           </div>
         );
       })
