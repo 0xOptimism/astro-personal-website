@@ -1,7 +1,13 @@
 ---
 const title = "Yannis";
-const role = "Full-Stack Developer";
-const description = "I build scalable web applications with React, TypeScript, Node.js, and React Native—from backend APIs and serverless functions to frontend and mobile. 5+ years across MedTech, E‑commerce, and Web3. ETH Denver 2023 winner. From Antibes, France; based in Stockholm, Sweden.";
+const role = "Full-stack developer";
+const description = "I build production web apps across frontend, backend, and mobile, mostly with TypeScript, React, Node.js, and agentic workflows.";
+const proofPoints = [
+  "5+ years shipping product",
+  "Medtech, e-commerce, Web3",
+  "ETH Denver 2023 winner",
+  "Antibes-born, Stockholm-based"
+];
 ---
 
 <div class="font-display">
@@ -17,4 +23,13 @@ const description = "I build scalable web applications with React, TypeScript, N
   <p class="reveal reveal-delay-3 mt-8 max-w-xl font-body text-lg font-normal leading-relaxed text-(--color-text-muted)">
     {description}
   </p>
+  <div class="reveal reveal-delay-4 mt-8 flex max-w-2xl flex-wrap gap-2">
+    {
+      proofPoints.map((point) => (
+        <span class="rounded-md border border-(--color-surface-elevated) bg-(--color-surface) px-3 py-2 font-body text-sm text-(--color-text-muted)">
+          {point}
+        </span>
+      ))
+    }
+  </div>
 </div>

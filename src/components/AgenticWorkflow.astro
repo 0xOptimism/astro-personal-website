@@ -1,0 +1,96 @@
+---
+import data from '../data/data.json';
+
+const { agenticWorkflow } = data as {
+  agenticWorkflow: {
+    eyebrow: string;
+    title: string;
+    description: string;
+    tools: {
+      name: string;
+      mark: string;
+      logo?: string;
+      alt?: string;
+      role: string;
+      description: string;
+      accent: string;
+    }[];
+    principles: string[];
+  };
+};
+---
+
+<div class="grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
+  <div>
+    <p class="reveal font-display text-sm font-semibold uppercase tracking-[0.2em] text-(--color-accent)">
+      {agenticWorkflow.eyebrow}
+    </p>
+    <h2 id="agentic-workflow-heading" class="reveal reveal-delay-1 mt-3 font-display text-2xl font-bold tracking-tight sm:text-3xl">
+      {agenticWorkflow.title}
+    </h2>
+    <p class="reveal reveal-delay-2 mt-5 max-w-xl font-body text-lg leading-relaxed text-(--color-text-muted)">
+      {agenticWorkflow.description}
+    </p>
+
+    <ul class="mt-8 space-y-3">
+      {
+        agenticWorkflow.principles.map((principle: string, i: number) => (
+          <li
+            class="reveal flex gap-3 font-body text-(--color-text-muted)"
+            style={`animation-delay: ${0.35 + i * 0.08}s`}
+          >
+            <span class="mt-2 h-px w-6 shrink-0 bg-(--color-accent-warm)" aria-hidden="true" />
+            <span>{principle}</span>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+
+  <div class="grid gap-3 sm:grid-cols-2">
+    {
+      agenticWorkflow.tools.map((tool, i: number) => (
+        <article
+          class="reveal rounded-md border border-(--color-surface-elevated) bg-(--color-surface) p-5 transition-all duration-300 hover:-translate-y-1 hover:border-[var(--tool-accent)]"
+          style={`--tool-accent: ${tool.accent}; animation-delay: ${0.2 + i * 0.08}s`}
+        >
+          <div class="flex items-start justify-between gap-4">
+            <div
+              class="flex size-12 shrink-0 items-center justify-center overflow-hidden rounded-md border border-(--color-surface-elevated) bg-(--color-bg) p-1.5 font-display text-sm font-bold"
+              style={`color: ${tool.accent}`}
+            >
+              {tool.logo ? (
+                <img
+                  src={tool.logo}
+                  alt={tool.alt ?? `${tool.name} logo`}
+                  loading="lazy"
+                  decoding="async"
+                  class="h-full w-full object-contain"
+                />
+              ) : (
+                <span aria-hidden="true">{tool.mark}</span>
+              )}
+            </div>
+            <span
+              class="mt-2 h-px flex-1 bg-[var(--tool-accent)] opacity-50"
+              aria-hidden="true"
+            />
+          </div>
+
+          <h3 class="mt-5 font-display text-lg font-semibold text-(--color-text)">
+            {tool.name}
+          </h3>
+          <p
+            class="mt-2 font-display text-xs font-semibold uppercase tracking-[0.18em]"
+            style={`color: ${tool.accent}`}
+          >
+            {tool.role}
+          </p>
+          <p class="mt-4 font-body leading-relaxed text-(--color-text-muted)">
+            {tool.description}
+          </p>
+        </article>
+      ))
+    }
+  </div>
+</div>

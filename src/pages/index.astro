@@ -2,6 +2,7 @@
 import Layout from '../layouts/Layout.astro';
 import Header from '../components/Header.astro';
 import Skills from '../components/Skills.astro';
+import AgenticWorkflow from '../components/AgenticWorkflow.astro';
 import Timeline from '../components/Timeline.astro';
 // import Interests from '../components/Interests.astro';
 import ContactForm from '../components/ContactForm.astro';
@@ -27,6 +28,12 @@ import Social from '../components/Social.astro';
       </div>
     </section>
 
+    <section class="px-6 py-(--space-section) md:px-12 lg:px-16" aria-labelledby="agentic-workflow-heading">
+      <div class="mx-auto max-w-5xl">
+        <AgenticWorkflow />
+      </div>
+    </section>
+
     <!-- Interests: commented out for now, rebuild later -->
     <!--
     <section class="px-6 py-[var(--space-section)] md:px-12 lg:px-16" aria-labelledby="interests-heading">
@@ -37,7 +44,7 @@ import Social from '../components/Social.astro';
     -->
 
     <section class="px-6 py-[var(--space-section)] md:px-12 lg:px-16" aria-labelledby="timeline-heading">
-      <div class="mx-auto max-w-2xl">
+      <div class="mx-auto max-w-5xl">
         <Timeline />
       </div>
     </section>

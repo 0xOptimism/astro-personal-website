@@ -2,36 +2,76 @@
 import data from '../data/data.json';
 import Icon from './Icon.astro';
 
-const title = "Tech I enjoy building with";
-const { skills } = data;
+const { skills } = data as { skills: SkillStack };
 
 interface Item {
   name: string;
-  icon: string;
+  icon?: string;
+  mark?: string;
   color: string;
+}
+
+interface SkillGroup {
+  title: string;
+  items: Item[];
+}
+
+interface SkillStack {
+  eyebrow: string;
+  title: string;
+  description: string;
+  groups: SkillGroup[];
 }
 ---
 
-<section>
-  <h2 id="skills-heading" class="reveal font-display text-2xl font-bold tracking-tight sm:text-3xl">
-    {title}
-  </h2>
-  <div class="mt-8 flex flex-wrap gap-3">
+<div class="grid gap-10 lg:grid-cols-[0.85fr_1.15fr] lg:items-start">
+  <div>
+    <p class="reveal font-display text-sm font-semibold uppercase tracking-[0.2em] text-(--color-accent)">
+      {skills.eyebrow}
+    </p>
+    <h2 id="skills-heading" class="reveal reveal-delay-1 mt-3 font-display text-2xl font-bold tracking-tight sm:text-3xl">
+      {skills.title}
+    </h2>
+    <p class="reveal reveal-delay-2 mt-5 max-w-xl font-body text-lg leading-relaxed text-(--color-text-muted)">
+      {skills.description}
+    </p>
+  </div>
+
+  <div class="grid gap-4 sm:grid-cols-2">
     {
-      skills.map((item: Item, i: number) => {
-        const delay = Math.min(i * 0.05 + 0.2, 0.9);
+      skills.groups.map((group: SkillGroup, groupIndex: number) => {
+        const delay = 0.2 + groupIndex * 0.08;
         return (
-          <div
-            class="reveal flex items-center gap-2.5 rounded-md border border-(--color-surface-elevated) bg-(--color-surface) px-4 py-3 transition-all duration-300 hover:scale-[1.02] hover:border-(--color-accent-dim) hover:shadow-[0_0_24px_var(--color-accent-dim)]"
+          <article
+            class="reveal rounded-md border border-(--color-surface-elevated) bg-(--color-surface) p-5"
             style={`animation-delay: ${delay}s`}
           >
-            <span class="flex items-center justify-center">
-              <Icon item={item} />
-            </span>
-            <span class="font-body text-sm font-medium text-(--color-text)">{item.name}</span>
-          </div>
+            <div class="flex items-start justify-between gap-4">
+              <h3 class="font-display text-lg font-semibold text-(--color-text)">
+                {group.title}
+              </h3>
+              <span class="font-display text-xs font-semibold text-(--color-text-muted)">
+                0{groupIndex + 1}
+              </span>
+            </div>
+
+            <div class="mt-5 flex flex-wrap gap-2">
+              {
+                group.items.map((item: Item) => (
+                  <span class="inline-flex min-h-10 items-center gap-2 rounded-md border border-(--color-surface-elevated) bg-(--color-bg) px-3 py-2 transition-colors duration-300 hover:border-(--color-accent-dim)">
+                    <span class="flex size-5 items-center justify-center">
+                      <Icon item={item} />
+                    </span>
+                    <span class="font-body text-sm font-medium leading-none text-(--color-text)">
+                      {item.name}
+                    </span>
+                  </span>
+                ))
+              }
+            </div>
+          </article>
         );
       })
     }
   </div>
-</section>
+</div>

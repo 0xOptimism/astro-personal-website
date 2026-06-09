@@ -1,111 +1,179 @@
 {
-  "skills": [
-    {
-      "name": "HTML5",
-      "icon": "html5",
-      "color": "#FF5733"
-    },
-    {
-      "name": "CSS3",
-      "icon": "css3",
-      "color": "#264de4"
-    },
-    {
-      "name": "JavaScript",
-      "icon": "javascript",
-      "color": "#F0DB4F"
-    },
-    {
-      "name": "TypeScript",
-      "icon": "typescript",
-      "color": "#007acc"
-    },
-    {
-      "name": "React",
-      "icon": "react",
-      "color": "#61DBFB"
-    },
-    {
-      "name": "Next.js",
-      "icon": "nextjs",
-      "color": "#45ce05"
-    },
-    {
-      "name": "Node.js",
-      "icon": "nodejs",
-      "color": "#68a063"
-    },
-    {
-      "name": "Git",
-      "icon": "git",
-      "color": "#3E2C00"
-    },
-    {
-      "name": "MySQL",
-      "icon": "mysql",
-      "color": "#00758f"
-    },
-    {
-      "name": "SASS",
-      "icon": "sass",
-      "color": "#CD6799"
-    },
-    {
-      "name": "Bootstrap",
-      "icon": "bootstrap",
-      "color": "#563d7c"
-    },
-    {
-      "name": "Tailwind",
-      "icon": "tailwindcss",
-      "color": "#36B3EC"
-    },
-    {
-      "name": "MaterialUI",
-      "icon": "materialui",
-      "color": "#0379F3"
-    },
-    {
-      "name": "Solidity",
-      "icon": "solidity",
-      "color": "#1C1C1C"
-    },
-    {
-      "name": "GraphQL",
-      "icon": "graphql",
-      "color": "#e535ab"
-    },
-    {
-      "name": "Redux",
-      "icon": "redux",
-      "color": "#764abc"
-    },
-    {
-      "name": "Gatsby",
-      "icon": "gatsby",
-      "color": "#663399"
-    },
-    {
-      "name": "Azure",
-      "icon": "azure",
-      "color": "#0089D6"
-    },
-    {
-      "name": "Supabase",
-      "icon": "supabase",
-      "color": "#3ECF8E"
-    },
-    {
-      "name": "Vercel",
-      "icon": "vercel",
-      "color": "#000000"
-    },
-    {
-      "name": "Claude",
-      "icon": "claude",
-      "color": "#CC785C"
-    }
-  ],
+  "skills": {
+    "eyebrow": "Core stack",
+    "title": "Production tools I reach for",
+    "description": "A focused stack for modern product work: typed interfaces, pragmatic APIs, cloud delivery, and Web3 when it adds real leverage.",
+    "groups": [
+      {
+        "title": "Product interfaces",
+        "items": [
+          {
+            "name": "TypeScript",
+            "icon": "typescript",
+            "color": "#3178c6"
+          },
+          {
+            "name": "React",
+            "icon": "react",
+            "color": "#61dafb"
+          },
+          {
+            "name": "Next.js",
+            "icon": "nextjs",
+            "color": "#f2ede5"
+          },
+          {
+            "name": "React Native",
+            "mark": "RN",
+            "color": "#61dafb"
+          },
+          {
+            "name": "Tailwind",
+            "icon": "tailwindcss",
+            "color": "#38bdf8"
+          },
+          {
+            "name": "Material UI",
+            "icon": "materialui",
+            "color": "#38bdf8"
+          },
+          {
+            "name": "Gatsby",
+            "icon": "gatsby",
+            "color": "#a78bfa"
+          }
+        ]
+      },
+      {
+        "title": "Backend and data",
+        "items": [
+          {
+            "name": "Node.js",
+            "icon": "nodejs",
+            "color": "#68a063"
+          },
+          {
+            "name": "Express",
+            "mark": "EX",
+            "color": "#f2ede5"
+          },
+          {
+            "name": "REST APIs",
+            "mark": "API",
+            "color": "#e4a02b"
+          },
+          {
+            "name": "GraphQL",
+            "icon": "graphql",
+            "color": "#e535ab"
+          },
+          {
+            "name": "MySQL",
+            "icon": "mysql",
+            "color": "#38bdf8"
+          },
+          {
+            "name": "Supabase",
+            "mark": "SB",
+            "color": "#3ecf8e"
+          }
+        ]
+      },
+      {
+        "title": "Platforms and delivery",
+        "items": [
+          {
+            "name": "Azure Functions",
+            "icon": "azure",
+            "color": "#38bdf8"
+          },
+          {
+            "name": "Vercel",
+            "mark": "V",
+            "color": "#f2ede5"
+          },
+          {
+            "name": "Git",
+            "icon": "git",
+            "color": "#f05032"
+          },
+          {
+            "name": "Adyen",
+            "mark": "AD",
+            "color": "#0abf53"
+          }
+        ]
+      },
+      {
+        "title": "Web3 and experiments",
+        "items": [
+          {
+            "name": "Solidity",
+            "icon": "solidity",
+            "color": "#a3a3a3"
+          },
+          {
+            "name": "ethers.js",
+            "mark": "E",
+            "color": "#a78bfa"
+          },
+          {
+            "name": "Ethereum",
+            "mark": "ETH",
+            "color": "#60a5fa"
+          }
+        ]
+      }
+    ]
+  },
+  "agenticWorkflow": {
+    "eyebrow": "How I ship with AI",
+    "title": "Agentic workflow stack",
+    "description": "I use AI agents as a development loop: plan with context, split work into focused agents, review the diffs, and automate the repeatable parts without losing engineering judgement.",
+    "tools": [
+      {
+        "name": "Codex",
+        "mark": "CX",
+        "logo": "/assets/agentic-stack/codex-logo.webp",
+        "alt": "Codex logo",
+        "role": "Implementation agent",
+        "description": "Codebase-aware changes, bug fixes, tests, and PR-ready iterations inside real repositories.",
+        "accent": "#14b8a6"
+      },
+      {
+        "name": "Claude Code",
+        "mark": "CC",
+        "logo": "/assets/agentic-stack/claude-code-logo.png",
+        "alt": "Claude Code logo",
+        "role": "Deep reasoning pair",
+        "description": "Architecture passes, refactors, code reviews, and long-context problem solving when the shape is still forming.",
+        "accent": "#CC785C"
+      },
+      {
+        "name": "Hermes",
+        "mark": "HM",
+        "logo": "/assets/agentic-stack/hermes-agent-logo.webp",
+        "alt": "Hermes logo",
+        "role": "Workflow coordination",
+        "description": "Project memory, handoffs, and lightweight orchestration so agent work stays connected to intent.",
+        "accent": "#60a5fa"
+      },
+      {
+        "name": "Cursor Cloud Automations",
+        "mark": "CA",
+        "logo": "/assets/agentic-stack/cursor-cloud-automations-logo.webp",
+        "alt": "Cursor Cloud Automations logo",
+        "role": "Background execution",
+        "description": "Async chores, queued fixes, and automation runs that keep momentum while I review the important decisions.",
+        "accent": "#e4a02b"
+      }
+    ],
+    "principles": [
+      "AI for acceleration, not abdication.",
+      "Small agents, clear context, reviewed output.",
+      "Automate the repeatable parts; keep taste and responsibility human."
+    ]
+  },
   "interest": [
     {
       "title": "Spending time with my Kid",
@@ -136,66 +204,99 @@
     }
   ],
   "timeline": {
-    "2024": [
+    "eyebrow": "Path so far",
+    "title": "Developer journey",
+    "description": "A compressed path from self-taught Web3 experiments to production product work in medtech, e-commerce, and AI-assisted engineering.",
+    "years": [
       {
-        "title": "BabyBjörn — Fullstack Developer (2024 – now)",
-        "description": "Full-stack development for the e-commerce platform: backend APIs, serverless architecture, and frontend features. Organized and led a company-wide hackathon. Tech: React, TypeScript, Node.js, Next.js, Gatsby, Azure Functions, Adyen, Express, REST APIs."
-      }
-    ],
-    "2023": [
-      {
-        "title": "Anotherblock",
-        "description": "Built the frontend for a music NFT marketplace—integrating Ethereum smart contracts with ethers.js and GraphQL for real-time on-chain data."
+        "year": "2024",
+        "items": [
+          {
+            "title": "BabyBjörn — Full-stack developer",
+            "meta": "2024 - present",
+            "description": "Building across the e-commerce platform: backend APIs, serverless functions, frontend features, payments, and internal developer workflows.",
+            "tags": ["React", "TypeScript", "Node.js", "Azure", "Adyen"]
+          }
+        ]
       },
       {
-        "title": "ETH Denver — DAO & Community track winner",
-        "description": "Won the DAO & Community track at ETH Denver (600+ teams). Built a knowledge management tool with Notion-like commands for on-chain data."
+        "year": "2023",
+        "items": [
+          {
+            "title": "Anotherblock",
+            "meta": "Music NFT marketplace",
+            "description": "Built frontend experiences that connected Ethereum smart contracts, ethers.js, and GraphQL-backed marketplace data.",
+            "tags": ["React", "GraphQL", "ethers.js", "Web3"]
+          },
+          {
+            "title": "ETH Denver winner",
+            "meta": "DAO & Community track",
+            "description": "Won among 600+ teams with a knowledge management tool using Notion-like commands for on-chain data.",
+            "tags": ["Hackathon", "Product", "On-chain data"]
+          },
+          {
+            "title": "Bonsai pivot",
+            "meta": "Portfolio tracking",
+            "description": "Reframed Bonsai from a Web3 dashboard into a broader portfolio tracker for crypto, stocks, real estate, and collectibles.",
+            "tags": ["Founder", "Product strategy", "Finance"]
+          }
+        ]
       },
       {
-        "title": "Bonsai pivot to portfolio tracking",
-        "description": "Pivoted Bonsai into a unified portfolio dashboard: track crypto, stocks, real estate, and collectibles in one place with automated sync and real-time insights."
-      }
-    ],
-    "2022": [
-      {
-        "title": "Bonsai Finance pre-alpha",
-        "description": "Launched app.bonsai.finance as a Web3 dashboard for Ethereum assets and NFTs. Later evolved into Bonsai—a portfolio tracker for crypto, stocks, real estate, and collectibles at bonsai.finance."
-      }
-    ],
-    "2019": [
-      {
-        "title": "SALT Full-Stack Bootcamp",
-        "description": "3-month full-stack JavaScript bootcamp in Stockholm—mob programming, modern frameworks, agile—graduated ready for production."
+        "year": "2022",
+        "items": [
+          {
+            "title": "Bonsai Finance pre-alpha",
+            "meta": "Web3 dashboard",
+            "description": "Launched an early Ethereum asset and NFT dashboard that later evolved into a broader portfolio product.",
+            "tags": ["Ethereum", "NFTs", "Dashboard"]
+          }
+        ]
       },
       {
-        "title": "Podme internship",
-        "description": "Built a React/Redux admin dashboard for podcast analytics so creators could track listener stats and engagement."
+        "year": "2019",
+        "items": [
+          {
+            "title": "Mindler",
+            "meta": "First full-time developer role",
+            "description": "Joined early at a medtech startup, worked across web and mobile, and led the psychologist dashboard used by 200+ professionals.",
+            "tags": ["React", "Node.js", "React Native", "Medtech"]
+          },
+          {
+            "title": "Podme and Redmind internships",
+            "meta": "First production teams",
+            "description": "Built podcast analytics tooling, React Native features, and got hands-on experience shipping with real product teams.",
+            "tags": ["React", "Redux", "React Native"]
+          },
+          {
+            "title": "SALT full-stack bootcamp",
+            "meta": "Stockholm",
+            "description": "Completed an intensive full-stack JavaScript program focused on mob programming, agile delivery, and modern web development.",
+            "tags": ["JavaScript", "Full-stack", "Agile"]
+          }
+        ]
       },
       {
-        "title": "Redmind internship",
-        "description": "First dev internship: built a React Native app and got hooked on mobile development."
+        "year": "2018",
+        "items": [
+          {
+            "title": "OnChain Jobs",
+            "meta": "Co-founder",
+            "description": "Co-founded a hiring product for blockchain companies and used it as a real-world path into JavaScript and product building.",
+            "tags": ["Founder", "Blockchain", "JavaScript"]
+          }
+        ]
       },
       {
-        "title": "Mindler — first full-time role",
-        "description": "Joined as one of the first three developers at the med-tech startup. Worked across React, Node.js, and React Native; led the psychologist dashboard for 200+ professionals; helped scale the team to 20+ engineers."
-      }
-    ],
-    "2018": [
-      {
-        "title": "OnChain Jobs",
-        "description": "Co-founded OnChain Jobs with a childhood friend to connect blockchain companies with developers. Built the product while learning JavaScript."
-      }
-    ],
-    "2017": [
-      {
-        "title": "Smart contracts & first steps in code",
-        "description": "After buying my first NFT, I saw the potential of Ethereum and smart contracts. Taught myself programming and built HashDrop, a site that tracked token launches."
-      }
-    ],
-    "1990": [
-      {
-        "title": "Born in Antibes",
-        "description": "I was born in January 1990 on the French Riviera."
+        "year": "2017",
+        "items": [
+          {
+            "title": "Smart contracts and first code",
+            "meta": "Self-taught start",
+            "description": "Started programming after discovering Ethereum and built HashDrop, a site for tracking token launches.",
+            "tags": ["Ethereum", "Solidity", "Self-taught"]
+          }
+        ]
       }
     ]
   },
