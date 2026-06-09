@@ -1,46 +1,91 @@
 ---
 import data from '../data/data.json';
 
-const title = "The timeline of my developer journey";
-const { timeline } = data as { timeline: Record<string, { title: string; description: string }[]> };
+const { timeline } = data as { timeline: TimelineData };
 
-interface Year {
+interface TimelineItem {
+  title: string;
+  meta: string;
+  description: string;
+  tags: string[];
+}
+
+interface TimelineYear {
+  year: string;
+  items: TimelineItem[];
+}
+
+interface TimelineData {
+  eyebrow: string;
   title: string;
   description: string;
+  years: TimelineYear[];
 }
 ---
 
-<section>
-  <h2 id="timeline-heading" class="reveal font-display text-2xl font-bold tracking-tight sm:text-3xl">
-    {title}
-  </h2>
-  <ol class="relative mt-10 border-l-2 border-[var(--color-surface-elevated)] pl-6">
+<div class="grid gap-10 lg:grid-cols-[0.75fr_1.25fr] lg:items-start">
+  <div class="lg:sticky lg:top-12">
+    <p class="reveal font-display text-sm font-semibold uppercase tracking-[0.2em] text-(--color-accent)">
+      {timeline.eyebrow}
+    </p>
+    <h2 id="timeline-heading" class="reveal reveal-delay-1 mt-3 font-display text-2xl font-bold tracking-tight sm:text-3xl">
+      {timeline.title}
+    </h2>
+    <p class="reveal reveal-delay-2 mt-5 max-w-xl font-body text-lg leading-relaxed text-(--color-text-muted)">
+      {timeline.description}
+    </p>
+  </div>
+
+  <ol class="space-y-8">
     {
-      Object.keys(timeline)
-        .reverse()
-        .map((year: string, yearIndex: number) => (
-          <li class="relative mb-12 last:mb-0">
+      timeline.years.map((group: TimelineYear, yearIndex: number) => (
+        <li
+          class="reveal grid gap-4 sm:grid-cols-[5rem_1fr]"
+          style={`animation-delay: ${0.2 + yearIndex * 0.08}s`}
+        >
+          <time class="font-display text-sm font-semibold uppercase tracking-[0.2em] text-(--color-accent)">
+            {group.year}
+          </time>
+
+          <div class="relative space-y-3 border-l border-(--color-surface-elevated) pl-5">
             <span
-              class="absolute -left-[29px] top-0 h-3 w-3 rounded-full border-2 border-[var(--color-bg)] bg-[var(--color-accent)]"
+              class="absolute -left-[5px] top-1 size-2 rounded-full bg-(--color-accent)"
               aria-hidden="true"
             />
-            <time class="reveal block font-display text-sm font-semibold uppercase tracking-wider text-[var(--color-accent)]" style={`animation-delay: ${0.2 + yearIndex * 0.08}s`}>
-              {year}
-            </time>
             {
-              timeline[year].map((item: Year, i: number) => (
-                <div class="reveal mt-2" style={`animation-delay: ${0.25 + yearIndex * 0.08 + i * 0.05}s`}>
-                  <h3 class="font-display text-lg font-semibold text-[var(--color-text)]">
-                    {item.title}
-                  </h3>
-                  <p class="mt-1 font-body text-[var(--color-text-muted)] leading-relaxed">
+              group.items.map((item: TimelineItem, itemIndex: number) => (
+                <article
+                  class="rounded-md border border-(--color-surface-elevated) bg-(--color-surface) p-5 transition-colors duration-300 hover:border-(--color-accent-dim)"
+                  style={`animation-delay: ${0.25 + yearIndex * 0.08 + itemIndex * 0.04}s`}
+                >
+                  <div class="flex flex-wrap items-start justify-between gap-3">
+                    <h3 class="font-display text-lg font-semibold text-(--color-text)">
+                      {item.title}
+                    </h3>
+                    <p class="font-display text-xs font-semibold uppercase tracking-[0.16em] text-(--color-accent-warm)">
+                      {item.meta}
+                    </p>
+                  </div>
+
+                  <p class="mt-3 font-body leading-relaxed text-(--color-text-muted)">
                     {item.description}
                   </p>
-                </div>
+
+                  <div class="mt-4 flex flex-wrap gap-2">
+                    {
+                      item.tags.map((tag: string) => (
+                        <span class="rounded-md border border-(--color-surface-elevated) bg-(--color-bg) px-2.5 py-1 font-body text-xs text-(--color-text-muted)">
+                          {tag}
+                        </span>
+                      ))
+                    }
+                  </div>
+                </article>
               ))
             }
-          </li>
-        ))
+          </div>
+        </li>
+      ))
     }
   </ol>
-</section>
+</div>
