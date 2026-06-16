@@ -9,17 +9,17 @@
         "items": [
           {
             "name": "TypeScript",
-            "icon": "typescript",
+            "logo": "/assets/stack-logos/typescript.svg",
             "color": "#3178c6"
           },
           {
             "name": "React",
-            "icon": "react",
+            "logo": "/assets/stack-logos/react.svg",
             "color": "#61dafb"
           },
           {
             "name": "Next.js",
-            "icon": "nextjs",
+            "logo": "/assets/stack-logos/nextjs.svg",
             "color": "#f2ede5"
           },
           {
@@ -29,17 +29,17 @@
           },
           {
             "name": "Tailwind",
-            "icon": "tailwindcss",
+            "logo": "/assets/stack-logos/tailwindcss.svg",
             "color": "#38bdf8"
           },
           {
-            "name": "Material UI",
-            "icon": "materialui",
-            "color": "#38bdf8"
+            "name": "TanStack",
+            "logo": "/assets/stack-logos/tanstack.svg",
+            "color": "#ff6b35"
           },
           {
             "name": "Gatsby",
-            "icon": "gatsby",
+            "logo": "/assets/stack-logos/gatsby.svg",
             "color": "#a78bfa"
           }
         ]
@@ -49,12 +49,12 @@
         "items": [
           {
             "name": "Node.js",
-            "icon": "nodejs",
+            "logo": "/assets/stack-logos/nodejs.svg",
             "color": "#68a063"
           },
           {
             "name": "Express",
-            "mark": "EX",
+            "logo": "/assets/stack-logos/express.svg",
             "color": "#f2ede5"
           },
           {
@@ -64,17 +64,17 @@
           },
           {
             "name": "GraphQL",
-            "icon": "graphql",
+            "logo": "/assets/stack-logos/graphql.svg",
             "color": "#e535ab"
           },
           {
             "name": "MySQL",
-            "icon": "mysql",
+            "logo": "/assets/stack-logos/mysql.svg",
             "color": "#38bdf8"
           },
           {
             "name": "Supabase",
-            "mark": "SB",
+            "logo": "/assets/stack-logos/supabase.svg",
             "color": "#3ecf8e"
           }
         ]
@@ -84,23 +84,28 @@
         "items": [
           {
             "name": "Azure Functions",
-            "icon": "azure",
+            "mark": "AF",
             "color": "#38bdf8"
           },
           {
             "name": "Vercel",
-            "mark": "V",
+            "logo": "/assets/stack-logos/vercel.svg",
             "color": "#f2ede5"
           },
           {
             "name": "Git",
-            "icon": "git",
+            "logo": "/assets/stack-logos/git.svg",
             "color": "#f05032"
           },
           {
             "name": "Adyen",
-            "mark": "AD",
+            "logo": "/assets/stack-logos/adyen.svg",
             "color": "#0abf53"
+          },
+          {
+            "name": "Stripe",
+            "logo": "/assets/stack-logos/stripe.svg",
+            "color": "#635bff"
           }
         ]
       },
@@ -109,17 +114,17 @@
         "items": [
           {
             "name": "Solidity",
-            "icon": "solidity",
+            "logo": "/assets/stack-logos/solidity.svg",
             "color": "#a3a3a3"
           },
           {
             "name": "ethers.js",
-            "mark": "E",
+            "logo": "/assets/stack-logos/ethers.svg",
             "color": "#a78bfa"
           },
           {
             "name": "Ethereum",
-            "mark": "ETH",
+            "logo": "/assets/stack-logos/ethereum.svg",
             "color": "#60a5fa"
           }
         ]
