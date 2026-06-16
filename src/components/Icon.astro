@@ -1,12 +1,20 @@
 ---
 const { item, size } = Astro.props;
 const colorStyle = item.color ? { color: item.color } : {};
-// Devicons may not include every icon, so selected items provide a compact mark.
-const useFallback = item.mark || !item.icon || ['vercel', 'claude'].includes(item.icon);
+const logoMaskStyle = item.logo
+  ? `background-color: ${item.color ?? 'currentColor'}; mask-image: url(${item.logo}); -webkit-mask-image: url(${item.logo}); mask-repeat: no-repeat; -webkit-mask-repeat: no-repeat; mask-position: center; -webkit-mask-position: center; mask-size: contain; -webkit-mask-size: contain;`
+  : '';
+const useFallback = item.mark || (!item.logo && !item.icon);
 const initial = item.mark ?? item.name?.charAt(0) ?? '?';
 ---
 
-{useFallback ? (
+{item.logo ? (
+  <span
+    class={`inline-block shrink-0 ${size === 'lg' ? 'size-6' : 'size-[1.125rem]'}`}
+    style={logoMaskStyle}
+    aria-hidden="true"
+  ></span>
+) : useFallback ? (
   <span
     class={`inline-flex size-6 items-center justify-center rounded font-display font-bold ${size === 'lg' ? 'text-base' : 'text-[0.7rem]'}`}
     style={colorStyle}
