@@ -9,6 +9,11 @@ export const SITE_JOB_TITLE = 'Full-stack developer';
 export const SITE_LOCATION = 'Stockholm';
 export const SITE_COUNTRY = 'SE';
 export const SITE_EMPLOYER = 'BabyBjörn';
+export const SITE_OG_IMAGE_PATH = '/og-image.png';
+export const SITE_OG_IMAGE_WIDTH = 1200;
+export const SITE_OG_IMAGE_HEIGHT = 630;
+export const SITE_OG_IMAGE_ALT =
+  'Yannis portfolio, full-stack developer in Stockholm';
 
 export const SAME_AS = [
   'https://www.linkedin.com/in/yannis-b-713090179/',

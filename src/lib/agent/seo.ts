@@ -1,4 +1,19 @@
-import { SAME_AS, SITE_COUNTRY, SITE_DESCRIPTION, SITE_DOMAIN, SITE_EMAIL, SITE_EMPLOYER, SITE_JOB_TITLE, SITE_LOCATION, SITE_NAME, SITE_TITLE, KNOWS_ABOUT } from '../site.ts';
+import {
+  KNOWS_ABOUT,
+  SAME_AS,
+  SITE_COUNTRY,
+  SITE_DESCRIPTION,
+  SITE_DOMAIN,
+  SITE_EMAIL,
+  SITE_EMPLOYER,
+  SITE_JOB_TITLE,
+  SITE_LOCATION,
+  SITE_NAME,
+  SITE_OG_IMAGE_PATH,
+  SITE_TITLE,
+} from '../site.ts';
+
+const siteImageUrl = `https://${SITE_DOMAIN}${SITE_OG_IMAGE_PATH}`;
 
 export const JSON_LD_SCRIPT = JSON.stringify({
   '@context': 'https://schema.org',
@@ -11,6 +26,7 @@ export const JSON_LD_SCRIPT = JSON.stringify({
       email: SITE_EMAIL,
       jobTitle: SITE_JOB_TITLE,
       description: SITE_DESCRIPTION,
+      image: siteImageUrl,
       sameAs: [...SAME_AS],
       knowsAbout: KNOWS_ABOUT,
       worksFor: { '@type': 'Organization', name: SITE_EMPLOYER },
@@ -31,6 +47,7 @@ export const JSON_LD_SCRIPT = JSON.stringify({
       alternateName: [SITE_DOMAIN, 'Yannis full-stack developer'],
       url: `https://${SITE_DOMAIN}`,
       description: SITE_DESCRIPTION,
+      image: siteImageUrl,
       inLanguage: 'en',
       publisher: { '@id': `https://${SITE_DOMAIN}/#person` },
       author: { '@id': `https://${SITE_DOMAIN}/#person` },
@@ -41,6 +58,7 @@ export const JSON_LD_SCRIPT = JSON.stringify({
       url: `https://${SITE_DOMAIN}`,
       name: SITE_TITLE,
       description: SITE_DESCRIPTION,
+      image: siteImageUrl,
       about: { '@id': `https://${SITE_DOMAIN}/#person` },
       mainEntity: { '@id': `https://${SITE_DOMAIN}/#person` },
       isPartOf: { '@id': `https://${SITE_DOMAIN}/#website` },

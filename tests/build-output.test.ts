@@ -7,6 +7,13 @@ import { GET as getLlms } from '../src/pages/llms.txt.ts';
 import { homepageMarkdown } from '../src/lib/agent/markdown';
 import { llmsTxt } from '../src/lib/agent/llms';
 import { JSON_LD_SCRIPT } from '../src/lib/agent/seo';
+import {
+  SITE_OG_IMAGE_ALT,
+  SITE_OG_IMAGE_HEIGHT,
+  SITE_OG_IMAGE_PATH,
+  SITE_OG_IMAGE_WIDTH,
+  SITE_ORIGIN,
+} from '../src/lib/site';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const distIndex = join(root, 'dist', 'index.html');
@@ -47,6 +54,17 @@ describe.skipIf(!distBuilt)('built homepage HTML', () => {
     const person = parsed['@graph']?.find((node) => node['@type'] === 'Person');
     expect(person?.name).toBe('Yannis');
     expect(person?.url).toBe('https://yannis.dev');
+  });
+
+  it('includes social preview metadata', () => {
+    const imageUrl = new URL(SITE_OG_IMAGE_PATH, SITE_ORIGIN).href;
+
+    expect(html).toContain(`property="og:image" content="${imageUrl}"`);
+    expect(html).toContain(`property="og:image:width" content="${SITE_OG_IMAGE_WIDTH}"`);
+    expect(html).toContain(`property="og:image:height" content="${SITE_OG_IMAGE_HEIGHT}"`);
+    expect(html).toContain(`property="og:image:alt" content="${SITE_OG_IMAGE_ALT}"`);
+    expect(html).toContain('name="twitter:card" content="summary_large_image"');
+    expect(html).toContain(`name="twitter:image" content="${imageUrl}"`);
   });
 
   it('does not hide the H1 behind a reveal class', () => {
