@@ -180,18 +180,13 @@ const grokChannels = PROOF_POINTS.map((point, index) => ({
   let packetCount = 412;
 
   const tickGrokReadouts = () => {
-    if (document.body.dataset.modelSkin !== 'grok-46') {
+    if (document.body.dataset.modelSkin !== 'grok-46' || !grokClock || !grokPackets) {
       return;
     }
 
-    if (grokClock) {
-      grokClock.textContent = `${new Date().toISOString().slice(11, 19)}Z`;
-    }
-
-    if (grokPackets) {
-      packetCount = (packetCount + 3) % 100000;
-      grokPackets.textContent = `pkt ${String(packetCount).padStart(5, '0')}`;
-    }
+    grokClock.textContent = `${new Date().toISOString().slice(11, 19)}Z`;
+    packetCount = (packetCount + 3) % 100000;
+    grokPackets.textContent = `pkt ${String(packetCount).padStart(5, '0')}`;
   };
 
   tickGrokReadouts();
