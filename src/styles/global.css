@@ -1913,7 +1913,9 @@ body[data-model-skin="claude-opus-5"] .site-shell {
   flex-direction: column;
 }
 
-/* Reading progress, scroll-driven and JS-free. */
+/* Reading progress, scroll-driven and JS-free.
+   Gate the animation so unsupported browsers do not treat it as a
+   0s fill-forwards tween and snap the bar to full width on load. */
 body[data-model-skin="claude-opus-5"] .site-shell::before {
   content: "";
   position: fixed;
@@ -1926,10 +1928,15 @@ body[data-model-skin="claude-opus-5"] .site-shell::before {
   pointer-events: none;
   transform: scaleX(0);
   transform-origin: 0 50%;
-  animation-name: opusReadingProgress;
-  animation-timing-function: linear;
-  animation-fill-mode: both;
-  animation-timeline: scroll(root block);
+}
+
+@supports (animation-timeline: scroll()) {
+  body[data-model-skin="claude-opus-5"] .site-shell::before {
+    animation-name: opusReadingProgress;
+    animation-timing-function: linear;
+    animation-fill-mode: both;
+    animation-timeline: scroll(root block);
+  }
 }
 
 /* Reading order: argument, then evidence, then the index. */
