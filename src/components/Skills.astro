@@ -25,8 +25,8 @@ interface SkillStack {
 }
 ---
 
-<div class="grid gap-10 lg:grid-cols-[0.85fr_1.15fr] lg:items-start">
-  <div>
+<div class="stack-layout grid gap-10 lg:grid-cols-[0.85fr_1.15fr] lg:items-start">
+  <div class="stack-intro">
     <p class="reveal font-display text-sm font-semibold uppercase tracking-[0.2em] text-(--color-accent)">
       {skills.eyebrow}
     </p>
@@ -38,7 +38,7 @@ interface SkillStack {
     </p>
   </div>
 
-  <div class="grid gap-4 sm:grid-cols-2">
+  <div class="stack-grid grid gap-4 sm:grid-cols-2">
     {
       skills.groups.map((group: SkillGroup, groupIndex: number) => {
         const delay = 0.2 + groupIndex * 0.08;
