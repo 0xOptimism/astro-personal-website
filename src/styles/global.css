@@ -339,7 +339,48 @@ body[data-model-skin="gpt-55-sol-high"] .model-switcher__option:focus-visible {
   background: rgba(247, 209, 84, 0.12);
 }
 
+body[data-model-skin="grok-46"] .model-switcher__trigger {
+  border-color: rgba(124, 108, 255, 0.5);
+  background: rgba(8, 8, 14, 0.82);
+  color: #f4f4ff;
+  box-shadow:
+    0 0 0 1px rgba(124, 108, 255, 0.1),
+    0 0.8rem 2rem rgba(255, 77, 141, 0.12);
+}
+
+body[data-model-skin="grok-46"] .model-switcher__trigger:hover,
+body[data-model-skin="grok-46"] .model-switcher.is-open .model-switcher__trigger {
+  border-color: rgba(124, 108, 255, 0.72);
+  background: rgba(10, 10, 16, 0.9);
+}
+
+body[data-model-skin="grok-46"] .model-switcher__trigger::after {
+  background: linear-gradient(100deg, transparent, rgba(124, 108, 255, 0.28), rgba(255, 77, 141, 0.2), transparent);
+}
+
+body[data-model-skin="grok-46"] .model-switcher__menu {
+  border-color: rgba(124, 108, 255, 0.28);
+  background:
+    linear-gradient(135deg, rgba(124, 108, 255, 0.14), transparent 42%),
+    linear-gradient(315deg, rgba(255, 77, 141, 0.1), transparent 48%),
+    rgba(6, 6, 10, 0.94);
+}
+
+body[data-model-skin="grok-46"] .model-switcher__option:hover,
+body[data-model-skin="grok-46"] .model-switcher__option:focus-visible {
+  background: rgba(124, 108, 255, 0.14);
+}
+
 .model-activation {
+  --activation-bg: #050508;
+  --activation-accent: rgba(247, 209, 84, 0.52);
+  --activation-pulse: rgba(76, 201, 240, 0.5);
+  --activation-beam-a: rgba(247, 209, 84, 0.32);
+  --activation-beam-b: rgba(76, 201, 240, 0.28);
+  --activation-core-fg: #fff7cf;
+  --activation-core-border: rgba(247, 209, 84, 0.48);
+  --activation-core-glow-a: rgba(247, 209, 84, 0.85);
+  --activation-core-glow-b: rgba(76, 201, 240, 0.55);
   position: fixed;
   inset: 0;
   z-index: 70;
@@ -347,9 +388,9 @@ body[data-model-skin="gpt-55-sol-high"] .model-switcher__option:focus-visible {
   place-items: center;
   overflow: hidden;
   background:
-    linear-gradient(100deg, transparent 0 38%, rgba(247, 209, 84, 0.52) 42%, rgba(76, 201, 240, 0.5) 48%, transparent 58%),
+    linear-gradient(100deg, transparent 0 38%, var(--activation-accent) 42%, var(--activation-pulse) 48%, transparent 58%),
     repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.08) 0 1px, transparent 1px 5rem),
-    #050508;
+    var(--activation-bg);
   clip-path: inset(0 100% 0 0);
   opacity: 0;
   pointer-events: none;
@@ -360,17 +401,17 @@ body[data-model-skin="gpt-55-sol-high"] .model-switcher__option:focus-visible {
   inset: -15%;
   background:
     repeating-linear-gradient(115deg, transparent 0 1.4rem, rgba(255, 255, 255, 0.08) 1.4rem 1.5rem),
-    linear-gradient(90deg, transparent, rgba(247, 209, 84, 0.32), rgba(76, 201, 240, 0.28), transparent);
+    linear-gradient(90deg, transparent, var(--activation-beam-a), var(--activation-beam-b), transparent);
   transform: translateX(-25%) skewX(-12deg);
 }
 
 .model-activation__core {
   position: relative;
-  border: 1px solid rgba(247, 209, 84, 0.48);
+  border: 1px solid var(--activation-core-border);
   border-radius: var(--radius-sm);
   padding: 1rem 1.25rem;
-  background: rgba(5, 5, 8, 0.8);
-  color: #fff7cf;
+  background: color-mix(in srgb, var(--activation-bg) 80%, transparent);
+  color: var(--activation-core-fg);
   font-family: var(--font-display);
   font-size: clamp(1.25rem, 6vw, 4.5rem);
   font-weight: 800;
@@ -379,8 +420,8 @@ body[data-model-skin="gpt-55-sol-high"] .model-switcher__option:focus-visible {
   text-align: center;
   text-transform: uppercase;
   text-shadow:
-    0 0 1.5rem rgba(247, 209, 84, 0.85),
-    0 0 3rem rgba(76, 201, 240, 0.55);
+    0 0 1.5rem var(--activation-core-glow-a),
+    0 0 3rem var(--activation-core-glow-b);
 }
 
 .model-activation.is-firing {
@@ -393,6 +434,47 @@ body[data-model-skin="gpt-55-sol-high"] .model-switcher__option:focus-visible {
 
 .model-activation.is-firing .model-activation__core {
   animation: solCore 1.6s var(--ease-out-expo) both;
+}
+
+body[data-model-skin="grok-46"] .model-activation {
+  --activation-bg: #030306;
+  --activation-accent: rgba(124, 108, 255, 0.58);
+  --activation-pulse: rgba(255, 77, 141, 0.48);
+  --activation-beam-a: rgba(124, 108, 255, 0.38);
+  --activation-beam-b: rgba(255, 77, 141, 0.32);
+  --activation-core-fg: #f4f4ff;
+  --activation-core-border: rgba(124, 108, 255, 0.62);
+  --activation-core-glow-a: rgba(124, 108, 255, 0.9);
+  --activation-core-glow-b: rgba(255, 77, 141, 0.55);
+  background:
+    linear-gradient(118deg, transparent 0 32%, var(--activation-accent) 38%, var(--activation-pulse) 46%, transparent 58%),
+    repeating-linear-gradient(180deg, rgba(255, 255, 255, 0.07) 0 1px, transparent 1px 4.5rem),
+    var(--activation-bg);
+  clip-path: polygon(-30% 0, 0 0, 0 100%, -30% 100%);
+}
+
+body[data-model-skin="grok-46"] .model-activation__beam {
+  background:
+    repeating-linear-gradient(128deg, transparent 0 1.15rem, rgba(255, 255, 255, 0.07) 1.15rem 1.25rem),
+    linear-gradient(90deg, transparent, var(--activation-beam-a), var(--activation-beam-b), transparent);
+  transform: translateX(-30%) skewX(-18deg);
+}
+
+body[data-model-skin="grok-46"] .model-activation__core {
+  border-radius: 2px;
+  letter-spacing: 0.04em;
+}
+
+body[data-model-skin="grok-46"] .model-activation.is-firing {
+  animation: grokActivation 1.45s var(--ease-out-expo) both;
+}
+
+body[data-model-skin="grok-46"] .model-activation.is-firing .model-activation__beam {
+  animation: grokBeam 1.45s var(--ease-out-expo) both;
+}
+
+body[data-model-skin="grok-46"] .model-activation.is-firing .model-activation__core {
+  animation: grokCore 1.45s var(--ease-out-expo) both;
 }
 
 /* --- GPT 5.5 Sol High skin --- */
@@ -515,6 +597,144 @@ body[data-model-skin="gpt-55-sol-high"] button[type="submit"] {
   box-shadow: 0 1rem 2.5rem rgba(76, 201, 240, 0.18);
 }
 
+/* --- Grok 4.6 skin --- */
+body[data-model-skin="grok-46"] {
+  --color-bg: #030306;
+  --color-surface: rgba(10, 10, 14, 0.88);
+  --color-surface-elevated: rgba(124, 108, 255, 0.28);
+  --color-text: #f7f7f8;
+  --color-text-muted: #9b9ba8;
+  --color-accent: #7c6cff;
+  --color-accent-dim: rgba(124, 108, 255, 0.3);
+  --color-accent-warm: #ff4d8d;
+  --color-accent-warm-dim: rgba(255, 77, 141, 0.24);
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  background-color: var(--color-bg);
+}
+
+body[data-model-skin="grok-46"]::before {
+  opacity: 1;
+  transform: translateY(0);
+  background:
+    radial-gradient(ellipse 70% 46% at 100% 0%, rgba(124, 108, 255, 0.18), transparent 58%),
+    radial-gradient(ellipse 48% 38% at 0% 100%, rgba(255, 77, 141, 0.12), transparent 52%),
+    linear-gradient(128deg, transparent 0 18%, rgba(124, 108, 255, 0.16) 18% 18.35%, transparent 18.35% 81%, rgba(255, 77, 141, 0.12) 81% 81.28%, transparent 81.28%),
+    repeating-linear-gradient(180deg, rgba(255, 255, 255, 0.028) 0 1px, transparent 1px 8.5rem);
+  animation: grokFieldDrift 16s linear infinite;
+}
+
+body[data-model-skin="grok-46"] .site-shell {
+  position: relative;
+  isolation: isolate;
+}
+
+body[data-model-skin="grok-46"] .site-section {
+  position: relative;
+  animation: grokSectionStrike 0.68s var(--ease-out-expo) both;
+}
+
+body[data-model-skin="grok-46"] .site-section::before {
+  content: "";
+  position: absolute;
+  inset: 1rem 0 auto;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(124, 108, 255, 0.7), rgba(255, 77, 141, 0.48), transparent);
+  opacity: 0.8;
+  transform: scaleX(0);
+  transform-origin: center;
+  animation: grokLineDraw 0.85s var(--ease-out-expo) forwards;
+}
+
+body[data-model-skin="grok-46"] .site-section--hero {
+  min-height: 84vh;
+  display: flex;
+  align-items: center;
+}
+
+body[data-model-skin="grok-46"] .site-section--hero > div {
+  position: relative;
+}
+
+body[data-model-skin="grok-46"] .site-section--hero > div::before,
+body[data-model-skin="grok-46"] .site-section--hero > div::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  width: 2.75rem;
+  height: 2.75rem;
+  border: 2px solid rgba(124, 108, 255, 0.55);
+}
+
+body[data-model-skin="grok-46"] .site-section--hero > div::before {
+  top: -1.1rem;
+  left: -1.1rem;
+  border-right: 0;
+  border-bottom: 0;
+}
+
+body[data-model-skin="grok-46"] .site-section--hero > div::after {
+  right: -1.1rem;
+  bottom: -1.1rem;
+  border-left: 0;
+  border-top: 0;
+  border-color: rgba(255, 77, 141, 0.48);
+}
+
+body[data-model-skin="grok-46"] h1 {
+  letter-spacing: -0.045em;
+  color: #f7f7f8;
+  text-shadow:
+    0 0 1.75rem rgba(124, 108, 255, 0.28),
+    0 0 3.5rem rgba(255, 77, 141, 0.12);
+}
+
+body[data-model-skin="grok-46"] h2,
+body[data-model-skin="grok-46"] h3 {
+  letter-spacing: -0.03em;
+  text-shadow: 0 0 1.25rem rgba(124, 108, 255, 0.16);
+}
+
+body[data-model-skin="grok-46"] article,
+body[data-model-skin="grok-46"] .input-field,
+body[data-model-skin="grok-46"] footer a,
+body[data-model-skin="grok-46"] span.rounded-md {
+  border-color: rgba(124, 108, 255, 0.22);
+  border-radius: var(--radius-sm);
+  background:
+    linear-gradient(180deg, rgba(124, 108, 255, 0.08), transparent 28%),
+    rgba(8, 8, 12, 0.82);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.04),
+    0 1.5rem 3.5rem rgba(0, 0, 0, 0.22);
+  backdrop-filter: blur(16px);
+}
+
+body[data-model-skin="grok-46"] article {
+  border-left: 2px solid rgba(124, 108, 255, 0.62);
+}
+
+body[data-model-skin="grok-46"] article:hover {
+  border-color: rgba(255, 77, 141, 0.55);
+  border-left-color: rgba(255, 77, 141, 0.85);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.06),
+    0 0 0 1px rgba(255, 77, 141, 0.12),
+    0 1.75rem 4rem rgba(124, 108, 255, 0.12);
+}
+
+body[data-model-skin="grok-46"] .link-accent {
+  color: #b9b0ff;
+  background-image: linear-gradient(90deg, #7c6cff, #ff4d8d);
+}
+
+body[data-model-skin="grok-46"] button[type="submit"] {
+  background: linear-gradient(95deg, #7c6cff, #ff4d8d);
+  color: #f7f7f8;
+  box-shadow: 0 1rem 2.5rem rgba(124, 108, 255, 0.22);
+}
+
 @keyframes solActivation {
   0% {
     clip-path: inset(0 100% 0 0);
@@ -608,6 +828,87 @@ body[data-model-skin="gpt-55-sol-high"] button[type="submit"] {
   }
 }
 
+@keyframes grokActivation {
+  0% {
+    clip-path: polygon(-30% 0, 0 0, 0 100%, -30% 100%);
+    opacity: 0;
+    filter: saturate(1.15) brightness(1.08);
+  }
+  12% {
+    opacity: 1;
+  }
+  42% {
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+    opacity: 1;
+  }
+  62% {
+    opacity: 1;
+    filter: saturate(1.35) brightness(1.16);
+  }
+  100% {
+    clip-path: polygon(100% 0, 130% 0, 130% 100%, 100% 100%);
+    opacity: 0;
+    filter: saturate(1) brightness(1);
+  }
+}
+
+@keyframes grokBeam {
+  0% {
+    transform: translateX(-38%) skewX(-18deg);
+  }
+  100% {
+    transform: translateX(38%) skewX(-18deg);
+  }
+}
+
+@keyframes grokCore {
+  0% {
+    opacity: 0;
+    transform: translate(-0.55rem, 0.35rem) skewX(-7deg);
+    letter-spacing: 0.18em;
+  }
+  20% {
+    opacity: 1;
+    transform: translate(0.12rem, 0) skewX(2deg);
+  }
+  34%,
+  70% {
+    opacity: 1;
+    transform: none;
+    letter-spacing: 0.04em;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-0.45rem) scale(1.03);
+  }
+}
+
+@keyframes grokFieldDrift {
+  0% {
+    background-position: 0 0, 0 0, 0 0, 0 0;
+  }
+  100% {
+    background-position: 0 0, 0 0, 8rem 0, 0 8.5rem;
+  }
+}
+
+@keyframes grokSectionStrike {
+  0% {
+    opacity: 0.68;
+    transform: translateX(-0.7rem);
+  }
+  100% {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes grokLineDraw {
+  to {
+    transform: scaleX(1);
+  }
+}
+
 @media (max-width: 640px) {
   .model-switcher {
     top: 0.75rem;
@@ -638,6 +939,26 @@ body[data-model-skin="gpt-55-sol-high"] button[type="submit"] {
   body[data-model-skin="gpt-55-sol-high"] .site-section--hero > div::before,
   body[data-model-skin="gpt-55-sol-high"] .site-section--hero > div::after {
     inset: -1rem;
+  }
+
+  body[data-model-skin="grok-46"] .site-section--hero {
+    min-height: 78vh;
+  }
+
+  body[data-model-skin="grok-46"] .site-section--hero > div::before,
+  body[data-model-skin="grok-46"] .site-section--hero > div::after {
+    width: 1.75rem;
+    height: 1.75rem;
+  }
+
+  body[data-model-skin="grok-46"] .site-section--hero > div::before {
+    top: -0.7rem;
+    left: -0.7rem;
+  }
+
+  body[data-model-skin="grok-46"] .site-section--hero > div::after {
+    right: -0.7rem;
+    bottom: -0.7rem;
   }
 }
 

@@ -6,6 +6,7 @@ const models = [
     skin: '',
     accent: '#0f766e',
     pulse: '#e4a02b',
+    activationLabel: 'Yannis',
   },
   {
     id: 'gpt-55-sol-high',
@@ -13,6 +14,15 @@ const models = [
     skin: 'gpt-55-sol-high',
     accent: '#f7d154',
     pulse: '#4cc9f0',
+    activationLabel: 'gpt 5.5 sol high',
+  },
+  {
+    id: 'grok-46',
+    label: 'Grok 4.6',
+    skin: 'grok-46',
+    accent: '#7c6cff',
+    pulse: '#ff4d8d',
+    activationLabel: 'grok 4.6',
   },
 ];
 ---
@@ -38,6 +48,7 @@ const models = [
         data-model-option={model.id}
         data-model-skin={model.skin}
         data-model-label={model.label}
+        data-model-activation-label={model.activationLabel}
         style={`--model-accent: ${model.accent}; --model-pulse: ${model.pulse};`}
         aria-pressed="false"
         role="menuitemradio"
@@ -52,7 +63,7 @@ const models = [
 
 <div class="model-activation" aria-hidden="true">
   <div class="model-activation__beam"></div>
-  <div class="model-activation__core">gpt 5.5 sol high</div>
+  <div class="model-activation__core" data-model-activation-core></div>
 </div>
 
 <script>
@@ -64,6 +75,7 @@ const models = [
   const menu = document.querySelector('[data-model-menu]');
   const options = Array.from(document.querySelectorAll('[data-model-option]'));
   const activation = document.querySelector('.model-activation');
+  const activationCore = document.querySelector('[data-model-activation-core]');
   const storageKey = 'selected-model-skin';
 
   const setMenuOpen = (isOpen) => {
@@ -83,6 +95,10 @@ const models = [
 
       if (isPressed && currentLabel) {
         currentLabel.textContent = option.dataset.modelLabel || 'Yannis';
+      }
+
+      if (isPressed && activationCore) {
+        activationCore.textContent = option.dataset.modelActivationLabel || option.dataset.modelLabel || '';
       }
     });
 
