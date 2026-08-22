@@ -79,7 +79,7 @@ ${timelineLines}
 
 ## Contact
 
-Email [${SITE_EMAIL}](mailto:${SITE_EMAIL}) or use the form on [yannis.dev](https://${SITE_DOMAIN}/#contact).
+Email [${SITE_EMAIL}](mailto:${SITE_EMAIL}).
 
 - [Home](https://${SITE_DOMAIN}/)
 - [Markdown twin](https://${SITE_DOMAIN}/index.md)
@@ -99,8 +99,8 @@ The path you requested does not exist on ${SITE_DOMAIN}.
 
 - [Home](https://${SITE_DOMAIN}/): Profile of ${SITE_NAME}, full-stack developer
 - [Homepage markdown](https://${SITE_DOMAIN}/index.md): Markdown twin of the homepage
-- [llms.txt](https://${SITE_DOMAIN}/llms.txt): Agent index, when-to-use notes, and key links
-- [Sitemap](https://${SITE_DOMAIN}/sitemap.xml): Machine-readable list of pages
+- [llms.txt](https://${SITE_DOMAIN}/llms.txt): Agent index and key links
+- [Sitemap](https://${SITE_DOMAIN}/sitemap.xml): Public page list
 - [Contact](https://${SITE_DOMAIN}/#contact): Email ${SITE_EMAIL}
 `;
 }

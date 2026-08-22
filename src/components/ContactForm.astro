@@ -1,65 +1,13 @@
 ---
-const title = "Contact Me";
-const getInTouchStart = "Get in touch via this form or contact me directly at ";
+const title = "Contact";
 const email = "hello@yannis.dev";
-const emailLabel = "Your email";
-const messageLabel = "Your message";
-const nameLabel = "Your name";
 ---
 
 <section class="contact-panel">
   <h2 id="contact-heading" class="reveal font-display text-2xl font-bold tracking-tight sm:text-3xl">
     {title}
   </h2>
-  <p class="reveal reveal-delay-1 mt-4 font-body text-(--color-text-muted)">
-    {getInTouchStart}
+  <p class="reveal reveal-delay-1 mt-4 font-body text-lg text-(--color-text-muted)">
     <a class="link-accent" href={`mailto:${email}`}>{email}</a>
   </p>
-  <form
-    action="https://formspree.io/f/xnqyqnbl"
-    method="POST"
-    class="contact-form reveal reveal-delay-2 mt-8 space-y-6"
-  >
-    <label class="block">
-      <span class="mb-2 block font-display text-sm font-medium text-(--color-text-muted)">
-        {nameLabel}
-      </span>
-      <input
-        type="text"
-        name="name"
-        required
-        class="input-field"
-        placeholder="Your name"
-      />
-    </label>
-    <label class="block">
-      <span class="mb-2 block font-display text-sm font-medium text-(--color-text-muted)">
-        {emailLabel}
-      </span>
-      <input
-        type="email"
-        name="email"
-        required
-        class="input-field"
-        placeholder="you@example.com"
-      />
-    </label>
-    <label class="block">
-      <span class="mb-2 block font-display text-sm font-medium text-(--color-text-muted)">
-        {messageLabel}
-      </span>
-      <textarea
-        name="message"
-        rows={5}
-        class="input-field resize-y"
-        placeholder="Your message..."
-      />
-    </label>
-    <button
-      type="submit"
-      class="mt-4 rounded-md bg-(--color-accent-warm) px-6 py-3 font-display text-sm font-semibold text-(--color-bg) transition-transform hover:scale-[1.02] active:scale-[0.98]"
-    >
-      Send
-    </button>
-  </form>
 </section>

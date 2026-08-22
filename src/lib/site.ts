@@ -16,34 +16,34 @@ export const SAME_AS = [
 ] as const;
 
 export const SITE_DESCRIPTION =
-  'Yannis is a Stockholm-based full-stack developer at yannis.dev. He builds production web apps across frontend, backend, and mobile with TypeScript, React, Node.js, and agentic workflows.';
+  'Yannis is a Stockholm-based full-stack developer building web, mobile, and commerce software with TypeScript, React, and Node.js.';
 
 export const HERO_KICKER = "Hey, I'm";
 export const HERO_NAME = SITE_NAME;
 export const HERO_ROLE = SITE_JOB_TITLE;
 
 export const HERO_LEDE_PARAGRAPHS = [
-  "I'm Yannis, a full-stack developer based in Stockholm. I build production web apps with TypeScript, React, Node.js, and mobile tooling.",
-  'At BabyBjörn, I work on e-commerce, payments, and internal developer tools. Before that: medtech, Web3, and an ETH Denver 2023 win among 600+ teams.',
+  "I'm a full-stack developer in Stockholm. I build web and mobile products with TypeScript, React, and Node.js.",
+  'At BabyBjörn, I work on commerce, payments, and internal tools. Earlier work spans medtech, Web3, and an ETH Denver win among 600+ teams.',
 ] as const;
 
 export const HERO_LEDE = HERO_LEDE_PARAGRAPHS.join('\n\n');
 
 export const PROOF_POINTS = [
-  '5+ years shipping product',
-  'Medtech, e-commerce, Web3',
+  '5+ years in product teams',
+  'Commerce, medtech, Web3',
   'ETH Denver 2023 winner',
-  'Antibes-born, Stockholm-based',
+  'Born in Antibes. Based in Stockholm.',
 ] as const;
 
 export const ABOUT_WORK_HEADING = 'Work';
 export const ABOUT_AGENTS_HEADING = 'For agents';
 
 export const ABOUT_WORK =
-  'Yannis works as a full-stack developer on production product systems: typed interfaces, pragmatic APIs, cloud delivery, payments, and Web3 when it adds leverage. The public record on yannis.dev covers a self-taught start in Ethereum, an early seat at the medtech startup Mindler, frontend work on the Anotherblock music NFT marketplace, and current full-stack work at BabyBjörn.';
+  'Yannis builds production product systems across interfaces, APIs, cloud delivery, payments, and Web3 where it fits. His path runs from Ethereum experiments to Mindler, Anotherblock, and BabyBjörn.';
 
 export const ABOUT_AGENTS =
-  'Agents should start at yannis.dev, then read /llms.txt for the site map and /index.md for a markdown twin of this page. Contact is hello@yannis.dev. This is a personal portfolio, not a SaaS API, MCP server, or docs product.';
+  'For machine-readable context, use /llms.txt and /index.md. Contact: hello@yannis.dev. This is a personal portfolio, not an API or documentation site.';
 
 export const skills = data.skills;
 export const agenticWorkflow = data.agenticWorkflow;
