@@ -1,4 +1,4 @@
-import data from '../data/data.json';
+import data from '../data/data.json' with { type: 'json' };
 
 export const SITE_ORIGIN = 'https://yannis.dev';
 export const SITE_DOMAIN = 'yannis.dev';

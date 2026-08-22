@@ -13,7 +13,7 @@ import {
   agenticWorkflow,
   skills,
   timeline,
-} from '../site';
+} from '../site.ts';
 
 export function homepageMarkdown(): string {
   const skillLines = skills.groups

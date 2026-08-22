@@ -3,9 +3,9 @@ import {
   MARKDOWN_CONTENT_TYPE,
   PLAIN_CONTENT_TYPE,
   VARY_ACCEPT,
-} from '../../src/lib/agent/negotiate';
-import { homepageLinkHeader } from '../../src/lib/agent/seo';
-import { homepageMarkdown, notAcceptableBody, notFoundMarkdown } from '../../src/lib/agent/markdown';
+} from '../../src/lib/agent/negotiate.ts';
+import { homepageLinkHeader } from '../../src/lib/agent/seo.ts';
+import { homepageMarkdown, notAcceptableBody, notFoundMarkdown } from '../../src/lib/agent/markdown.ts';
 
 const MARKDOWN_PATHS = new Set(['/', '/index.html']);
 
