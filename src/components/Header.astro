@@ -22,9 +22,35 @@ const kimiTelemetry = [
   { label: 'Time in orbit', value: '7+ years' },
   { label: 'Guidance', value: 'Agents, human taste' },
 ];
+
+const grokConsoleLines = [
+  { cmd: 'whoami', out: 'Yannis. Full-stack. Stockholm. Not a brand deck.' },
+  { cmd: 'uptime', out: '2017 → now. Ethereum first, then product teams.' },
+  { cmd: 'job --current', out: 'BabyBjörn · commerce, payments, internal tools' },
+  { cmd: 'grep receipts', out: 'ETH Denver 2023 · DAO track · 600+ teams' },
+  { cmd: 'agents --policy', out: 'Scoped diffs. Human taste. No autopilot.' },
+];
+
+const grokDiagnostics = [
+  { label: 'signal', value: '0.92', fill: 92 },
+  { label: 'noise', value: '0.11', fill: 11 },
+  { label: 'agency', value: 'MAX', fill: 100 },
+  { label: 'latency', value: '12ms', fill: 18 },
+];
+
+const grokChannels = PROOF_POINTS.map((point, index) => ({
+  id: `CH-${String(index + 1).padStart(2, '0')}`,
+  point,
+}));
 ---
 
 <div class="hero-block font-display">
+  <div class="grok-status">
+    <span class="grok-status__live" aria-hidden="true"></span>
+    <p class="grok-status__channel">grok 4.6 // operator console</p>
+    <p class="grok-status__locus">prod · stockholm</p>
+    <p class="grok-status__clock" data-grok-clock>00:00:00Z</p>
+  </div>
   <p class="hero-kicker reveal text-(--color-text-muted) text-sm uppercase tracking-[0.2em]">
     {HERO_KICKER}
   </p>
@@ -100,4 +126,69 @@ const kimiTelemetry = [
       }
     </div>
   </div>
+  <p class="grok-meta">
+    <span>{HERO_ROLE}</span>
+    <span>human in the loop</span>
+    <span>live</span>
+  </p>
+  <div class="grok-console" aria-label="Live build console">
+    <div class="grok-console__bar">
+      <span>live-build</span>
+      <span data-grok-packets>pkt 00412</span>
+    </div>
+    <ol class="grok-console__log">
+      {
+        grokConsoleLines.map((line) => (
+          <li>
+            <span class="grok-console__cmd">{line.cmd}</span>
+            <span class="grok-console__out">{line.out}</span>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+  <div class="grok-diag" aria-label="Signal diagnostics">
+    {
+      grokDiagnostics.map((reading) => (
+        <div class="grok-diag__item">
+          <div class="grok-diag__label">
+            <span>{reading.label}</span>
+            <strong>{reading.value}</strong>
+          </div>
+          <span class="grok-diag__track" aria-hidden="true">
+            <span class="grok-diag__fill" style={`--grok-fill: ${reading.fill}%`}></span>
+          </span>
+        </div>
+      ))
+    }
+  </div>
+  <div class="grok-channels">
+    {
+      grokChannels.map((channel) => (
+        <div class="grok-channel">
+          <span>{channel.id}</span>
+          <strong>{channel.point}</strong>
+        </div>
+      ))
+    }
+  </div>
 </div>
+
+<script>
+  const grokClock = document.querySelector<HTMLElement>('[data-grok-clock]');
+  const grokPackets = document.querySelector<HTMLElement>('[data-grok-packets]');
+  let packetCount = 412;
+
+  const tickGrokReadouts = () => {
+    if (document.body.dataset.modelSkin !== 'grok-46' || !grokClock || !grokPackets) {
+      return;
+    }
+
+    grokClock.textContent = `${new Date().toISOString().slice(11, 19)}Z`;
+    packetCount = (packetCount + 3) % 100000;
+    grokPackets.textContent = `pkt ${String(packetCount).padStart(5, '0')}`;
+  };
+
+  tickGrokReadouts();
+  window.setInterval(tickGrokReadouts, 1000);
+</script>
