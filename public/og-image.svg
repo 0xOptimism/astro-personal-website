@@ -1,0 +1,15 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="630" fill="#f6f2ea"/>
+  <rect x="48" y="48" width="1104" height="534" rx="0" fill="#fbfaf6" stroke="#d9d0c3" stroke-width="2"/>
+  <rect x="96" y="96" width="52" height="52" fill="#0f766e"/>
+  <rect x="164" y="121" width="160" height="2" fill="#0f766e"/>
+  <text x="96" y="188" fill="#5f5a52" font-family="Inter, Helvetica, Arial, sans-serif" font-size="26" font-weight="500" letter-spacing="4">YANNIS.DEV</text>
+  <text x="96" y="342" fill="#111111" font-family="Inter, Helvetica, Arial, sans-serif" font-size="116" font-weight="700" letter-spacing="-2">Yannis</text>
+  <text x="100" y="408" fill="#34312d" font-family="Inter, Helvetica, Arial, sans-serif" font-size="42" font-weight="500">Full-stack developer in Stockholm</text>
+  <text x="100" y="472" fill="#6d675f" font-family="Inter, Helvetica, Arial, sans-serif" font-size="28" font-weight="400">Portfolio for product work across web, mobile, commerce, and Web3.</text>
+  <rect x="96" y="526" width="1008" height="1.5" fill="#d9d0c3"/>
+  <text x="96" y="558" fill="#504b45" font-family="Inter, Helvetica, Arial, sans-serif" font-size="22" font-weight="500" letter-spacing="1.6">TYPESCRIPT</text>
+  <text x="282" y="558" fill="#504b45" font-family="Inter, Helvetica, Arial, sans-serif" font-size="22" font-weight="500" letter-spacing="1.6">REACT</text>
+  <text x="400" y="558" fill="#504b45" font-family="Inter, Helvetica, Arial, sans-serif" font-size="22" font-weight="500" letter-spacing="1.6">NODE.JS</text>
+  <text x="968" y="558" fill="#0f766e" font-family="Inter, Helvetica, Arial, sans-serif" font-size="22" font-weight="600" letter-spacing="1.8">PORTFOLIO</text>
+</svg>
