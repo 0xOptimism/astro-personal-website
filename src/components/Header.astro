@@ -23,6 +23,21 @@ const solCapabilities = [
     value: "Payments, Web3, e-commerce",
   },
 ];
+
+const kimiTelemetry = [
+  {
+    label: "Context window",
+    value: "2M tokens of horizon",
+  },
+  {
+    label: "Mission elapsed",
+    value: "7+ years in orbit",
+  },
+  {
+    label: "Guidance",
+    value: "Agentic loops, human taste",
+  },
+];
 ---
 
 <div class="hero-block font-display">
@@ -55,6 +70,25 @@ const solCapabilities = [
           <div class="sol-command-card">
             <span>{capability.label}</span>
             <strong>{capability.value}</strong>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+  <div class="kimi-context-deck reveal reveal-delay-5">
+    <div class="kimi-context-deck__header">
+      <p class="kimi-context-deck__eyebrow">Kimi K3 portfolio mode</p>
+      <p class="kimi-context-deck__readout">ctx 2,000,000 / 2,000,000</p>
+    </div>
+    <div class="kimi-context-deck__track" aria-hidden="true">
+      <span class="kimi-context-deck__fill"></span>
+    </div>
+    <div class="kimi-context-deck__grid">
+      {
+        kimiTelemetry.map((reading) => (
+          <div class="kimi-context-card">
+            <span>{reading.label}</span>
+            <strong>{reading.value}</strong>
           </div>
         ))
       }
