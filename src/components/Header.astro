@@ -1,10 +1,16 @@
 ---
 import { HERO_KICKER, HERO_LEDE_PARAGRAPHS, HERO_NAME, HERO_ROLE, PROOF_POINTS } from '../lib/site';
 
-const solCapabilities = [
-  { label: 'Product systems', value: 'Web, backend, mobile' },
-  { label: 'Agent work', value: 'Scoped tasks, reviewed diffs' },
-  { label: 'Commerce', value: 'Payments, Web3, e-commerce' },
+const sol56Evidence = [
+  { index: '01', claim: 'Product range', proof: 'Web, backend, mobile, payments' },
+  { index: '02', claim: 'Builder instinct', proof: 'Founder work to production teams' },
+  { index: '03', claim: 'AI posture', proof: 'Fast execution, human final call' },
+];
+
+const sol56WorkingSet = [
+  { label: 'Current', value: 'BabyBjörn commerce' },
+  { label: 'Signal', value: 'ETH Denver winner' },
+  { label: 'Origin', value: 'Ethereum, 2017' },
 ];
 
 const opusAbstract = 'The path is clear: Ethereum experiments, early medtech work, a music NFT marketplace, an ETH Denver win, and full-stack commerce at BabyBjörn.';
@@ -76,18 +82,44 @@ const grokChannels = PROOF_POINTS.map((point, index) => ({
       ))
     }
   </div>
-  <div class="sol-command-deck reveal reveal-delay-4">
-    <p class="sol-command-deck__eyebrow">GPT-5.5 Sol High</p>
-    <div class="sol-command-deck__grid">
-      {
-        solCapabilities.map((capability) => (
-          <div class="sol-command-card">
-            <span>{capability.label}</span>
-            <strong>{capability.value}</strong>
-          </div>
-        ))
-      }
+  <div class="sol56-workbench reveal reveal-delay-1">
+    <div class="sol56-workbench__topline">
+      <p>GPT-5.6 <strong>Sol High</strong></p>
+      <p><span aria-hidden="true"></span> Synthesis complete</p>
     </div>
+    <div class="sol56-workbench__identity">
+      <p class="sol56-label">Subject / full-stack developer</p>
+      <h1>{HERO_NAME}</h1>
+      <p>{HERO_ROLE}</p>
+    </div>
+    <div class="sol56-workbench__answer">
+      <p class="sol56-label">Best answer</p>
+      <p class="sol56-workbench__thesis">
+        A product-minded engineer who turns ambiguous ideas into durable software, then keeps the final decisions human.
+      </p>
+      <div class="sol56-evidence">
+        {
+          sol56Evidence.map((item) => (
+            <div class="sol56-evidence__row">
+              <span>{item.index}</span>
+              <strong>{item.claim}</strong>
+              <p>{item.proof}</p>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+    <div class="sol56-workbench__working-set">
+      <p class="sol56-label">Working set</p>
+      <div>
+        {
+          sol56WorkingSet.map((item) => (
+            <p><span>{item.label}</span><strong>{item.value}</strong></p>
+          ))
+        }
+      </div>
+    </div>
+    <p class="sol56-workbench__prompt">Inspect the capability map below <span aria-hidden="true">↓</span></p>
   </div>
   <div class="opus-brief reveal reveal-delay-4">
     <div class="opus-brief__masthead">
