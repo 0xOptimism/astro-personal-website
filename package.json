@@ -12,28 +12,33 @@
     "test": "vitest run"
   },
   "dependencies": {
-    "@tailwindcss/vite": "^4.1.18",
-    "astro": "^5.18.2",
+    "@tailwindcss/vite": "^4.3.3",
+    "astro": "^7.2.4",
     "tailwindcss": "^4"
   },
   "resolutions": {
+    "@babel/core": "7.29.7",
     "@rollup/pluginutils/picomatch": "4.0.5",
     "anymatch/picomatch": "2.3.2",
     "astro/picomatch": "4.0.5",
     "defu": "6.1.7",
+    "devalue": "5.9.1",
+    "esbuild": "0.28.2",
     "h3": "1.15.11",
     "js-yaml": "4.3.1",
     "nanoid": "3.3.18",
     "postcss": "8.5.26",
     "rollup": "4.62.5",
+    "sharp": "0.35.3",
+    "smol-toml": "1.8.0",
     "svgo": "4.0.2",
     "tinyglobby/picomatch": "4.0.5",
-    "vite": "6.4.3",
+    "vite": "8.2.2",
     "vite/picomatch": "4.0.5",
     "vitest/picomatch": "4.0.5"
   },
   "devDependencies": {
-    "@astrojs/react": "^4.4.2",
+    "@astrojs/react": "^6.0.4",
     "@types/node": "^26.2.0",
     "@types/react": "^19.2.10",
     "@types/react-dom": "^19.2.3",

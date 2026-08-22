@@ -42,7 +42,7 @@ curl https://yannis.dev/llms.txt
 
 ## Stack
 
-- [Astro](https://astro.build) 5, TypeScript
+- [Astro](https://astro.build) 7, TypeScript
 - [Tailwind CSS](https://tailwindcss.com) v4 (`@tailwindcss/vite`)
 - [Vitest](https://vitest.dev)
 - [Netlify](https://www.netlify.com) for `dist/` plus the edge function
@@ -89,4 +89,4 @@ Yarn, from the repo root:
 
 ## Deploy
 
-Netlify: `yarn build`, Node 20, publish `dist/`. `negotiate-markdown` is mounted on `/*` in `netlify.toml`.
+Netlify: `yarn build`, Node 22, publish `dist/`. `negotiate-markdown` is mounted on `/*` in `netlify.toml`.
