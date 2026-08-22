@@ -8,6 +8,21 @@ const proofPoints = [
   "ETH Denver 2023 winner",
   "Antibes-born, Stockholm-based"
 ];
+
+const solCapabilities = [
+  {
+    label: "Product systems",
+    value: "Frontend, backend, mobile",
+  },
+  {
+    label: "AI loop",
+    value: "Agents, review, automation",
+  },
+  {
+    label: "Commercial edge",
+    value: "Payments, Web3, e-commerce",
+  },
+];
 ---
 
 <div class="hero-block font-display">
@@ -31,5 +46,18 @@ const proofPoints = [
         </span>
       ))
     }
+  </div>
+  <div class="sol-command-deck reveal reveal-delay-5">
+    <p class="sol-command-deck__eyebrow">GPT-5.5 Sol High portfolio mode</p>
+    <div class="sol-command-deck__grid">
+      {
+        solCapabilities.map((capability) => (
+          <div class="sol-command-card">
+            <span>{capability.label}</span>
+            <strong>{capability.value}</strong>
+          </div>
+        ))
+      }
+    </div>
   </div>
 </div>
