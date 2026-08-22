@@ -1,6 +1,6 @@
 @import "tailwindcss";
 
-/* --- Design tokens: Yannis default (neutral ink on white) --- */
+/* --- Design tokens --- */
 :root {
   --color-bg: #ffffff;
   --color-surface: #ffffff;
@@ -12,10 +12,8 @@
   --color-accent-warm: #0f766e;
   --color-accent-warm-dim: rgb(15 118 110 / 18%);
   --color-hover: rgb(0 0 0 / 5%);
-  --color-pressed: rgb(0 0 0 / 9%);
   --color-border: rgb(0 0 0 / 10%);
   --color-border-strong: rgb(0 0 0 / 18%);
-  --color-ink-tertiary: rgb(0 0 0 / 44%);
   --font-display: "Inter", system-ui, sans-serif;
   --font-body: "Inter", system-ui, sans-serif;
   --font-mono: ui-monospace, "Cascadia Code", "Source Code Pro", Menlo, Monaco, monospace;
@@ -338,7 +336,7 @@ body::before {
   color: var(--color-accent);
 }
 
-/* --- Yannis default: quiet chapters, scoped so other skins stay intact --- */
+/* --- Yannis default skin --- */
 :is(body:not([data-model-skin]), body[data-model-skin=""]) {
   color-scheme: light;
   scrollbar-color: rgb(0 0 0 / 28%) #ffffff;
@@ -352,10 +350,13 @@ body::before {
   color: #000000;
 }
 
-:is(body:not([data-model-skin]), body[data-model-skin=""]).grain::after,
+:is(body:not([data-model-skin]), body[data-model-skin=""]).grain::after {
+  content: none;
+  display: none;
+}
+
 :is(body:not([data-model-skin]), body[data-model-skin=""]) .model-frame,
 :is(body:not([data-model-skin]), body[data-model-skin=""]) .model-activation {
-  content: none;
   display: none;
 }
 
@@ -370,7 +371,6 @@ body::before {
 :is(body:not([data-model-skin]), body[data-model-skin=""]) .hero-title {
   font-weight: 600;
   letter-spacing: -0.03em;
-  text-shadow: none;
 }
 
 :is(body:not([data-model-skin]), body[data-model-skin=""]) h1,
@@ -492,9 +492,13 @@ body::before {
 
 :is(body:not([data-model-skin]), body[data-model-skin=""]) .stack-grid span.rounded-md,
 :is(body:not([data-model-skin]), body[data-model-skin=""]) .timeline-log span.rounded-md {
+  display: inline-flex;
   min-height: 2.25rem;
+  align-items: center;
+  justify-content: center;
   border-color: transparent;
   background: rgb(0 0 0 / 5%);
+  line-height: 1;
 }
 
 :is(body:not([data-model-skin]), body[data-model-skin=""]) .stack-grid span[style*="#f2ede5"] {
@@ -540,17 +544,6 @@ body::before {
 :is(body:not([data-model-skin]), body[data-model-skin=""]) .link-accent:hover {
   color: #000000;
   background-size: 100% 1px;
-}
-
-:is(body:not([data-model-skin]), body[data-model-skin=""]) .input-field {
-  border-color: var(--color-border);
-  border-radius: var(--radius-sm);
-  background: #ffffff;
-}
-
-:is(body:not([data-model-skin]), body[data-model-skin=""]) .input-field:focus {
-  border-color: var(--color-accent);
-  box-shadow: 0 0 0 1px var(--color-accent);
 }
 
 :is(body:not([data-model-skin]), body[data-model-skin=""]) button[type="submit"] {
@@ -630,12 +623,6 @@ body::before {
 :is(body:not([data-model-skin]), body[data-model-skin=""]) .model-switcher__option[aria-checked="true"],
 :is(body:not([data-model-skin]), body[data-model-skin=""]) .model-switcher__option[aria-pressed="true"] {
   color: #000000;
-}
-
-@media (hover: hover) and (pointer: fine) {
-  :is(body:not([data-model-skin]), body[data-model-skin=""]) button[type="submit"]:hover {
-    background: #0c5f58;
-  }
 }
 
 @media (max-width: 640px) {
