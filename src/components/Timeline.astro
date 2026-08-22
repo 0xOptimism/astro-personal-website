@@ -23,8 +23,8 @@ interface TimelineData {
 }
 ---
 
-<div class="grid gap-10 lg:grid-cols-[0.75fr_1.25fr] lg:items-start">
-  <div class="lg:sticky lg:top-12">
+<div class="timeline-layout grid gap-10 lg:grid-cols-[0.75fr_1.25fr] lg:items-start">
+  <div class="timeline-intro lg:sticky lg:top-12">
     <p class="reveal font-display text-sm font-semibold uppercase tracking-[0.2em] text-(--color-accent)">
       {timeline.eyebrow}
     </p>
@@ -36,7 +36,7 @@ interface TimelineData {
     </p>
   </div>
 
-  <ol class="space-y-8">
+  <ol class="timeline-log space-y-8">
     {
       timeline.years.map((group: TimelineYear, yearIndex: number) => (
         <li

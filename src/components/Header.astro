@@ -10,23 +10,23 @@ const proofPoints = [
 ];
 ---
 
-<div class="font-display">
-  <p class="reveal text-(--color-text-muted) text-sm uppercase tracking-[0.2em]">
+<div class="hero-block font-display">
+  <p class="hero-kicker reveal text-(--color-text-muted) text-sm uppercase tracking-[0.2em]">
     Hey, I'm
   </p>
-  <h1 class="reveal reveal-delay-1 mt-2 text-5xl font-extrabold tracking-tight sm:text-6xl md:text-7xl lg:text-8xl">
+  <h1 class="hero-title reveal reveal-delay-1 mt-2 text-5xl font-extrabold tracking-tight sm:text-6xl md:text-7xl lg:text-8xl">
     {title}
   </h1>
-  <p class="reveal reveal-delay-2 mt-3 text-2xl font-medium text-(--color-accent) sm:text-3xl md:text-4xl">
+  <p class="hero-role reveal reveal-delay-2 mt-3 text-2xl font-medium text-(--color-accent) sm:text-3xl md:text-4xl">
     {role}
   </p>
-  <p class="reveal reveal-delay-3 mt-8 max-w-xl font-body text-lg font-normal leading-relaxed text-(--color-text-muted)">
+  <p class="hero-lede reveal reveal-delay-3 mt-8 max-w-xl font-body text-lg font-normal leading-relaxed text-(--color-text-muted)">
     {description}
   </p>
-  <div class="reveal reveal-delay-4 mt-8 flex max-w-2xl flex-wrap gap-2">
+  <div class="hero-signals reveal reveal-delay-4 mt-8 flex max-w-2xl flex-wrap gap-2">
     {
       proofPoints.map((point) => (
-        <span class="rounded-md border border-(--color-surface-elevated) bg-(--color-surface) px-3 py-2 font-body text-sm text-(--color-text-muted)">
+        <span class="hero-signal rounded-md border border-(--color-surface-elevated) bg-(--color-surface) px-3 py-2 font-body text-sm text-(--color-text-muted)">
           {point}
         </span>
       ))

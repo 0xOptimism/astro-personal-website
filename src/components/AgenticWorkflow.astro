@@ -20,8 +20,8 @@ const { agenticWorkflow } = data as {
 };
 ---
 
-<div class="grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
-  <div>
+<div class="workflow-layout grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
+  <div class="workflow-intro">
     <p class="reveal font-display text-sm font-semibold uppercase tracking-[0.2em] text-(--color-accent)">
       {agenticWorkflow.eyebrow}
     </p>
@@ -32,7 +32,7 @@ const { agenticWorkflow } = data as {
       {agenticWorkflow.description}
     </p>
 
-    <ul class="mt-8 space-y-3">
+    <ul class="workflow-principles mt-8 space-y-3">
       {
         agenticWorkflow.principles.map((principle: string, i: number) => (
           <li
@@ -47,7 +47,7 @@ const { agenticWorkflow } = data as {
     </ul>
   </div>
 
-  <div class="grid gap-3 sm:grid-cols-2">
+  <div class="workflow-grid grid gap-3 sm:grid-cols-2">
     {
       agenticWorkflow.tools.map((tool, i: number) => (
         <article
