@@ -1,11 +1,11 @@
 {
   "skills": {
-    "eyebrow": "Core stack",
-    "title": "Production tools I reach for",
-    "description": "A focused stack for modern product work: typed interfaces, pragmatic APIs, cloud delivery, and Web3 when it adds real leverage.",
+    "eyebrow": "Stack",
+    "title": "Tools I use",
+    "description": "TypeScript, React, Node.js, APIs, cloud delivery, and Web3 when it fits.",
     "groups": [
       {
-        "title": "Product interfaces",
+        "title": "Interfaces",
         "items": [
           {
             "name": "TypeScript",
@@ -80,7 +80,7 @@
         ]
       },
       {
-        "title": "Platforms and delivery",
+        "title": "Platforms",
         "items": [
           {
             "name": "Azure Functions",
@@ -110,7 +110,7 @@
         ]
       },
       {
-        "title": "Web3 and experiments",
+        "title": "Web3",
         "items": [
           {
             "name": "Solidity",
@@ -132,9 +132,9 @@
     ]
   },
   "agenticWorkflow": {
-    "eyebrow": "How I ship with AI",
-    "title": "Agentic workflow stack",
-    "description": "I use AI agents as a development loop: plan with context, split work into focused agents, review the diffs, and automate the repeatable parts without losing engineering judgement.",
+    "eyebrow": "AI workflow",
+    "title": "How I work with agents",
+    "description": "I use coding agents for scoped implementation, review, and repeatable tasks. I keep the architecture, taste, and final call human.",
     "tools": [
       {
         "name": "Codex",
@@ -142,7 +142,7 @@
         "logo": "/assets/agentic-stack/codex-logo.webp",
         "alt": "Codex logo",
         "role": "Implementation agent",
-        "description": "Codebase-aware changes, bug fixes, tests, and PR-ready iterations inside real repositories.",
+        "description": "Codebase-aware changes, fixes, tests, and PR-ready iterations in real repositories.",
         "accent": "#14b8a6"
       },
       {
@@ -150,8 +150,8 @@
         "mark": "CC",
         "logo": "/assets/agentic-stack/claude-code-logo.png",
         "alt": "Claude Code logo",
-        "role": "Deep reasoning pair",
-        "description": "Architecture passes, refactors, code reviews, and long-context problem solving when the shape is still forming.",
+        "role": "Architecture pair",
+        "description": "Architecture passes, refactors, reviews, and long-context debugging.",
         "accent": "#CC785C"
       },
       {
@@ -160,7 +160,7 @@
         "logo": "/assets/agentic-stack/hermes-agent-logo.webp",
         "alt": "Hermes logo",
         "role": "Workflow coordination",
-        "description": "Project memory, handoffs, and lightweight orchestration so agent work stays connected to intent.",
+        "description": "Project memory and handoffs so agent work stays tied to the brief.",
         "accent": "#60a5fa"
       },
       {
@@ -169,57 +169,57 @@
         "logo": "/assets/agentic-stack/cursor-cloud-automations-logo.webp",
         "alt": "Cursor Cloud Automations logo",
         "role": "Background execution",
-        "description": "Async chores, queued fixes, and automation runs that keep momentum while I review the important decisions.",
+        "description": "Queued fixes and background tasks while I review the decisions that matter.",
         "accent": "#e4a02b"
       }
     ],
     "principles": [
-      "AI for acceleration, not abdication.",
-      "Small agents, clear context, reviewed output.",
-      "Automate the repeatable parts; keep taste and responsibility human."
+      "Use AI to move faster, not to check out.",
+      "Keep scopes small and context clear.",
+      "Automate chores, own the decisions."
     ]
   },
   "interest": [
     {
-      "title": "Spending time with my Kid",
-      "description": "I love spending time with my kid when I'm not coding. She is full of energy and positivity.",
+      "title": "Time with my daughter",
+      "description": "The best part of time away from code.",
       "image": "/assets/bonnie.jpg",
       "alts": "my kid"
     },
     {
       "title": "Bonsai 🌳",
-      "description": "Personal project: Bonsai is a portfolio dashboard to track your entire net worth in one place—crypto, stocks, real estate, and collectibles. Automated tracking, real-time data, and read-only connections so you stop juggling spreadsheets and multiple apps.",
+      "description": "Bonsai is a personal portfolio tracker for crypto, stocks, real estate, and collectibles.",
       "image": "/assets/bonsai.jpg",
       "link": "https://bonsai.finance/",
       "alts": "bonsai website"
     },
     {
       "title": "Photography",
-      "description": "Spending time in the nature taking photography.",
+      "description": "Nature photography from time outside Stockholm.",
       "image": "/assets/photography.jpg",
       "link": "https://opensea.io/collection/yanneth-photography",
       "alts": "photography website"
     },
     {
       "title": "Anotherblock",
-      "description": "Previously, I worked on the Frontend at Anotherblock.",
+      "description": "Frontend work on the Anotherblock marketplace.",
       "image": "/assets/Anotherblock.jpg",
       "link": "https://anotherblock.io/",
       "alts": "anotherblock website"
     }
   ],
   "timeline": {
-    "eyebrow": "Path so far",
-    "title": "Developer journey",
-    "description": "A compressed path from self-taught Web3 experiments to production product work in medtech, e-commerce, and workflow orchestration.",
+    "eyebrow": "Timeline",
+    "title": "Work so far",
+    "description": "From self-taught Ethereum projects to product work in medtech, commerce, and Web3.",
     "years": [
       {
         "year": "2024",
         "items": [
           {
-            "title": "BabyBjörn — Full-stack developer",
+            "title": "BabyBjörn, full-stack developer",
             "meta": "2024 - present",
-            "description": "Building across the e-commerce platform: backend APIs, serverless functions, frontend features, payments, and internal developer workflows.",
+            "description": "Building across the commerce platform: APIs, serverless functions, frontend work, payments, and internal tools.",
             "tags": ["React", "TypeScript", "Node.js", "Azure", "Adyen"]
           }
         ]
@@ -230,19 +230,19 @@
           {
             "title": "Anotherblock",
             "meta": "Music NFT marketplace",
-            "description": "Built frontend experiences that connected Ethereum smart contracts, ethers.js, and GraphQL-backed marketplace data.",
+            "description": "Built React surfaces for a music NFT marketplace connected to Ethereum contracts, ethers.js, and GraphQL data.",
             "tags": ["React", "GraphQL", "ethers.js", "Web3"]
           },
           {
             "title": "ETH Denver winner",
             "meta": "DAO & Community track",
-            "description": "Won among 600+ teams with a knowledge management tool using Notion-like commands for on-chain data.",
+            "description": "Won the DAO and Community track among 600+ teams with an on-chain knowledge tool.",
             "tags": ["Hackathon", "Product", "On-chain data"]
           },
           {
             "title": "Bonsai pivot",
             "meta": "Portfolio tracking",
-            "description": "Reframed Bonsai from a Web3 dashboard into a broader portfolio tracker for crypto, stocks, real estate, and collectibles.",
+            "description": "Moved Bonsai from a Web3 dashboard toward portfolio tracking across crypto, stocks, real estate, and collectibles.",
             "tags": ["Founder", "Product strategy", "Finance"]
           }
         ]
@@ -253,7 +253,7 @@
           {
             "title": "Bonsai Finance pre-alpha",
             "meta": "Web3 dashboard",
-            "description": "Launched an early Ethereum asset and NFT dashboard that later evolved into a broader portfolio product.",
+            "description": "Launched an early Ethereum asset and NFT dashboard, the first version of Bonsai.",
             "tags": ["Ethereum", "NFTs", "Dashboard"]
           }
         ]
@@ -264,19 +264,19 @@
           {
             "title": "Mindler",
             "meta": "First full-time developer role",
-            "description": "Joined early at a medtech startup, worked across web and mobile, and led the psychologist dashboard used by 200+ professionals.",
+            "description": "Joined early at Mindler, worked across web and mobile, and led the psychologist dashboard used by 200+ professionals.",
             "tags": ["React", "Node.js", "React Native", "Medtech"]
           },
           {
             "title": "Podme and Redmind internships",
             "meta": "First production teams",
-            "description": "Built podcast analytics tooling, React Native features, and got hands-on experience shipping with real product teams.",
+            "description": "Built podcast analytics tooling and React Native features with production teams.",
             "tags": ["React", "Redux", "React Native"]
           },
           {
             "title": "SALT full-stack bootcamp",
             "meta": "Stockholm",
-            "description": "Completed an intensive full-stack JavaScript program focused on mob programming, agile delivery, and modern web development.",
+            "description": "Completed a full-stack JavaScript program focused on mob programming and web development.",
             "tags": ["JavaScript", "Full-stack", "Agile"]
           }
         ]
@@ -287,7 +287,7 @@
           {
             "title": "OnChain Jobs",
             "meta": "Co-founder",
-            "description": "Co-founded a hiring product for blockchain companies and used it as a real-world path into JavaScript and product building.",
+            "description": "Co-founded a hiring product for blockchain companies while learning JavaScript through real product work.",
             "tags": ["Founder", "Blockchain", "JavaScript"]
           }
         ]
