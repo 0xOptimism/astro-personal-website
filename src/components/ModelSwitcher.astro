@@ -50,6 +50,7 @@ const models = [
         data-model-label={model.label}
         data-model-activation-label={model.activationLabel}
         style={`--model-accent: ${model.accent}; --model-pulse: ${model.pulse};`}
+        aria-checked="false"
         aria-pressed="false"
         role="menuitemradio"
       >
@@ -77,21 +78,22 @@ const models = [
 <script>
   const root = document.documentElement;
   const body = document.body;
-  const switcher = document.querySelector('[data-model-switcher]');
-  const trigger = document.querySelector('[data-model-menu-trigger]');
-  const currentLabel = document.querySelector('[data-model-current]');
-  const menu = document.querySelector('[data-model-menu]');
-  const options = Array.from(document.querySelectorAll('[data-model-option]'));
-  const activation = document.querySelector('.model-activation');
-  const activationCore = document.querySelector('[data-model-activation-core]');
+  const switcher = document.querySelector<HTMLElement>('[data-model-switcher]');
+  const trigger = document.querySelector<HTMLButtonElement>('[data-model-menu-trigger]');
+  const currentLabel = document.querySelector<HTMLElement>('[data-model-current]');
+  const options = Array.from(
+    document.querySelectorAll<HTMLButtonElement>('[data-model-option]'),
+  );
+  const activation = document.querySelector<HTMLElement>('.model-activation');
+  const activationCore = document.querySelector<HTMLElement>('[data-model-activation-core]');
   const storageKey = 'selected-model-skin';
 
-  const setMenuOpen = (isOpen) => {
+  const setMenuOpen = (isOpen: boolean) => {
     switcher?.classList.toggle('is-open', isOpen);
     trigger?.setAttribute('aria-expanded', String(isOpen));
   };
 
-  const setActiveSkin = (skinId, animate = false) => {
+  const setActiveSkin = (skinId: string, animate = false) => {
     const nextSkin = skinId || '';
     root.dataset.modelSkin = nextSkin;
     body.dataset.modelSkin = nextSkin;
@@ -99,6 +101,7 @@ const models = [
     options.forEach((option) => {
       const optionSkin = option.dataset.modelSkin || '';
       const isPressed = optionSkin === nextSkin;
+      option.setAttribute('aria-checked', String(isPressed));
       option.setAttribute('aria-pressed', String(isPressed));
 
       if (isPressed && currentLabel) {
@@ -106,7 +109,8 @@ const models = [
       }
 
       if (isPressed && activationCore) {
-        activationCore.textContent = option.dataset.modelActivationLabel || option.dataset.modelLabel || '';
+        activationCore.textContent =
+          option.dataset.modelActivationLabel || option.dataset.modelLabel || '';
       }
     });
 
@@ -145,12 +149,15 @@ const models = [
     setActiveSkin('');
   }
 
-  activation?.addEventListener('animationend', () => {
-    activation.classList.remove('is-firing');
+  activation?.addEventListener('animationend', (event) => {
+    if (event.target === activation) {
+      activation.classList.remove('is-firing');
+    }
   });
 
   document.addEventListener('click', (event) => {
-    if (!switcher?.contains(event.target)) {
+    const target = event.target;
+    if (!(target instanceof Node) || !switcher?.contains(target)) {
       setMenuOpen(false);
     }
   });

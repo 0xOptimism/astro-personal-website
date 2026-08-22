@@ -311,10 +311,12 @@ body::before {
   transform: rotate(42deg);
 }
 
+.model-switcher__option[aria-checked="true"] .model-switcher__check,
 .model-switcher__option[aria-pressed="true"] .model-switcher__check {
   opacity: 1;
 }
 
+.model-switcher__option[aria-checked="true"],
 .model-switcher__option[aria-pressed="true"] {
   color: var(--color-accent);
 }
