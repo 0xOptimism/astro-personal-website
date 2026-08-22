@@ -83,6 +83,10 @@ const umamiWebsiteId = import.meta.env.PUBLIC_UMAMI_WEBSITE_ID ?? '8f97ce4f-3008
     <script is:inline>
       try {
         var skin = localStorage.getItem('selected-model-skin');
+        if (skin === 'gpt-55-sol-high') {
+          skin = 'gpt-56-sol-high';
+          localStorage.setItem('selected-model-skin', skin);
+        }
         if (skin) {
           document.documentElement.dataset.modelSkin = skin;
           document.body.dataset.modelSkin = skin;
