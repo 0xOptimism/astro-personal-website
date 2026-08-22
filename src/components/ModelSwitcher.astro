@@ -111,8 +111,14 @@ const models = [
 
   const setActiveSkin = (skinId: string, animate = false) => {
     const nextSkin = skinId || '';
-    root.dataset.modelSkin = nextSkin;
-    body.dataset.modelSkin = nextSkin;
+
+    if (nextSkin) {
+      root.dataset.modelSkin = nextSkin;
+      body.dataset.modelSkin = nextSkin;
+    } else {
+      delete root.dataset.modelSkin;
+      delete body.dataset.modelSkin;
+    }
 
     options.forEach((option) => {
       const optionSkin = option.dataset.modelSkin || '';

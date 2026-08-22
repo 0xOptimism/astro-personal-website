@@ -71,7 +71,7 @@ body::before {
 
 /* --- Staggered reveal (SKILL: high-impact page load) --- */
 .reveal {
-  animation: reveal 0.8s var(--ease-out-expo);
+  animation: reveal 0.8s var(--ease-out-expo) both;
 }
 
 .reveal-delay-1 { animation-delay: 0.1s; }
@@ -360,9 +360,8 @@ body::before {
   display: none;
 }
 
-:is(body:not([data-model-skin]), body[data-model-skin=""]) .reveal {
-  animation-duration: 0.28s;
-  animation-timing-function: ease-out;
+:is(html:not([data-model-skin]), html[data-model-skin=""], body:not([data-model-skin]), body[data-model-skin=""]) .reveal {
+  animation: none;
 }
 
 :is(body:not([data-model-skin]), body[data-model-skin=""]) h1,
