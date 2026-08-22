@@ -1,23 +1,26 @@
 @import "tailwindcss";
 
-/* --- Design tokens (SKILL: cohesive aesthetic, CSS variables) --- */
+/* --- Design tokens --- */
 :root {
-  --color-bg: #0a0a0a;
-  --color-surface: #121212;
-  --color-surface-elevated: #1a1a1a;
-  --color-text: #f2ede5;
-  --color-text-muted: #8c8780;
+  --color-bg: #ffffff;
+  --color-surface: #ffffff;
+  --color-surface-elevated: rgb(0 0 0 / 10%);
+  --color-text: #000000;
+  --color-text-muted: rgb(0 0 0 / 64%);
   --color-accent: #0f766e;
-  --color-accent-dim: rgba(15, 118, 110, 0.25);
-  --color-accent-warm: #e4a02b;
-  --color-accent-warm-dim: rgba(228, 160, 43, 0.25);
-  --font-display: "Syne", system-ui, sans-serif;
-  --font-body: "Source Serif 4", Georgia, serif;
+  --color-accent-dim: rgb(15 118 110 / 18%);
+  --color-accent-warm: #0f766e;
+  --color-accent-warm-dim: rgb(15 118 110 / 18%);
+  --color-hover: rgb(0 0 0 / 5%);
+  --color-border: rgb(0 0 0 / 10%);
+  --color-border-strong: rgb(0 0 0 / 18%);
+  --font-display: "Inter", system-ui, sans-serif;
+  --font-body: "Inter", system-ui, sans-serif;
   --font-mono: ui-monospace, "Cascadia Code", "Source Code Pro", Menlo, Monaco, monospace;
-  --space-section: clamp(4rem, 10vw, 8rem);
-  --radius-sm: 6px;
-  --radius-md: 12px;
-  --radius-lg: 20px;
+  --space-section: clamp(4rem, 10vw, 9rem);
+  --radius-sm: 8px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
   --model-frame-opacity: 0;
@@ -94,6 +97,10 @@ body::before {
 /* --- Typography utilities --- */
 .font-display {
   font-family: var(--font-display);
+}
+
+.font-body {
+  font-family: var(--font-body);
 }
 
 .sol-command-deck,
@@ -327,6 +334,307 @@ body::before {
 .model-switcher__option[aria-checked="true"],
 .model-switcher__option[aria-pressed="true"] {
   color: var(--color-accent);
+}
+
+/* --- Yannis default skin --- */
+:is(body:not([data-model-skin]), body[data-model-skin=""]) {
+  color-scheme: light;
+  scrollbar-color: rgb(0 0 0 / 28%) #ffffff;
+  font-size: 1.0625rem;
+  line-height: 1.55;
+}
+
+:is(body:not([data-model-skin]), body[data-model-skin=""])::selection,
+:is(body:not([data-model-skin]), body[data-model-skin=""]) ::selection {
+  background: rgb(0 0 0 / 10%);
+  color: #000000;
+}
+
+:is(body:not([data-model-skin]), body[data-model-skin=""]).grain::after {
+  content: none;
+  display: none;
+}
+
+:is(body:not([data-model-skin]), body[data-model-skin=""]) .model-frame,
+:is(body:not([data-model-skin]), body[data-model-skin=""]) .model-activation {
+  display: none;
+}
+
+:is(body:not([data-model-skin]), body[data-model-skin=""]) .reveal {
+  animation-duration: 0.28s;
+  animation-timing-function: ease-out;
+}
+
+:is(body:not([data-model-skin]), body[data-model-skin=""]) h1,
+:is(body:not([data-model-skin]), body[data-model-skin=""]) h2,
+:is(body:not([data-model-skin]), body[data-model-skin=""]) h3,
+:is(body:not([data-model-skin]), body[data-model-skin=""]) .hero-title {
+  font-weight: 600;
+  letter-spacing: -0.03em;
+}
+
+:is(body:not([data-model-skin]), body[data-model-skin=""]) h1,
+:is(body:not([data-model-skin]), body[data-model-skin=""]) .hero-title {
+  max-width: 12ch;
+  font-size: clamp(3.5rem, 9vw, 6.5rem);
+  line-height: 1.05;
+}
+
+:is(body:not([data-model-skin]), body[data-model-skin=""]) h2 {
+  font-size: clamp(1.5rem, 2.4vw, 1.85rem);
+  line-height: 1.15;
+}
+
+:is(body:not([data-model-skin]), body[data-model-skin=""]) h3 {
+  font-weight: 500;
+  letter-spacing: -0.02em;
+}
+
+:is(body:not([data-model-skin]), body[data-model-skin=""]) .hero-kicker,
+:is(body:not([data-model-skin]), body[data-model-skin=""]) .stack-intro p:first-child,
+:is(body:not([data-model-skin]), body[data-model-skin=""]) .workflow-intro p:first-child,
+:is(body:not([data-model-skin]), body[data-model-skin=""]) .timeline-intro p:first-child,
+:is(body:not([data-model-skin]), body[data-model-skin=""]) .timeline-log time,
+:is(body:not([data-model-skin]), body[data-model-skin=""]) .timeline-log article > div:first-child > p,
+:is(body:not([data-model-skin]), body[data-model-skin=""]) .workflow-card__role,
+:is(body:not([data-model-skin]), body[data-model-skin=""]) .contact-panel label span,
+:is(body:not([data-model-skin]), body[data-model-skin=""]) .social-links p,
+:is(body:not([data-model-skin]), body[data-model-skin=""]) .site-shell > article > p:first-child {
+  color: var(--color-text-muted);
+  font-weight: 500;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+:is(body:not([data-model-skin]), body[data-model-skin=""]) .hero-role {
+  max-width: 28ch;
+  color: var(--color-text-muted);
+  font-size: clamp(1.15rem, 2vw, 1.5rem);
+  font-weight: 500;
+}
+
+:is(body:not([data-model-skin]), body[data-model-skin=""]) .hero-lede {
+  max-width: 38rem;
+  color: var(--color-text-muted);
+  font-size: 1.0625rem;
+  line-height: 1.55;
+}
+
+.hero-lede p + p {
+  margin-top: 1rem;
+}
+
+:is(body:not([data-model-skin]), body[data-model-skin=""]) .hero-signals {
+  max-width: 40rem;
+  gap: 0.75rem 1.25rem;
+}
+
+:is(body:not([data-model-skin]), body[data-model-skin=""]) .hero-signal {
+  min-height: 0;
+  border: 0;
+  border-radius: 0;
+  padding: 0;
+  background: none;
+  box-shadow: none;
+  color: var(--color-text-muted);
+  font-size: 0.875rem;
+  line-height: 1.45;
+}
+
+:is(body:not([data-model-skin]), body[data-model-skin=""]) .site-section--hero {
+  min-height: 78vh;
+  display: flex;
+  align-items: flex-end;
+  padding-bottom: clamp(3rem, 8vw, 5.5rem);
+}
+
+:is(body:not([data-model-skin]), body[data-model-skin=""]) [data-site-section="skills"],
+:is(body:not([data-model-skin]), body[data-model-skin=""]) [data-site-section="timeline"] {
+  background: rgb(0 0 0 / 4%);
+}
+
+:is(body:not([data-model-skin]), body[data-model-skin=""]) .stack-intro p:last-child,
+:is(body:not([data-model-skin]), body[data-model-skin=""]) .workflow-intro > p:nth-child(3),
+:is(body:not([data-model-skin]), body[data-model-skin=""]) .timeline-intro p:last-child {
+  max-width: 38rem;
+  font-size: 1.0625rem;
+  line-height: 1.55;
+}
+
+:is(body:not([data-model-skin]), body[data-model-skin=""]) .stack-grid,
+:is(body:not([data-model-skin]), body[data-model-skin=""]) .workflow-grid {
+  gap: 1.5rem 2rem;
+}
+
+:is(body:not([data-model-skin]), body[data-model-skin=""]) .stack-grid article,
+:is(body:not([data-model-skin]), body[data-model-skin=""]) .workflow-grid article,
+:is(body:not([data-model-skin]), body[data-model-skin=""]) .timeline-log article {
+  min-width: 0;
+  border: 0;
+  border-top: 1px solid var(--color-border);
+  border-radius: 0;
+  padding: 1.5rem 0;
+  background: none;
+  box-shadow: none;
+}
+
+:is(body:not([data-model-skin]), body[data-model-skin=""]) .workflow-card__body {
+  overflow-wrap: break-word;
+}
+
+:is(body:not([data-model-skin]), body[data-model-skin=""]) .stack-grid article:hover,
+:is(body:not([data-model-skin]), body[data-model-skin=""]) .workflow-grid article:hover,
+:is(body:not([data-model-skin]), body[data-model-skin=""]) .timeline-log article:hover {
+  border-color: var(--color-border);
+  transform: none;
+  box-shadow: none;
+}
+
+:is(body:not([data-model-skin]), body[data-model-skin=""]) .stack-grid span.rounded-md,
+:is(body:not([data-model-skin]), body[data-model-skin=""]) .timeline-log span.rounded-md {
+  display: inline-flex;
+  min-height: 2.25rem;
+  align-items: center;
+  justify-content: center;
+  border-color: transparent;
+  background: rgb(0 0 0 / 5%);
+  line-height: 1;
+}
+
+:is(body:not([data-model-skin]), body[data-model-skin=""]) .stack-grid span[style*="#f2ede5"] {
+  background-color: #000000 !important;
+}
+
+:is(body:not([data-model-skin]), body[data-model-skin=""]) .workflow-principles li {
+  color: var(--color-text-muted);
+}
+
+:is(body:not([data-model-skin]), body[data-model-skin=""]) .workflow-principles li span:first-child {
+  background: var(--color-border-strong);
+}
+
+:is(body:not([data-model-skin]), body[data-model-skin=""]) .workflow-card__rule {
+  background: var(--color-border);
+  opacity: 1;
+}
+
+:is(body:not([data-model-skin]), body[data-model-skin=""]) .workflow-card__mark {
+  border-color: transparent;
+  background: rgb(0 0 0 / 5%);
+}
+
+:is(body:not([data-model-skin]), body[data-model-skin=""]) .timeline-log {
+  gap: 2.5rem;
+}
+
+:is(body:not([data-model-skin]), body[data-model-skin=""]) .timeline-log > li > div {
+  border-left-color: var(--color-border);
+}
+
+:is(body:not([data-model-skin]), body[data-model-skin=""]) .timeline-log .size-2 {
+  background: #000000;
+}
+
+:is(body:not([data-model-skin]), body[data-model-skin=""]) .link-accent {
+  color: #000000;
+  background-image: linear-gradient(#000000, #000000);
+  background-size: 0 1px;
+}
+
+:is(body:not([data-model-skin]), body[data-model-skin=""]) .link-accent:hover {
+  color: #000000;
+  background-size: 100% 1px;
+}
+
+:is(body:not([data-model-skin]), body[data-model-skin=""]) button[type="submit"] {
+  border-radius: var(--radius-sm);
+  background: var(--color-accent);
+  color: #ffffff;
+  font-weight: 500;
+  box-shadow: none;
+  transform: none;
+}
+
+:is(body:not([data-model-skin]), body[data-model-skin=""]) button[type="submit"]:hover {
+  background: #0c5f58;
+  transform: none;
+}
+
+:is(body:not([data-model-skin]), body[data-model-skin=""]) button[type="submit"]:active {
+  background: #0a524c;
+  transform: scale(0.97);
+}
+
+:is(body:not([data-model-skin]), body[data-model-skin=""]) .social-links {
+  gap: 1.25rem;
+  border-color: var(--color-border);
+}
+
+:is(body:not([data-model-skin]), body[data-model-skin=""]) .social-links a {
+  border-color: var(--color-border);
+  background: #ffffff;
+}
+
+:is(body:not([data-model-skin]), body[data-model-skin=""]) .social-links a:hover {
+  border-color: var(--color-border-strong);
+  color: #000000;
+  transform: none;
+}
+
+:is(body:not([data-model-skin]), body[data-model-skin=""]) .not-found-markdown {
+  border-color: var(--color-border);
+  background: rgb(0 0 0 / 4%);
+}
+
+:is(body:not([data-model-skin]), body[data-model-skin=""]) .model-switcher__trigger {
+  border-color: var(--color-border);
+  background: rgb(255 255 255 / 88%);
+  color: #000000;
+  font-weight: 500;
+  box-shadow: none;
+}
+
+:is(body:not([data-model-skin]), body[data-model-skin=""]) .model-switcher__trigger:hover,
+:is(body:not([data-model-skin]), body[data-model-skin=""]) .model-switcher.is-open .model-switcher__trigger {
+  border-color: var(--color-border-strong);
+  background: #ffffff;
+  transform: none;
+}
+
+:is(body:not([data-model-skin]), body[data-model-skin=""]) .model-switcher__trigger::after {
+  background: none;
+}
+
+:is(body:not([data-model-skin]), body[data-model-skin=""]) .model-switcher__menu {
+  border-color: var(--color-border);
+  background: #ffffff;
+  box-shadow: 0 12px 32px rgb(0 0 0 / 8%);
+}
+
+:is(body:not([data-model-skin]), body[data-model-skin=""]) .model-switcher__option {
+  font-weight: 500;
+}
+
+:is(body:not([data-model-skin]), body[data-model-skin=""]) .model-switcher__option:hover,
+:is(body:not([data-model-skin]), body[data-model-skin=""]) .model-switcher__option:focus-visible {
+  background: var(--color-hover);
+}
+
+:is(body:not([data-model-skin]), body[data-model-skin=""]) .model-switcher__option[aria-checked="true"],
+:is(body:not([data-model-skin]), body[data-model-skin=""]) .model-switcher__option[aria-pressed="true"] {
+  color: #000000;
+}
+
+@media (max-width: 640px) {
+  :is(body:not([data-model-skin]), body[data-model-skin=""]) .site-section--hero {
+    min-height: 72vh;
+  }
+
+  :is(body:not([data-model-skin]), body[data-model-skin=""]) .hero-signals {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.65rem;
+  }
 }
 
 body[data-model-skin="gpt-55-sol-high"] .model-switcher__trigger {
@@ -748,6 +1056,10 @@ body[data-model-skin="gpt-55-sol-high"] {
   --color-accent-dim: rgba(247, 209, 84, 0.27);
   --color-accent-warm: #4cc9f0;
   --color-accent-warm-dim: rgba(76, 201, 240, 0.24);
+  --font-display: "Syne", system-ui, sans-serif;
+  --font-body: "Source Serif 4", Georgia, serif;
+  --radius-sm: 6px;
+  --radius-lg: 20px;
   background-color: var(--color-bg);
 }
 
@@ -2072,7 +2384,7 @@ body[data-model-skin="claude-opus-5"] .hero-lede {
   line-height: 1.72;
 }
 
-body[data-model-skin="claude-opus-5"] .hero-lede::first-letter {
+body[data-model-skin="claude-opus-5"] .hero-lede p:first-child::first-letter {
   float: left;
   margin: 0.42rem 0.6rem 0 0;
   color: var(--color-accent);
@@ -3234,7 +3546,7 @@ body[data-model-skin="claude-opus-5"] .model-frame__corner.is-br {
     min-height: 86vh;
   }
 
-  body[data-model-skin="claude-opus-5"] .hero-lede::first-letter {
+  body[data-model-skin="claude-opus-5"] .hero-lede p:first-child::first-letter {
     font-size: 2.9rem;
   }
 

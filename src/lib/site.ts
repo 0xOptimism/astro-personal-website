@@ -22,11 +22,12 @@ export const HERO_KICKER = "Hey, I'm";
 export const HERO_NAME = SITE_NAME;
 export const HERO_ROLE = SITE_JOB_TITLE;
 
-export const HERO_LEDE = [
-  'I am Yannis, the full-stack developer behind yannis.dev, currently based in Stockholm and born in Antibes.',
-  'I build production web apps across frontend, backend, and mobile, mostly with TypeScript, React, Node.js, and agentic workflows.',
-  `I currently ship e-commerce, payments, and internal developer tooling at ${SITE_EMPLOYER}, after product work in medtech and Web3, including an ETH Denver 2023 win among 600+ teams.`,
-].join(' ');
+export const HERO_LEDE_PARAGRAPHS = [
+  "I'm Yannis, a full-stack developer based in Stockholm. I build production web apps with TypeScript, React, Node.js, and mobile tooling.",
+  'At BabyBjörn, I work on e-commerce, payments, and internal developer tools. Before that: medtech, Web3, and an ETH Denver 2023 win among 600+ teams.',
+] as const;
+
+export const HERO_LEDE = HERO_LEDE_PARAGRAPHS.join('\n\n');
 
 export const PROOF_POINTS = [
   '5+ years shipping product',

@@ -1,5 +1,5 @@
 ---
-import { HERO_KICKER, HERO_LEDE, HERO_NAME, HERO_ROLE, PROOF_POINTS } from '../lib/site';
+import { HERO_KICKER, HERO_LEDE_PARAGRAPHS, HERO_NAME, HERO_ROLE, PROOF_POINTS } from '../lib/site';
 
 const solCapabilities = [
   { label: 'Product systems', value: 'Frontend, backend, mobile' },
@@ -34,9 +34,13 @@ const kimiTelemetry = [
   <p class="hero-role reveal reveal-delay-1 mt-3 text-2xl font-medium text-(--color-accent) sm:text-3xl md:text-4xl">
     {HERO_ROLE}
   </p>
-  <p class="hero-lede reveal reveal-delay-2 mt-8 max-w-xl font-body text-lg font-normal leading-relaxed text-(--color-text-muted)">
-    {HERO_LEDE}
-  </p>
+  <div class="hero-lede reveal reveal-delay-2 mt-8 max-w-xl font-body text-lg font-normal leading-relaxed text-(--color-text-muted)">
+    {
+      HERO_LEDE_PARAGRAPHS.map((paragraph) => (
+        <p>{paragraph}</p>
+      ))
+    }
+  </div>
   <div class="hero-signals reveal reveal-delay-3 mt-8 flex max-w-2xl flex-wrap gap-2">
     {
       PROOF_POINTS.map((point) => (
