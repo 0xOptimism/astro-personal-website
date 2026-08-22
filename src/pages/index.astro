@@ -14,10 +14,9 @@ import ModelSwitcher from '../components/ModelSwitcher.astro';
   rel="stylesheet"
   href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.15.1/devicon.min.css"
 />
-<Layout title="Yannis | Software Engineer">
+<Layout>
   <ModelSwitcher />
   <main class="site-shell min-h-screen">
-    <!-- Asymmetric layout: hero full-bleed, content with varied widths -->
     <header class="site-section site-section--hero px-6 pt-(--space-section) pb-12 md:px-12 lg:px-16" data-site-section="hero">
       <div class="mx-auto max-w-4xl">
         <Header />
@@ -45,7 +44,7 @@ import ModelSwitcher from '../components/ModelSwitcher.astro';
     </section>
     -->
 
-    <section class="site-section px-6 py-[var(--space-section)] md:px-12 lg:px-16" data-site-section="timeline" aria-labelledby="timeline-heading">
+    <section class="site-section px-6 py-(--space-section) md:px-12 lg:px-16" data-site-section="timeline" aria-labelledby="timeline-heading">
       <div class="mx-auto max-w-5xl">
         <Timeline />
       </div>

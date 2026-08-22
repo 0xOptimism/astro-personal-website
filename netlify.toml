@@ -4,3 +4,7 @@
 
 [build.environment]
   NODE_VERSION = "20"
+
+[[edge_functions]]
+  function = "negotiate-markdown"
+  path = "/*"
