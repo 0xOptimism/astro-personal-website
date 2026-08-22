@@ -7,6 +7,7 @@ import Timeline from '../components/Timeline.astro';
 // import Interests from '../components/Interests.astro';
 import ContactForm from '../components/ContactForm.astro';
 import Social from '../components/Social.astro';
+import ModelSwitcher from '../components/ModelSwitcher.astro';
 ---
 
 <link
@@ -14,21 +15,22 @@ import Social from '../components/Social.astro';
   href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.15.1/devicon.min.css"
 />
 <Layout title="Yannis | Software Engineer">
-  <main class="min-h-screen">
+  <ModelSwitcher />
+  <main class="site-shell min-h-screen">
     <!-- Asymmetric layout: hero full-bleed, content with varied widths -->
-    <header class="px-6 pt-(--space-section) pb-12 md:px-12 lg:px-16">
+    <header class="site-section site-section--hero px-6 pt-(--space-section) pb-12 md:px-12 lg:px-16">
       <div class="mx-auto max-w-4xl">
         <Header />
       </div>
     </header>
 
-    <section class="px-6 py-(--space-section) md:px-12 lg:px-16" aria-labelledby="skills-heading">
+    <section class="site-section px-6 py-(--space-section) md:px-12 lg:px-16" aria-labelledby="skills-heading">
       <div class="mx-auto max-w-5xl">
         <Skills />
       </div>
     </section>
 
-    <section class="px-6 py-(--space-section) md:px-12 lg:px-16" aria-labelledby="agentic-workflow-heading">
+    <section class="site-section px-6 py-(--space-section) md:px-12 lg:px-16" aria-labelledby="agentic-workflow-heading">
       <div class="mx-auto max-w-5xl">
         <AgenticWorkflow />
       </div>
@@ -43,13 +45,13 @@ import Social from '../components/Social.astro';
     </section>
     -->
 
-    <section class="px-6 py-[var(--space-section)] md:px-12 lg:px-16" aria-labelledby="timeline-heading">
+    <section class="site-section px-6 py-[var(--space-section)] md:px-12 lg:px-16" aria-labelledby="timeline-heading">
       <div class="mx-auto max-w-5xl">
         <Timeline />
       </div>
     </section>
 
-    <section class="px-6 py-(--space-section) md:px-12 lg:px-16" aria-labelledby="contact-heading">
+    <section class="site-section px-6 py-(--space-section) md:px-12 lg:px-16" aria-labelledby="contact-heading">
       <div class="mx-auto max-w-xl">
         <ContactForm />
       </div>
