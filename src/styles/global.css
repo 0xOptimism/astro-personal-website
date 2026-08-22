@@ -94,7 +94,8 @@ body::before {
   font-family: var(--font-display);
 }
 
-.sol-command-deck {
+.sol-command-deck,
+.kimi-context-deck {
   display: none;
 }
 
@@ -379,6 +380,38 @@ body[data-model-skin="grok-46"] .model-switcher__option:focus-visible {
   background: rgba(124, 108, 255, 0.14);
 }
 
+body[data-model-skin="kimi-k3"] .model-switcher__trigger {
+  border-color: rgba(157, 184, 255, 0.42);
+  background: rgba(6, 9, 18, 0.78);
+  color: #e6ecff;
+  box-shadow:
+    0 0 0 1px rgba(157, 184, 255, 0.08),
+    0 0.8rem 2rem rgba(255, 184, 107, 0.1);
+}
+
+body[data-model-skin="kimi-k3"] .model-switcher__trigger:hover,
+body[data-model-skin="kimi-k3"] .model-switcher.is-open .model-switcher__trigger {
+  border-color: rgba(157, 184, 255, 0.68);
+  background: rgba(8, 12, 24, 0.88);
+}
+
+body[data-model-skin="kimi-k3"] .model-switcher__trigger::after {
+  background: linear-gradient(100deg, transparent, rgba(157, 184, 255, 0.24), rgba(255, 184, 107, 0.18), transparent);
+}
+
+body[data-model-skin="kimi-k3"] .model-switcher__menu {
+  border-color: rgba(157, 184, 255, 0.24);
+  background:
+    radial-gradient(ellipse 120% 60% at 50% -20%, rgba(157, 184, 255, 0.12), transparent 55%),
+    linear-gradient(315deg, rgba(255, 184, 107, 0.07), transparent 48%),
+    rgba(5, 8, 16, 0.94);
+}
+
+body[data-model-skin="kimi-k3"] .model-switcher__option:hover,
+body[data-model-skin="kimi-k3"] .model-switcher__option:focus-visible {
+  background: rgba(157, 184, 255, 0.12);
+}
+
 .model-activation {
   --activation-bg: #050508;
   --activation-accent: rgba(247, 209, 84, 0.52);
@@ -544,6 +577,57 @@ body[data-model-skin="grok-46"] .model-activation.is-firing .model-activation__s
 
 body[data-model-skin="grok-46"] .model-activation.is-firing .model-activation__core {
   animation: grokCore 1.55s var(--ease-out-expo) both;
+}
+
+body[data-model-skin="kimi-k3"] .model-activation {
+  --activation-bg: #03050c;
+  --activation-accent: rgba(157, 184, 255, 0.52);
+  --activation-pulse: rgba(255, 184, 107, 0.44);
+  --activation-beam-a: rgba(157, 184, 255, 0.42);
+  --activation-beam-b: rgba(255, 184, 107, 0.32);
+  --activation-core-fg: #eaf0ff;
+  --activation-core-border: rgba(157, 184, 255, 0.52);
+  --activation-core-glow-a: rgba(157, 184, 255, 0.85);
+  --activation-core-glow-b: rgba(255, 184, 107, 0.5);
+  background:
+    radial-gradient(ellipse 75% 42% at 50% 108%, var(--activation-accent), transparent 62%),
+    radial-gradient(ellipse 55% 26% at 50% 114%, var(--activation-pulse), transparent 58%),
+    repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.05) 0 1px, transparent 1px 6rem),
+    var(--activation-bg);
+  clip-path: circle(0% at 50% 112%);
+}
+
+body[data-model-skin="kimi-k3"] .model-activation__beam {
+  background: radial-gradient(
+    circle 30vmin at 50% 78%,
+    rgba(234, 240, 255, 0.85),
+    var(--activation-beam-a) 36%,
+    var(--activation-beam-b) 60%,
+    transparent 76%
+  );
+  transform: translateY(42%);
+}
+
+body[data-model-skin="kimi-k3"] .model-activation__core {
+  border-radius: 999px;
+  padding: 1rem 1.6rem;
+  letter-spacing: 0.06em;
+}
+
+body[data-model-skin="kimi-k3"] .model-activation.is-firing {
+  animation: kimiActivation 1.7s var(--ease-out-expo) both;
+}
+
+body[data-model-skin="kimi-k3"] .model-activation.is-firing .model-activation__beam {
+  animation: kimiBeam 1.7s var(--ease-out-expo) both;
+}
+
+body[data-model-skin="kimi-k3"] .model-activation.is-firing .model-activation__scan {
+  animation: kimiScan 1.7s var(--ease-out-expo) both;
+}
+
+body[data-model-skin="kimi-k3"] .model-activation.is-firing .model-activation__core {
+  animation: kimiCore 1.7s var(--ease-out-expo) both;
 }
 
 /* --- GPT 5.5 Sol High skin --- */
@@ -1231,6 +1315,444 @@ body[data-model-skin="grok-46"] .social-links a {
   border-radius: var(--radius-sm);
 }
 
+/* --- Kimi K3 skin: moonrise mission-control mode --- */
+body[data-model-skin="kimi-k3"] {
+  --color-bg: #04060e;
+  --color-surface: rgba(11, 16, 30, 0.82);
+  --color-surface-elevated: rgba(157, 184, 255, 0.22);
+  --color-text: #edf1ff;
+  --color-text-muted: #8d97b8;
+  --color-accent: #9db8ff;
+  --color-accent-dim: rgba(157, 184, 255, 0.26);
+  --color-accent-warm: #ffb86b;
+  --color-accent-warm-dim: rgba(255, 184, 107, 0.22);
+  --font-display: "Unbounded", "Syne", system-ui, sans-serif;
+  --font-body: "Sora", "Source Serif 4", system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+  --space-section: clamp(4.5rem, 9vw, 7.5rem);
+  --radius-sm: 10px;
+  --radius-md: 18px;
+  --radius-lg: 28px;
+  background-color: var(--color-bg);
+  overflow-x: clip;
+  scrollbar-color: #9db8ff #04060e;
+}
+
+body[data-model-skin="kimi-k3"]::selection,
+body[data-model-skin="kimi-k3"] ::selection {
+  background: rgba(157, 184, 255, 0.32);
+  color: #fff;
+}
+
+body[data-model-skin="kimi-k3"]::before {
+  opacity: 1;
+  transform: translateY(0);
+  background:
+    radial-gradient(circle 30rem at 84% -8%, rgba(157, 184, 255, 0.2), rgba(157, 184, 255, 0.05) 52%, transparent 72%),
+    radial-gradient(ellipse 92% 30% at 50% 114%, rgba(255, 184, 107, 0.11), transparent 62%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260' viewBox='0 0 260 260'%3E%3Ccircle cx='24' cy='40' r='1' fill='%23ffffff' fill-opacity='0.5'/%3E%3Ccircle cx='90' cy='120' r='0.8' fill='%23ffffff' fill-opacity='0.35'/%3E%3Ccircle cx='150' cy='60' r='1.2' fill='%23cfdcff' fill-opacity='0.45'/%3E%3Ccircle cx='210' cy='150' r='0.9' fill='%23ffffff' fill-opacity='0.3'/%3E%3Ccircle cx='60' cy='200' r='1.1' fill='%23cfdcff' fill-opacity='0.4'/%3E%3Ccircle cx='180' cy='230' r='0.7' fill='%23ffffff' fill-opacity='0.35'/%3E%3Ccircle cx='240' cy='30' r='0.8' fill='%23ffffff' fill-opacity='0.3'/%3E%3Ccircle cx='120' cy='170' r='0.6' fill='%23ffffff' fill-opacity='0.28'/%3E%3C/svg%3E");
+  animation: kimiFieldDrift 18s linear infinite;
+}
+
+body[data-model-skin="kimi-k3"] .site-shell {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  flex-direction: column;
+}
+
+body[data-model-skin="kimi-k3"] [data-site-section="hero"] { order: 1; }
+body[data-model-skin="kimi-k3"] [data-site-section="timeline"] { order: 2; }
+body[data-model-skin="kimi-k3"] [data-site-section="skills"] { order: 3; }
+body[data-model-skin="kimi-k3"] [data-site-section="workflow"] { order: 4; }
+body[data-model-skin="kimi-k3"] [data-site-section="contact"] { order: 5; }
+body[data-model-skin="kimi-k3"] [data-site-section="social"] { order: 6; }
+
+body[data-model-skin="kimi-k3"] .site-section {
+  position: relative;
+  animation: kimiSectionRise 0.8s var(--ease-out-expo) both;
+}
+
+body[data-model-skin="kimi-k3"] .site-section > div {
+  max-width: 70rem;
+}
+
+body[data-model-skin="kimi-k3"] .site-section::before {
+  content: "";
+  position: absolute;
+  inset: 1rem 0 auto;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(157, 184, 255, 0.5), rgba(255, 184, 107, 0.34), transparent);
+  opacity: 0.75;
+  transform: scaleX(0);
+  transform-origin: center;
+  animation: kimiLineDraw 1s var(--ease-out-expo) forwards;
+}
+
+body[data-model-skin="kimi-k3"] [data-site-section="timeline"]::after,
+body[data-model-skin="kimi-k3"] [data-site-section="skills"]::after,
+body[data-model-skin="kimi-k3"] [data-site-section="workflow"]::after,
+body[data-model-skin="kimi-k3"] [data-site-section="contact"]::after {
+  position: absolute;
+  top: 1.35rem;
+  right: 1.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+
+body[data-model-skin="kimi-k3"] [data-site-section="timeline"]::after { content: "Phase 01 / Trajectory"; }
+body[data-model-skin="kimi-k3"] [data-site-section="skills"]::after { content: "Phase 02 / Payload"; }
+body[data-model-skin="kimi-k3"] [data-site-section="workflow"]::after { content: "Phase 03 / Guidance"; }
+body[data-model-skin="kimi-k3"] [data-site-section="contact"]::after { content: "Phase 04 / Uplink"; }
+
+body[data-model-skin="kimi-k3"] .site-section--hero {
+  min-height: 94vh;
+  display: flex;
+  align-items: center;
+  padding-top: clamp(6rem, 12vw, 8.5rem);
+}
+
+body[data-model-skin="kimi-k3"] .site-section--hero::before {
+  display: none;
+}
+
+body[data-model-skin="kimi-k3"] .site-section--hero > div {
+  max-width: 64rem;
+}
+
+body[data-model-skin="kimi-k3"] .hero-block {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  justify-items: center;
+  text-align: center;
+}
+
+body[data-model-skin="kimi-k3"] .hero-block::before,
+body[data-model-skin="kimi-k3"] .hero-block::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: -1;
+  width: clamp(24rem, 56vw, 44rem);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+body[data-model-skin="kimi-k3"] .hero-block::before {
+  border: 1px solid rgba(157, 184, 255, 0.2);
+  box-shadow:
+    0 0 0 2.75rem rgba(157, 184, 255, 0.035),
+    inset 0 0 4.5rem rgba(157, 184, 255, 0.06);
+}
+
+body[data-model-skin="kimi-k3"] .hero-block::after {
+  background: radial-gradient(circle 0.55rem at 50% 0%, #ffd9a0 45%, rgba(255, 184, 107, 0.4) 70%, transparent 100%);
+  filter: drop-shadow(0 0 0.65rem rgba(255, 184, 107, 0.7));
+  animation: kimiOrbit 16s linear infinite;
+}
+
+body[data-model-skin="kimi-k3"] .hero-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  margin: 0;
+  color: var(--color-accent);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.3em;
+}
+
+body[data-model-skin="kimi-k3"] .hero-kicker::before {
+  content: "";
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  background: var(--color-accent-warm);
+  box-shadow: 0 0 0.9rem var(--color-accent-warm);
+  animation: kimiPulse 2.2s ease-in-out infinite;
+}
+
+body[data-model-skin="kimi-k3"] .hero-kicker::after {
+  content: "/ long-horizon edition";
+  color: var(--color-text-muted);
+  letter-spacing: 0.2em;
+}
+
+body[data-model-skin="kimi-k3"] .hero-title,
+body[data-model-skin="kimi-k3"] h1 {
+  max-width: none;
+  margin-top: 0.5rem;
+  font-size: clamp(3.4rem, 11vw, 8.5rem);
+  line-height: 0.94;
+  letter-spacing: -0.02em;
+  background: linear-gradient(180deg, #ffffff 8%, #cfdcff 48%, #9db8ff 88%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  text-shadow: 0 0 3rem rgba(157, 184, 255, 0.22);
+}
+
+body[data-model-skin="kimi-k3"] .hero-role {
+  margin-top: 0.6rem;
+  color: var(--color-accent-warm);
+  font-family: var(--font-mono);
+  font-size: clamp(0.95rem, 1.7vw, 1.25rem);
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+
+body[data-model-skin="kimi-k3"] .hero-lede {
+  max-width: 34rem;
+}
+
+body[data-model-skin="kimi-k3"] .hero-signals {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  max-width: 44rem;
+  gap: 0.6rem;
+}
+
+body[data-model-skin="kimi-k3"] .hero-signal {
+  min-height: 2.6rem;
+  display: inline-flex;
+  align-items: center;
+  padding: 0.55rem 1rem;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.05em;
+}
+
+body[data-model-skin="kimi-k3"] .kimi-context-deck {
+  display: grid;
+  width: min(100%, 44rem);
+  gap: 0.9rem;
+  margin-top: 2.2rem;
+  border: 1px solid rgba(157, 184, 255, 0.24);
+  border-radius: var(--radius-md);
+  padding: 1.1rem 1.2rem 1.2rem;
+  background:
+    radial-gradient(ellipse 120% 90% at 50% -30%, rgba(157, 184, 255, 0.12), transparent 60%),
+    linear-gradient(180deg, rgba(157, 184, 255, 0.05), transparent 40%),
+    rgba(8, 12, 24, 0.78);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.06),
+    0 1.5rem 4rem rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(16px);
+  text-align: left;
+}
+
+body[data-model-skin="kimi-k3"] .kimi-context-deck__header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.4rem 1rem;
+}
+
+body[data-model-skin="kimi-k3"] .kimi-context-deck__eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+}
+
+body[data-model-skin="kimi-k3"] .kimi-context-deck__readout {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+  color: var(--color-text-muted);
+}
+
+body[data-model-skin="kimi-k3"] .kimi-context-deck__track {
+  position: relative;
+  height: 0.45rem;
+  overflow: hidden;
+  border-radius: 999px;
+  background: rgba(157, 184, 255, 0.12);
+}
+
+body[data-model-skin="kimi-k3"] .kimi-context-deck__fill {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #9db8ff, #c7d6ff 55%, #ffb86b);
+  transform-origin: left;
+  animation: kimiContextFill 1.6s var(--ease-out-expo) 0.9s both;
+}
+
+body[data-model-skin="kimi-k3"] .kimi-context-deck__fill::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.45), transparent);
+  transform: translateX(-100%);
+  animation: kimiContextSheen 3.2s var(--ease-in-out) 2s infinite;
+}
+
+body[data-model-skin="kimi-k3"] .kimi-context-deck__grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.75rem;
+}
+
+body[data-model-skin="kimi-k3"] .kimi-context-card {
+  display: grid;
+  gap: 0.3rem;
+  border-top: 1px solid rgba(157, 184, 255, 0.2);
+  padding-top: 0.7rem;
+}
+
+body[data-model-skin="kimi-k3"] .kimi-context-card span {
+  font-family: var(--font-mono);
+  font-size: 0.64rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+
+body[data-model-skin="kimi-k3"] .kimi-context-card strong {
+  font-family: var(--font-display);
+  font-size: 0.82rem;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+body[data-model-skin="kimi-k3"] h2,
+body[data-model-skin="kimi-k3"] h3 {
+  letter-spacing: -0.01em;
+  text-shadow: 0 0 1.5rem rgba(157, 184, 255, 0.14);
+}
+
+body[data-model-skin="kimi-k3"] .stack-intro p:first-child,
+body[data-model-skin="kimi-k3"] .workflow-intro p:first-child,
+body[data-model-skin="kimi-k3"] .timeline-intro p:first-child,
+body[data-model-skin="kimi-k3"] .timeline-log time {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+}
+
+body[data-model-skin="kimi-k3"] .timeline-intro p:first-child::after {
+  content: " / full trajectory";
+  color: var(--color-text-muted);
+}
+
+body[data-model-skin="kimi-k3"] .stack-intro p:first-child::after {
+  content: " / payload manifest";
+  color: var(--color-text-muted);
+}
+
+body[data-model-skin="kimi-k3"] .workflow-intro p:first-child::after {
+  content: " / guidance loop";
+  color: var(--color-text-muted);
+}
+
+body[data-model-skin="kimi-k3"] article,
+body[data-model-skin="kimi-k3"] .input-field,
+body[data-model-skin="kimi-k3"] .social-links a,
+body[data-model-skin="kimi-k3"] span.rounded-md {
+  border-color: rgba(157, 184, 255, 0.18);
+  background:
+    radial-gradient(ellipse 130% 85% at 50% -30%, rgba(157, 184, 255, 0.09), transparent 56%),
+    rgba(8, 12, 24, 0.72);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.05),
+    0 1.5rem 3.5rem rgba(0, 0, 0, 0.26);
+  backdrop-filter: blur(14px);
+}
+
+body[data-model-skin="kimi-k3"] span.rounded-md {
+  border-radius: 999px;
+}
+
+body[data-model-skin="kimi-k3"] article {
+  border-radius: var(--radius-md);
+  transition:
+    border-color 0.3s var(--ease-out-expo),
+    transform 0.3s var(--ease-out-expo),
+    box-shadow 0.3s var(--ease-out-expo);
+}
+
+body[data-model-skin="kimi-k3"] article:hover {
+  border-color: rgba(255, 184, 107, 0.5);
+  transform: translateY(-4px);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.07),
+    0 0 0 1px rgba(255, 184, 107, 0.1),
+    0 1.75rem 4rem rgba(157, 184, 255, 0.12);
+}
+
+body[data-model-skin="kimi-k3"] .workflow-grid .size-12 {
+  border-radius: 50%;
+  box-shadow: 0 0 1.25rem rgba(157, 184, 255, 0.16);
+}
+
+body[data-model-skin="kimi-k3"] .workflow-principles li {
+  border: 1px solid rgba(157, 184, 255, 0.18);
+  border-radius: var(--radius-md);
+  padding: 0.9rem 1.1rem;
+  background: rgba(8, 12, 24, 0.6);
+}
+
+body[data-model-skin="kimi-k3"] .timeline-log .size-2 {
+  box-shadow: 0 0 0.75rem var(--color-accent);
+}
+
+body[data-model-skin="kimi-k3"] [data-site-section="contact"] > div {
+  max-width: 42rem;
+}
+
+body[data-model-skin="kimi-k3"] .contact-panel label span {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+body[data-model-skin="kimi-k3"] .input-field:focus {
+  border-color: var(--color-accent);
+  box-shadow:
+    0 0 0 1px var(--color-accent),
+    0 0 1.5rem rgba(157, 184, 255, 0.16);
+}
+
+body[data-model-skin="kimi-k3"] button[type="submit"] {
+  border-radius: 999px;
+  background: linear-gradient(95deg, #9db8ff, #ffb86b);
+  color: #04060e;
+  letter-spacing: 0.08em;
+  box-shadow: 0 1rem 2.5rem rgba(157, 184, 255, 0.2);
+}
+
+body[data-model-skin="kimi-k3"] .link-accent {
+  color: #c7d6ff;
+  background-image: linear-gradient(90deg, #9db8ff, #ffb86b);
+}
+
+body[data-model-skin="kimi-k3"] .social-links {
+  border-color: rgba(157, 184, 255, 0.18);
+}
+
+body[data-model-skin="kimi-k3"] .social-links a:hover {
+  box-shadow:
+    0 0 0 4px rgba(157, 184, 255, 0.1),
+    0 0 1.5rem rgba(157, 184, 255, 0.24);
+}
+
 @keyframes solActivation {
   0% {
     clip-path: inset(0 100% 0 0);
@@ -1432,6 +1954,145 @@ body[data-model-skin="grok-46"] .social-links a {
   }
 }
 
+@keyframes kimiActivation {
+  0% {
+    clip-path: circle(0% at 50% 112%);
+    opacity: 0;
+  }
+  12% {
+    opacity: 1;
+  }
+  44% {
+    clip-path: circle(142% at 50% 112%);
+    opacity: 1;
+  }
+  62% {
+    clip-path: circle(142% at 50% 92%);
+    opacity: 1;
+  }
+  88% {
+    opacity: 1;
+  }
+  100% {
+    clip-path: circle(0% at 50% -18%);
+    opacity: 0;
+  }
+}
+
+@keyframes kimiBeam {
+  0% {
+    opacity: 0.4;
+    transform: translateY(46%) scale(0.88);
+  }
+  42% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  100% {
+    opacity: 0.9;
+    transform: translateY(-54%) scale(1.08);
+  }
+}
+
+@keyframes kimiCore {
+  0% {
+    opacity: 0;
+    transform: translateY(1.4rem) scale(0.92);
+    letter-spacing: 0.32em;
+  }
+  30%,
+  70% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    letter-spacing: 0.06em;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-1rem) scale(1.05);
+  }
+}
+
+@keyframes kimiScan {
+  0% {
+    opacity: 0;
+    transform: translateY(28%);
+  }
+  24%,
+  62% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-28%);
+  }
+}
+
+@keyframes kimiOrbit {
+  from {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  to {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+@keyframes kimiPulse {
+  0%,
+  100% {
+    opacity: 0.5;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.32);
+  }
+}
+
+@keyframes kimiContextFill {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+@keyframes kimiContextSheen {
+  0% {
+    transform: translateX(-100%);
+  }
+  55%,
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes kimiFieldDrift {
+  0% {
+    background-position: 0 0, 0 0, 0 0;
+  }
+  100% {
+    background-position: 0 0, 0 0, 4.5rem 7rem;
+  }
+}
+
+@keyframes kimiSectionRise {
+  0% {
+    opacity: 0.55;
+    transform: translateY(1.15rem);
+  }
+  100% {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes kimiLineDraw {
+  to {
+    transform: scaleX(1);
+  }
+}
+
 @media (max-width: 1100px) {
   body[data-model-skin="gpt-55-sol-high"] .hero-block,
   body[data-model-skin="gpt-55-sol-high"] .stack-intro,
@@ -1614,6 +2275,26 @@ body[data-model-skin="grok-46"] .social-links a {
 
   body[data-model-skin="grok-46"] .site-shell::after {
     left: 0.45rem;
+  }
+
+  body[data-model-skin="kimi-k3"] .site-section--hero {
+    min-height: 82vh;
+  }
+
+  body[data-model-skin="kimi-k3"] .hero-block::before,
+  body[data-model-skin="kimi-k3"] .hero-block::after {
+    width: min(22rem, 92vw);
+  }
+
+  body[data-model-skin="kimi-k3"] .kimi-context-deck__grid {
+    grid-template-columns: 1fr;
+  }
+
+  body[data-model-skin="kimi-k3"] [data-site-section="timeline"]::after,
+  body[data-model-skin="kimi-k3"] [data-site-section="skills"]::after,
+  body[data-model-skin="kimi-k3"] [data-site-section="workflow"]::after,
+  body[data-model-skin="kimi-k3"] [data-site-section="contact"]::after {
+    display: none;
   }
 }
 
