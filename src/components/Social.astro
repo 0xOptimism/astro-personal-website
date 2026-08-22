@@ -1,5 +1,6 @@
 ---
 import data from '../data/data.json';
+import { SITE_DOMAIN } from '../lib/site';
 import Icon from './Icon.astro';
 
 const { socials } = data;
@@ -10,14 +11,17 @@ interface SocialItem {
 }
 ---
 
-<footer class="social-links flex flex-wrap items-center justify-center gap-8 border-t border-[var(--color-surface-elevated)] pt-8">
+<footer class="social-links flex flex-wrap items-center justify-center gap-8 border-t border-(--color-surface-elevated) pt-8">
+  <p class="w-full text-center font-display text-sm tracking-[0.18em] text-(--color-text-muted)">
+    {SITE_DOMAIN}
+  </p>
   {
     socials.map((item: SocialItem) => (
       <a
         href={item.link}
         target="_blank"
-        rel="noopener noreferrer"
-        class="flex h-12 w-12 items-center justify-center rounded-full border border-[var(--color-surface-elevated)] text-[var(--color-text-muted)] transition-all hover:border-[var(--color-accent)] hover:text-[var(--color-accent)] hover:scale-110"
+        rel="me noopener noreferrer"
+        class="flex h-12 w-12 items-center justify-center rounded-full border border-(--color-surface-elevated) text-(--color-text-muted) transition-all hover:border-(--color-accent) hover:text-(--color-accent) hover:scale-110"
         aria-label={item.icon === 'linkedin' ? 'LinkedIn' : 'GitHub'}
       >
         <Icon item={item} size="lg" />

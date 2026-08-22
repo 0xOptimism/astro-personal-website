@@ -1,11 +1,27 @@
 ---
 import '../styles/global.css';
+import { JSON_LD_SCRIPT } from '../lib/agent/seo';
+import { SITE_DESCRIPTION, SITE_NAME, SITE_ORIGIN, SITE_TITLE } from '../lib/site';
 
 export interface Props {
-  title: string;
+  title?: string;
+  description?: string;
+  canonicalPath?: string;
+  includeJsonLd?: boolean;
+  noIndex?: boolean;
 }
 
-const { title } = Astro.props;
+const {
+  title = SITE_TITLE,
+  description = SITE_DESCRIPTION,
+  canonicalPath = '/',
+  includeJsonLd = true,
+  noIndex = false,
+} = Astro.props;
+
+const canonicalUrl = new URL(canonicalPath, SITE_ORIGIN).href;
+const markdownUrl = `${SITE_ORIGIN}/index.md`;
+const llmsUrl = `${SITE_ORIGIN}/llms.txt`;
 
 // Umami analytics (privacy-friendly, no cookies). Set PUBLIC_UMAMI_WEBSITE_ID in production.
 // Forks can use their own ID via env or leave unset to disable.
@@ -20,11 +36,26 @@ const umamiWebsiteId = import.meta.env.PUBLIC_UMAMI_WEBSITE_ID ?? '8f97ce4f-3008
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
+    {noIndex && <meta name="robots" content="noindex" />}
+    <meta name="description" content={description} />
+    <meta name="author" content={SITE_NAME} />
+    <link rel="canonical" href={canonicalUrl} />
+    <link rel="alternate" type="text/markdown" href={markdownUrl} />
+    <link rel="describedby" href={llmsUrl} />
+    <meta property="og:type" content="profile" />
+    <meta property="og:site_name" content={SITE_NAME} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    {includeJsonLd && <script type="application/ld+json" set:html={JSON_LD_SCRIPT} />}
     <!-- Distinctive typography: display + refined body (SKILL) -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..700&family=IBM+Plex+Mono:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400..600;1,6..72,400..600&family=Sora:wght@400;500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,500;0,8..60,600;0,8..60,700;1,8..60,400&family=Space+Grotesk:wght@400;500;600;700&family=Syne:wght@400;500;600;700;800&family=Unbounded:wght@500;600;700;800&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..700&family=IBM+Plex+Mono:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400..600;1,6..72,400..600&family=Sora:wght@400;500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,500;0;8..60,700;1,8..60,400&family=Space+Grotesk:wght@400;500;600;700&family=Syne:wght@400;500;600;700;800&family=Unbounded:wght@500;600;700;800&display=swap"
       rel="stylesheet"
     />
     <!-- Umami analytics: privacy-friendly, no cookies, GDPR-compliant -->

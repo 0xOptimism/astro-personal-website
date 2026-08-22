@@ -68,9 +68,7 @@ body::before {
 
 /* --- Staggered reveal (SKILL: high-impact page load) --- */
 .reveal {
-  opacity: 0;
-  transform: translateY(1.25rem);
-  animation: reveal 0.8s var(--ease-out-expo) forwards;
+  animation: reveal 0.8s var(--ease-out-expo);
 }
 
 .reveal-delay-1 { animation-delay: 0.1s; }
@@ -83,6 +81,10 @@ body::before {
 .reveal-delay-8 { animation-delay: 1.05s; }
 
 @keyframes reveal {
+  from {
+    opacity: 0;
+    transform: translateY(1.25rem);
+  }
   to {
     opacity: 1;
     transform: translateY(0);
@@ -3301,6 +3303,10 @@ body[data-model-skin="claude-opus-5"] .model-frame__corner.is-br {
     animation-iteration-count: 1 !important;
     scroll-behavior: auto !important;
     transition-duration: 0.001ms !important;
+  }
+
+  .reveal {
+    animation: none !important;
   }
 
   body[data-model-skin="claude-opus-5"] .site-shell::before {

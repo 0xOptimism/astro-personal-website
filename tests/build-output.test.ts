@@ -1,0 +1,81 @@
+import { existsSync, readFileSync } from 'node:fs';
+import { dirname, join } from 'node:path';
+import { fileURLToPath } from 'node:url';
+import { describe, expect, it } from 'vitest';
+import { GET as getIndexMarkdown } from '../src/pages/index.md.ts';
+import { GET as getLlms } from '../src/pages/llms.txt.ts';
+import { homepageMarkdown } from '../src/lib/agent/markdown';
+import { llmsTxt } from '../src/lib/agent/llms';
+import { JSON_LD_SCRIPT } from '../src/lib/agent/seo';
+
+const root = join(dirname(fileURLToPath(import.meta.url)), '..');
+const distIndex = join(root, 'dist', 'index.html');
+const dist404 = join(root, 'dist', '404.html');
+const distBuilt = existsSync(distIndex);
+
+function stripHtml(html: string): string {
+  return html
+    .replace(/<script[\s\S]*?<\/script>/gi, ' ')
+    .replace(/<style[\s\S]*?<\/style>/gi, ' ')
+    .replace(/<[^>]+>/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+function extractHeadings(html: string, tag: 'h1' | 'h2' | 'h3'): string[] {
+  const matches = html.match(new RegExp(`<${tag}\\b[^>]*>[\\s\\S]*?<\\/${tag}>`, 'gi')) ?? [];
+  return matches.filter((block) => !/<a\b/i.test(block));
+}
+
+describe.skipIf(!distBuilt)('built homepage HTML', () => {
+  const html = readFileSync(distIndex, 'utf8');
+  const text = stripHtml(html);
+
+  it('includes a visible H1 and nested H2/H3 outside links', () => {
+    expect(extractHeadings(html, 'h1').join(' ')).toMatch(/Yannis/);
+    expect(extractHeadings(html, 'h2').length).toBeGreaterThan(0);
+    expect(extractHeadings(html, 'h3').length).toBeGreaterThan(0);
+  });
+
+  it('has at least 500 characters of text in raw HTML', () => {
+    expect(text.length).toBeGreaterThanOrEqual(500);
+  });
+
+  it('embeds Person JSON-LD in the first response', () => {
+    expect(html).toContain(JSON_LD_SCRIPT);
+    const parsed = JSON.parse(JSON_LD_SCRIPT) as { '@graph'?: Array<Record<string, unknown>> };
+    const person = parsed['@graph']?.find((node) => node['@type'] === 'Person');
+    expect(person?.name).toBe('Yannis');
+    expect(person?.url).toBe('https://yannis.dev');
+  });
+
+  it('does not hide the H1 behind a reveal class', () => {
+    const h1 = html.match(/<h1\b[^>]*>[\s\S]*?<\/h1>/i)?.[0] ?? '';
+    expect(h1).not.toMatch(/class="[^"]*reveal[^"]*"/);
+  });
+});
+
+describe.skipIf(!existsSync(dist404))('built 404 HTML', () => {
+  const html = readFileSync(dist404, 'utf8');
+
+  it('includes a markdown recovery body and agent links', () => {
+    expect(html).toMatch(/<h1\b[^>]*>\s*Not found\s*<\/h1>/i);
+    expect(html).toContain('/llms.txt');
+    expect(html).toContain('/sitemap.xml');
+    expect(html).toContain('# Not found');
+  });
+});
+
+describe('public endpoint handlers', () => {
+  it('serves homepage markdown from /index.md', async () => {
+    const response = await getIndexMarkdown({} as never);
+    expect(response.headers.get('Content-Type')).toContain('text/markdown');
+    expect(await response.text()).toBe(homepageMarkdown());
+  });
+
+  it('serves llms.txt as markdown', async () => {
+    const response = await getLlms({} as never);
+    expect(response.headers.get('Content-Type')).toContain('text/markdown');
+    expect(await response.text()).toBe(llmsTxt());
+  });
+});

@@ -1,87 +1,52 @@
 ---
-const title = "Yannis";
-const role = "Full-stack developer";
-const description = "I build production web apps across frontend, backend, and mobile, mostly with TypeScript, React, Node.js, and agentic workflows.";
-const proofPoints = [
-  "5+ years shipping product",
-  "Medtech, e-commerce, Web3",
-  "ETH Denver 2023 winner",
-  "Antibes-born, Stockholm-based"
-];
+import { HERO_KICKER, HERO_LEDE, HERO_NAME, HERO_ROLE, PROOF_POINTS } from '../lib/site';
 
 const solCapabilities = [
-  {
-    label: "Product systems",
-    value: "Frontend, backend, mobile",
-  },
-  {
-    label: "AI loop",
-    value: "Agents, review, automation",
-  },
-  {
-    label: "Commercial edge",
-    value: "Payments, Web3, e-commerce",
-  },
+  { label: 'Product systems', value: 'Frontend, backend, mobile' },
+  { label: 'AI loop', value: 'Agents, review, automation' },
+  { label: 'Commercial edge', value: 'Payments, Web3, e-commerce' },
 ];
 
-const opusAbstract = "Read end to end, the record is consistent: a self-taught start in Ethereum, an early seat at a medtech startup, a music-NFT marketplace shipped against real contracts, a hackathon win among 600+ teams, and now full-stack product work on a global commerce platform — the same instinct applied at larger and larger stakes.";
+const opusAbstract = 'Read end to end, the record is consistent: a self-taught start in Ethereum, an early seat at a medtech startup, a music-NFT marketplace shipped against real contracts, a hackathon win among 600+ teams, and now full-stack product work on a global commerce platform — the same instinct applied at larger and larger stakes.';
 
 const opusReadings = [
-  {
-    label: "Premise",
-    value: "Products, not demos",
-  },
-  {
-    label: "Method",
-    value: "Reason first, then build",
-  },
-  {
-    label: "Range",
-    value: "Medtech, commerce, onchain",
-  },
+  { label: 'Premise', value: 'Products, not demos' },
+  { label: 'Method', value: 'Reason first, then build' },
+  { label: 'Range', value: 'Medtech, commerce, onchain' },
 ];
 
-const opusFootnote = "Synthesized from 8 years, 6 teams, 3 industries.";
+const opusFootnote = 'Synthesized from 8 years, 6 teams, 3 industries.';
 
 const kimiTelemetry = [
-  {
-    label: "Context window",
-    value: "2M tokens of horizon",
-  },
-  {
-    label: "Mission elapsed",
-    value: "7+ years in orbit",
-  },
-  {
-    label: "Guidance",
-    value: "Agentic loops, human taste",
-  },
+  { label: 'Context window', value: '2M tokens of horizon' },
+  { label: 'Mission elapsed', value: '7+ years in orbit' },
+  { label: 'Guidance', value: 'Agentic loops, human taste' },
 ];
 ---
 
 <div class="hero-block font-display">
   <p class="hero-kicker reveal text-(--color-text-muted) text-sm uppercase tracking-[0.2em]">
-    Hey, I'm
+    {HERO_KICKER}
   </p>
-  <h1 class="hero-title reveal reveal-delay-1 mt-2 text-5xl font-extrabold tracking-tight sm:text-6xl md:text-7xl lg:text-8xl">
-    {title}
+  <h1 class="hero-title mt-2 text-5xl font-extrabold tracking-tight sm:text-6xl md:text-7xl lg:text-8xl">
+    {HERO_NAME}
   </h1>
-  <p class="hero-role reveal reveal-delay-2 mt-3 text-2xl font-medium text-(--color-accent) sm:text-3xl md:text-4xl">
-    {role}
+  <p class="hero-role reveal reveal-delay-1 mt-3 text-2xl font-medium text-(--color-accent) sm:text-3xl md:text-4xl">
+    {HERO_ROLE}
   </p>
-  <p class="hero-lede reveal reveal-delay-3 mt-8 max-w-xl font-body text-lg font-normal leading-relaxed text-(--color-text-muted)">
-    {description}
+  <p class="hero-lede reveal reveal-delay-2 mt-8 max-w-xl font-body text-lg font-normal leading-relaxed text-(--color-text-muted)">
+    {HERO_LEDE}
   </p>
-  <div class="hero-signals reveal reveal-delay-4 mt-8 flex max-w-2xl flex-wrap gap-2">
+  <div class="hero-signals reveal reveal-delay-3 mt-8 flex max-w-2xl flex-wrap gap-2">
     {
-      proofPoints.map((point) => (
+      PROOF_POINTS.map((point) => (
         <span class="hero-signal rounded-md border border-(--color-surface-elevated) bg-(--color-surface) px-3 py-2 font-body text-sm text-(--color-text-muted)">
           {point}
         </span>
       ))
     }
   </div>
-  <div class="sol-command-deck reveal reveal-delay-5">
+  <div class="sol-command-deck reveal reveal-delay-4">
     <p class="sol-command-deck__eyebrow">GPT-5.5 Sol High portfolio mode</p>
     <div class="sol-command-deck__grid">
       {
@@ -94,7 +59,7 @@ const kimiTelemetry = [
       }
     </div>
   </div>
-  <div class="opus-brief reveal reveal-delay-5">
+  <div class="opus-brief reveal reveal-delay-4">
     <div class="opus-brief__masthead">
       <p class="opus-brief__eyebrow">Claude Opus 5 portfolio mode</p>
       <p class="opus-brief__meta">Abstract</p>
@@ -112,7 +77,7 @@ const kimiTelemetry = [
     </div>
     <p class="opus-brief__footnote">{opusFootnote}</p>
   </div>
-  <div class="kimi-context-deck reveal reveal-delay-5">
+  <div class="kimi-context-deck reveal reveal-delay-4">
     <div class="kimi-context-deck__header">
       <p class="kimi-context-deck__eyebrow">Kimi K3 portfolio mode</p>
       <p class="kimi-context-deck__readout">ctx 2,000,000 / 2,000,000</p>
