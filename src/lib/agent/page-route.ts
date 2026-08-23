@@ -1,8 +1,8 @@
 import type { APIRoute } from 'astro';
-import type { PublicPage } from '../pages';
-import { pageMarkdown } from '../pages';
-import { homepageLinkHeader } from './seo';
-import { MARKDOWN_CONTENT_TYPE, VARY_ACCEPT } from './negotiate';
+import type { PublicPage } from '../pages.ts';
+import { pageMarkdown } from '../pages.ts';
+import { homepageLinkHeader } from './seo.ts';
+import { MARKDOWN_CONTENT_TYPE, VARY_ACCEPT } from './negotiate.ts';
 
 function jsonHeaders(): Record<string, string> {
   return {

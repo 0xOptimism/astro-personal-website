@@ -1,4 +1,4 @@
-import { HTML_PAGES } from '../pages';
+import { HTML_PAGES } from '../pages.ts';
 import {
   SAME_AS,
   SITE_DESCRIPTION,
@@ -6,9 +6,9 @@ import {
   SITE_EMAIL,
   SITE_EMPLOYER,
   SITE_NAME,
-} from '../site';
-import { homepageMarkdown, pageCollectionMarkdown } from './markdown';
-import { MACHINE_PATHS } from './routes';
+} from '../site.ts';
+import { homepageMarkdown, pageCollectionMarkdown } from './markdown.ts';
+import { MACHINE_PATHS } from './routes.ts';
 
 export function llmsTxt(): string {
   const resourceLines = HTML_PAGES.map(

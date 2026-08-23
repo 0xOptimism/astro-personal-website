@@ -1,4 +1,4 @@
-import { SITE_ORIGIN } from '../site';
+import { SITE_ORIGIN } from '../site.ts';
 
 export const MACHINE_PATHS = {
   homepageMarkdown: '/index.md',
