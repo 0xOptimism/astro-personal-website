@@ -2,13 +2,16 @@
 import Layout from '../layouts/Layout.astro';
 import { notFoundMarkdown } from '../lib/agent/markdown';
 import { SITE_EMAIL, SITE_ORIGIN } from '../lib/site';
+import SiteNav from '../components/SiteNav.astro';
 
 const recoveryLinks = [
   { href: `${SITE_ORIGIN}/`, label: 'Home', note: 'Profile of Yannis, full-stack developer' },
+  { href: `${SITE_ORIGIN}/about`, label: 'About', note: 'Long-form profile' },
+  { href: `${SITE_ORIGIN}/developers`, label: 'Developers', note: 'OpenAPI, auth, webhooks, MCP' },
   { href: `${SITE_ORIGIN}/index.md`, label: 'Homepage markdown', note: 'Markdown twin of the homepage' },
   { href: `${SITE_ORIGIN}/llms.txt`, label: 'llms.txt', note: 'Agent index and key links' },
   { href: `${SITE_ORIGIN}/sitemap.xml`, label: 'Sitemap', note: 'Public page list' },
-  { href: `${SITE_ORIGIN}/#contact`, label: 'Contact', note: `Email ${SITE_EMAIL}` },
+  { href: `${SITE_ORIGIN}/contact`, label: 'Contact', note: `Email ${SITE_EMAIL}` },
 ];
 ---
 
@@ -40,6 +43,7 @@ const recoveryLinks = [
       </ul>
 
       <pre class="not-found-markdown mt-10 overflow-x-auto rounded-md border border-(--color-surface-elevated) bg-(--color-surface) p-5 font-mono text-sm leading-relaxed text-(--color-text-muted)">{notFoundMarkdown()}</pre>
+      <SiteNav />
     </article>
   </main>
 </Layout>

@@ -18,6 +18,7 @@ export interface Props {
   canonicalPath?: string;
   includeJsonLd?: boolean;
   noIndex?: boolean;
+  ogType?: 'profile' | 'website';
 }
 
 const {
@@ -26,10 +27,12 @@ const {
   canonicalPath = '/',
   includeJsonLd = true,
   noIndex = false,
+  ogType = 'website',
 } = Astro.props;
 
 const canonicalUrl = new URL(canonicalPath, SITE_ORIGIN).href;
-const markdownUrl = `${SITE_ORIGIN}/index.md`;
+const markdownUrl =
+  canonicalPath === '/' ? `${SITE_ORIGIN}/index.md` : `${SITE_ORIGIN}${canonicalPath}.md`;
 const llmsUrl = `${SITE_ORIGIN}/llms.txt`;
 const ogImageUrl = new URL(SITE_OG_IMAGE_PATH, SITE_ORIGIN).href;
 
@@ -43,25 +46,26 @@ const umamiWebsiteId = import.meta.env.PUBLIC_UMAMI_WEBSITE_ID ?? '8f97ce4f-3008
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
+    <title>{title}</title>
+    <link rel="canonical" href={canonicalUrl} />
+    <meta property="og:type" content={ogType} />
+    <meta property="og:image" content={ogImageUrl} />
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />
     <meta name="generator" content={Astro.generator} />
-    <title>{title}</title>
     {noIndex && <meta name="robots" content="noindex" />}
     <meta name="description" content={description} />
     <meta name="author" content={SITE_NAME} />
-    <link rel="canonical" href={canonicalUrl} />
     <link rel="alternate" type="text/markdown" href={markdownUrl} />
     <link rel="describedby" href={llmsUrl} />
-    <meta property="og:type" content="profile" />
     <meta property="og:site_name" content={SITE_NAME} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonicalUrl} />
-    <meta property="og:image" content={ogImageUrl} />
+    <slot name="head" />
     <meta property="og:image:secure_url" content={ogImageUrl} />
     <meta property="og:image:type" content="image/png" />
-    <meta property="og:image:width" content={SITE_OG_IMAGE_WIDTH} />
-    <meta property="og:image:height" content={SITE_OG_IMAGE_HEIGHT} />
+    <meta property="og:image:width" content={String(SITE_OG_IMAGE_WIDTH)} />
+    <meta property="og:image:height" content={String(SITE_OG_IMAGE_HEIGHT)} />
     <meta property="og:image:alt" content={SITE_OG_IMAGE_ALT} />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />

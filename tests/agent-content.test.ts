@@ -48,9 +48,13 @@ describe('robots and sitemap', () => {
     expect(robots).toContain(`Sitemap: https://${SITE_DOMAIN}/sitemap.xml`);
   });
 
-  it('includes the canonical homepage', () => {
+  it('includes the canonical homepage and trust pages', () => {
     const sitemap = sitemapXml();
     expect(sitemap).toContain(`https://${SITE_DOMAIN}/`);
+    expect(sitemap).toContain(`https://${SITE_DOMAIN}/about`);
+    expect(sitemap).toContain(`https://${SITE_DOMAIN}/contact`);
+    expect(sitemap).toContain(`https://${SITE_DOMAIN}/privacy`);
+    expect(sitemap).toContain(`https://${SITE_DOMAIN}/developers`);
   });
 });
 
@@ -63,6 +67,18 @@ describe('JSON-LD', () => {
     expect(person.name).toBe(SITE_NAME);
     expect(person.description).toBeTruthy();
     expect(person.url).toBe(`https://${SITE_DOMAIN}`);
+  });
+
+  it('includes Organization contactPoint and address', () => {
+    const parsed = JSON.parse(JSON_LD_SCRIPT) as { '@graph'?: Array<Record<string, unknown>> };
+    const organization = parsed['@graph']?.find((node) => node['@type'] === 'Organization');
+    expect(organization?.name).toBe(SITE_NAME);
+    const contactPoint = organization?.contactPoint as { email?: string; contactType?: string };
+    expect(contactPoint.email).toBe(SITE_EMAIL);
+    expect(contactPoint.contactType).toBe('customer service');
+    const address = organization?.address as { '@type'?: string; addressLocality?: string };
+    expect(address['@type']).toBe('PostalAddress');
+    expect(address.addressLocality).toBeTruthy();
   });
 
   it('escapes < in the script payload', () => {

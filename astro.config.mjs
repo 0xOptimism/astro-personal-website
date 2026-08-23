@@ -9,4 +9,10 @@ export default defineConfig({
   vite: {
     plugins: [tailwind()],
   },
+  redirects: {
+    '/docs': '/developers',
+    '/docs/auth': '/developers/auth',
+    '/docs/mcp': '/developers/mcp',
+    '/docs/webhooks': '/developers/webhooks',
+  },
 });

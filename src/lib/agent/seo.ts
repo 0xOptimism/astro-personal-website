@@ -1,3 +1,4 @@
+import { HTML_PAGES } from '../pages.ts';
 import {
   KNOWS_ABOUT,
   SAME_AS,
@@ -14,6 +15,18 @@ import {
 } from '../site.ts';
 
 const siteImageUrl = `https://${SITE_DOMAIN}${SITE_OG_IMAGE_PATH}`;
+const postalAddress = {
+  '@type': 'PostalAddress',
+  addressLocality: SITE_LOCATION,
+  addressCountry: SITE_COUNTRY,
+};
+const contactPoint = {
+  '@type': 'ContactPoint',
+  email: SITE_EMAIL,
+  contactType: 'customer service',
+  url: `https://${SITE_DOMAIN}/contact`,
+  availableLanguage: ['English'],
+};
 
 export const JSON_LD_SCRIPT = JSON.stringify({
   '@context': 'https://schema.org',
@@ -33,23 +46,35 @@ export const JSON_LD_SCRIPT = JSON.stringify({
       homeLocation: {
         '@type': 'Place',
         name: SITE_LOCATION,
-        address: {
-          '@type': 'PostalAddress',
-          addressLocality: SITE_LOCATION,
-          addressCountry: SITE_COUNTRY,
-        },
+        address: postalAddress,
       },
+    },
+    {
+      '@type': 'Organization',
+      '@id': `https://${SITE_DOMAIN}/#organization`,
+      name: SITE_NAME,
+      legalName: SITE_NAME,
+      alternateName: [SITE_DOMAIN, `${SITE_NAME} full-stack developer`],
+      url: `https://${SITE_DOMAIN}`,
+      logo: siteImageUrl,
+      image: siteImageUrl,
+      email: SITE_EMAIL,
+      description: SITE_DESCRIPTION,
+      sameAs: [...SAME_AS],
+      founder: { '@id': `https://${SITE_DOMAIN}/#person` },
+      contactPoint,
+      address: postalAddress,
     },
     {
       '@type': 'WebSite',
       '@id': `https://${SITE_DOMAIN}/#website`,
       name: SITE_NAME,
-      alternateName: [SITE_DOMAIN, 'Yannis full-stack developer'],
+      alternateName: [SITE_DOMAIN, `${SITE_NAME} full-stack developer`],
       url: `https://${SITE_DOMAIN}`,
       description: SITE_DESCRIPTION,
       image: siteImageUrl,
       inLanguage: 'en',
-      publisher: { '@id': `https://${SITE_DOMAIN}/#person` },
+      publisher: { '@id': `https://${SITE_DOMAIN}/#organization` },
       author: { '@id': `https://${SITE_DOMAIN}/#person` },
     },
     {
@@ -94,14 +119,27 @@ Sitemap: https://${SITE_DOMAIN}/sitemap.xml
 
 export function sitemapXml(): string {
   const lastmod = new Date().toISOString().slice(0, 10);
+  const urls = [
+    { path: '/', changefreq: 'monthly', priority: '1.0' },
+    ...HTML_PAGES.map((page) => ({
+      path: page.path,
+      changefreq: page.changefreq,
+      priority: page.priority,
+    })),
+  ];
+  const body = urls
+    .map(
+      (entry) => `  <url>
+    <loc>https://${SITE_DOMAIN}${entry.path}</loc>
+    <changefreq>${entry.changefreq}</changefreq>
+    <priority>${entry.priority}</priority>
+    <lastmod>${lastmod}</lastmod>
+  </url>`,
+    )
+    .join('\n');
   return `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>https://${SITE_DOMAIN}/</loc>
-    <changefreq>monthly</changefreq>
-    <priority>1.0</priority>
-    <lastmod>${lastmod}</lastmod>
-  </url>
+${body}
 </urlset>
 `;
 }
