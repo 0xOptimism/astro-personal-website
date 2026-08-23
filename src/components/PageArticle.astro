@@ -1,0 +1,51 @@
+---
+import Layout from '../layouts/Layout.astro';
+import ModelSwitcher from './ModelSwitcher.astro';
+import SiteNav from './SiteNav.astro';
+import { splitMarkdownLinks, type PublicPage } from '../lib/pages';
+import { SAME_AS, SITE_DOMAIN } from '../lib/site';
+
+interface Props {
+  page: PublicPage;
+}
+
+const { page } = Astro.props;
+const sameAs = new Set<string>(SAME_AS);
+---
+
+<Layout title={page.title} description={page.description} canonicalPath={page.path} ogType="website">
+  <ModelSwitcher />
+  <main class="site-shell min-h-screen px-6 py-(--space-section) md:px-12 lg:px-16">
+    <article class="mx-auto max-w-2xl">
+      <p class="font-display text-sm font-semibold uppercase tracking-[0.2em] text-(--color-accent)">
+        {SITE_DOMAIN}
+      </p>
+      <h1 class="mt-3 font-display text-4xl font-extrabold tracking-tight sm:text-5xl">
+        {page.heading}
+      </h1>
+      <div class="page-prose mt-8 space-y-5 font-body text-lg leading-relaxed text-(--color-text-muted)">
+        {
+          page.body.split(/\n\n+/).map((paragraph) => (
+            <p>
+              {splitMarkdownLinks(paragraph).map((part) =>
+                part.href ? (
+                  <a
+                    class="link-accent"
+                    href={part.href}
+                    rel={sameAs.has(part.href) ? 'me' : undefined}
+                  >
+                    {part.text}
+                  </a>
+                ) : (
+                  part.text
+                )
+              )}
+            </p>
+          ))
+        }
+        <slot />
+      </div>
+      <SiteNav currentPath={page.path} />
+    </article>
+  </main>
+</Layout>

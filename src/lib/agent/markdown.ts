@@ -1,3 +1,5 @@
+import { HTML_PAGES, pageMarkdown } from '../pages.ts';
+import { normalizeIndexHtml } from './routes.ts';
 import {
   ABOUT_AGENTS,
   ABOUT_AGENTS_HEADING,
@@ -82,12 +84,32 @@ ${timelineLines}
 Email [${SITE_EMAIL}](mailto:${SITE_EMAIL}).
 
 - [Home](https://${SITE_DOMAIN}/)
+- [About](https://${SITE_DOMAIN}/about)
+- [Contact](https://${SITE_DOMAIN}/contact)
+- [Privacy](https://${SITE_DOMAIN}/privacy)
+- [Yannis developer resources](https://${SITE_DOMAIN}/developers)
+- [OpenAPI](https://${SITE_DOMAIN}/openapi.json)
+- [MCP server](https://${SITE_DOMAIN}/mcp)
 - [Markdown twin](https://${SITE_DOMAIN}/index.md)
 - [llms.txt](https://${SITE_DOMAIN}/llms.txt)
 - [Sitemap](https://${SITE_DOMAIN}/sitemap.xml)
 - [LinkedIn](${SAME_AS[0]})
 - [GitHub](${SAME_AS[1]})
 `;
+}
+
+export function pageCollectionMarkdown(): string {
+  return HTML_PAGES.map((page) => pageMarkdown(page).trim()).join('\n\n---\n\n');
+}
+
+export function markdownForPath(pathname: string): string | null {
+  const path = normalizeIndexHtml(pathname);
+  if (path === '/') {
+    return homepageMarkdown();
+  }
+
+  const page = HTML_PAGES.find((entry) => entry.path === path);
+  return page ? pageMarkdown(page) : null;
 }
 
 export function notFoundMarkdown(): string {
@@ -98,10 +120,12 @@ The path you requested does not exist on ${SITE_DOMAIN}.
 ## Where to look next
 
 - [Home](https://${SITE_DOMAIN}/): Profile of ${SITE_NAME}, full-stack developer
+- [About](https://${SITE_DOMAIN}/about): Long-form profile
+- [Yannis developer resources](https://${SITE_DOMAIN}/developers): OpenAPI, auth, webhooks, MCP
 - [Homepage markdown](https://${SITE_DOMAIN}/index.md): Markdown twin of the homepage
 - [llms.txt](https://${SITE_DOMAIN}/llms.txt): Agent index and key links
 - [Sitemap](https://${SITE_DOMAIN}/sitemap.xml): Public page list
-- [Contact](https://${SITE_DOMAIN}/#contact): Email ${SITE_EMAIL}
+- [Contact](https://${SITE_DOMAIN}/contact): Email ${SITE_EMAIL}
 `;
 }
 

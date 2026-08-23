@@ -2,6 +2,7 @@
 import data from '../data/data.json';
 import { SITE_DOMAIN } from '../lib/site';
 import Icon from './Icon.astro';
+import SiteNav from './SiteNav.astro';
 
 const { socials } = data;
 
@@ -11,21 +12,24 @@ interface SocialItem {
 }
 ---
 
-<footer class="social-links flex flex-wrap items-center justify-center gap-8 border-t border-(--color-surface-elevated) pt-8">
-  <p class="w-full text-center font-display text-sm tracking-[0.18em] text-(--color-text-muted)">
-    {SITE_DOMAIN}
-  </p>
-  {
-    socials.map((item: SocialItem) => (
-      <a
-        href={item.link}
-        target="_blank"
-        rel="me noopener noreferrer"
-        class="flex h-12 w-12 items-center justify-center rounded-full border border-(--color-surface-elevated) text-(--color-text-muted) transition-all hover:border-(--color-accent) hover:text-(--color-accent) hover:scale-110"
-        aria-label={item.icon === 'linkedin' ? 'LinkedIn' : 'GitHub'}
-      >
-        <Icon item={item} size="lg" />
-      </a>
-    ))
-  }
-</footer>
+<div class="flex flex-col items-center">
+  <footer class="social-links flex flex-wrap items-center justify-center gap-8 border-t border-(--color-surface-elevated) pt-8">
+    <p class="w-full text-center font-display text-sm tracking-[0.18em] text-(--color-text-muted)">
+      {SITE_DOMAIN}
+    </p>
+    {
+      socials.map((item: SocialItem) => (
+        <a
+          href={item.link}
+          target="_blank"
+          rel="me noopener noreferrer"
+          class="flex h-12 w-12 items-center justify-center rounded-full border border-(--color-surface-elevated) text-(--color-text-muted) transition-all hover:border-(--color-accent) hover:text-(--color-accent) hover:scale-110"
+          aria-label={item.icon === 'linkedin' ? 'LinkedIn' : 'GitHub'}
+        >
+          <Icon item={item} size="lg" />
+        </a>
+      ))
+    }
+  </footer>
+  <SiteNav currentPath="/" compact />
+</div>

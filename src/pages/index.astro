@@ -10,11 +10,12 @@ import Social from '../components/Social.astro';
 import ModelSwitcher from '../components/ModelSwitcher.astro';
 ---
 
-<link
-  rel="stylesheet"
-  href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.15.1/devicon.min.css"
-/>
-<Layout>
+<Layout ogType="profile">
+  <link
+    slot="head"
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.15.1/devicon.min.css"
+  />
   <ModelSwitcher />
   <main class="site-shell min-h-screen">
     <header class="site-section site-section--hero px-6 pt-(--space-section) pb-12 md:px-12 lg:px-16" data-site-section="hero">
