@@ -4,13 +4,9 @@ import Header from '../components/Header.astro';
 import Skills from '../components/Skills.astro';
 import AgenticWorkflow from '../components/AgenticWorkflow.astro';
 import Timeline from '../components/Timeline.astro';
-// import Interests from '../components/Interests.astro';
-import ContactForm from '../components/ContactForm.astro';
 import Social from '../components/Social.astro';
 import ModelSwitcher from '../components/ModelSwitcher.astro';
 import {
-  ABOUT_AGENTS,
-  ABOUT_WORK,
   HERO_LEDE_PARAGRAPHS,
   HERO_NAME,
   SITE_DOMAIN,
@@ -40,24 +36,22 @@ import {
             </h1>
             <p class="mt-4">
               {HERO_NAME} is a {SITE_LOCATION}-based {SITE_JOB_TITLE} at {SITE_EMPLOYER}. {HERO_LEDE_PARAGRAPHS.join(' ')}
+              Earlier work includes Mindler, Anotherblock, and an ETH Denver win.
             </p>
             <p class="mt-4">
-              {ABOUT_WORK} {ABOUT_AGENTS}
-            </p>
-            <p class="mt-4">
-              Agents and crawlers can read the canonical public resources without JavaScript:
+              Public resources:
               <a href="/index.md">/index.md</a>, <a href="/llms.txt">/llms.txt</a>,
               <a href="/llms-full.txt">/llms-full.txt</a>, <a href="/openapi.json">/openapi.json</a>,
               <a href="/api/status.json">/api/status.json</a>, <a href="/.well-known/mcp.json">/.well-known/mcp.json</a>,
-              and the Streamable HTTP MCP endpoint at
-              <a href="/mcp">/mcp</a>. Yannis developer documentation for {SITE_DOMAIN} is published at
-              <a href="/developers">/developers</a>, including <a href="/developers/auth">auth</a>,
-              <a href="/developers/errors">JSON errors</a>, <a href="/developers/versioning">API versioning</a>,
-              <a href="/developers/rate-limits">rate limits</a>, <a href="/developers/webhooks">webhooks</a>,
-              and <a href="/developers/mcp">MCP connection details</a>.
+              <a href="/mcp">/mcp</a>, <a href="/developers">/developers</a>,
+              <a href="/developers/auth">auth</a>, <a href="/developers/errors">JSON errors</a>,
+              <a href="/developers/versioning">API versioning</a>,
+              <a href="/developers/rate-limits">rate limits</a>,
+              <a href="/developers/webhooks">webhooks</a>,
+              and <a href="/developers/mcp">MCP</a>.
             </p>
             <p class="mt-4">
-              The canonical URL is <a href={SITE_ORIGIN}>{SITE_ORIGIN}</a>. Contact: <a href={`mailto:${SITE_EMAIL}`}>{SITE_EMAIL}</a>.
+              Canonical URL: <a href={SITE_ORIGIN}>{SITE_ORIGIN}</a>. Contact: <a href={`mailto:${SITE_EMAIL}`}>{SITE_EMAIL}</a>. {SITE_DOMAIN} developer docs stay on <a href="/developers">/developers</a>.
             </p>
           </section>
         </noscript>
@@ -76,24 +70,9 @@ import {
       </div>
     </section>
 
-    <!-- Interests: commented out for now, rebuild later -->
-    <!--
-    <section class="px-6 py-[var(--space-section)] md:px-12 lg:px-16" aria-labelledby="interests-heading">
-      <div class="mx-auto max-w-6xl">
-        <Interests />
-      </div>
-    </section>
-    -->
-
     <section class="site-section px-6 py-(--space-section) md:px-12 lg:px-16" data-site-section="timeline" aria-labelledby="timeline-heading">
       <div class="mx-auto max-w-5xl">
         <Timeline />
-      </div>
-    </section>
-
-    <section class="site-section px-6 py-(--space-section) md:px-12 lg:px-16" data-site-section="contact" aria-labelledby="contact-heading">
-      <div class="mx-auto max-w-xl">
-        <ContactForm />
       </div>
     </section>
 

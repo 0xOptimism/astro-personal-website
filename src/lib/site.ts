@@ -28,17 +28,15 @@ export const HERO_NAME = SITE_NAME;
 export const HERO_ROLE = SITE_JOB_TITLE;
 
 export const HERO_LEDE_PARAGRAPHS = [
-  "I'm a full-stack developer in Stockholm. I build web and mobile products with TypeScript, React, and Node.js.",
-  'At BabyBjörn, I work on commerce, payments, and internal tools. Earlier work spans medtech, Web3, and an ETH Denver win among 600+ teams.',
+  'I work on commerce and payments at BabyBjörn in Stockholm.',
 ] as const;
 
 export const HERO_LEDE = HERO_LEDE_PARAGRAPHS.join('\n\n');
 
 export const PROOF_POINTS = [
-  '5+ years in product teams',
-  'Commerce, medtech, Web3',
+  'BabyBjörn · commerce',
   'ETH Denver 2023 winner',
-  'Born in Antibes. Based in Stockholm.',
+  'Stockholm',
 ] as const;
 
 export const ABOUT_WORK_HEADING = 'Work';

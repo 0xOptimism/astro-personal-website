@@ -448,10 +448,10 @@ body::before {
 }
 
 :is(body:not([data-model-skin]), body[data-model-skin=""]) .site-section--hero {
-  min-height: 78vh;
-  display: flex;
-  align-items: flex-end;
-  padding-bottom: clamp(3rem, 8vw, 5.5rem);
+  min-height: 0;
+  display: block;
+  padding-top: clamp(5.25rem, 8vw, 6.5rem);
+  padding-bottom: clamp(2.5rem, 6vw, 4rem);
 }
 
 :is(body:not([data-model-skin]), body[data-model-skin=""]) [data-site-section="skills"],
@@ -460,7 +460,7 @@ body::before {
 }
 
 :is(body:not([data-model-skin]), body[data-model-skin=""]) .stack-intro p:last-child,
-:is(body:not([data-model-skin]), body[data-model-skin=""]) .workflow-intro > p:nth-child(3),
+:is(body:not([data-model-skin]), body[data-model-skin=""]) .workflow-intro > p:last-of-type,
 :is(body:not([data-model-skin]), body[data-model-skin=""]) .timeline-intro p:last-child {
   max-width: 38rem;
   font-size: 1.0625rem;
@@ -633,7 +633,8 @@ body::before {
 
 @media (max-width: 640px) {
   :is(body:not([data-model-skin]), body[data-model-skin=""]) .site-section--hero {
-    min-height: 72vh;
+    min-height: 0;
+    padding-top: 5rem;
   }
 
   :is(body:not([data-model-skin]), body[data-model-skin=""]) .hero-signals {
@@ -1276,7 +1277,7 @@ body[data-model-skin="gpt-56-sol-high"] .hero-block {
   max-width: none;
 }
 
-body[data-model-skin="gpt-56-sol-high"] :is(.hero-kicker, .hero-title, .hero-role, .hero-lede, .hero-signals) {
+body[data-model-skin="gpt-56-sol-high"] :is(.hero-kicker, .hero-title, .hero-role, .hero-lede, .hero-email, .hero-signals) {
   display: none;
 }
 
@@ -1854,6 +1855,7 @@ body[data-model-skin="grok-46"] [data-site-section="contact"]::after { content: 
 body[data-model-skin="grok-46"] .hero-kicker,
 body[data-model-skin="grok-46"] .hero-role,
 body[data-model-skin="grok-46"] .hero-lede,
+body[data-model-skin="grok-46"] .hero-email,
 body[data-model-skin="grok-46"] .hero-signals {
   display: none;
 }
@@ -2145,7 +2147,7 @@ body[data-model-skin="grok-46"] .timeline-intro {
 }
 
 body[data-model-skin="grok-46"] .stack-intro p:last-child,
-body[data-model-skin="grok-46"] .workflow-intro > p:nth-child(3),
+body[data-model-skin="grok-46"] .workflow-intro > p:last-of-type,
 body[data-model-skin="grok-46"] .timeline-intro p:last-child {
   max-width: 36ch;
   margin-top: 0.9rem;
@@ -3266,7 +3268,7 @@ body[data-model-skin="claude-opus-5"] .timeline-intro p:first-child {
 }
 
 body[data-model-skin="claude-opus-5"] .stack-intro p:last-child,
-body[data-model-skin="claude-opus-5"] .workflow-intro > p:nth-child(3),
+body[data-model-skin="claude-opus-5"] .workflow-intro > p:last-of-type,
 body[data-model-skin="claude-opus-5"] .timeline-intro p:last-child {
   margin-top: 1rem;
   max-width: none;
@@ -4202,7 +4204,7 @@ body[data-model-skin="claude-opus-5"] .model-frame__corner.is-br {
   }
 
   body[data-model-skin="claude-opus-5"] .stack-intro p:last-child,
-  body[data-model-skin="claude-opus-5"] .workflow-intro > p:nth-child(3),
+  body[data-model-skin="claude-opus-5"] .workflow-intro > p:last-of-type,
   body[data-model-skin="claude-opus-5"] .timeline-intro p:last-child {
     max-width: 62ch;
   }
