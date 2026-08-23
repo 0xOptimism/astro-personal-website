@@ -6,7 +6,8 @@ import {
 } from '../../src/lib/agent/negotiate.ts';
 import { homepageLinkHeader } from '../../src/lib/agent/seo.ts';
 import { markdownForPath, notAcceptableBody, notFoundMarkdown } from '../../src/lib/agent/markdown.ts';
-import { isNegotiatePassthrough, normalizeIndexHtml } from '../../src/lib/agent/routes.ts';
+import { isNegotiatePassthrough, MACHINE_PATHS, normalizeIndexHtml } from '../../src/lib/agent/routes.ts';
+import { API_RESPONSE_HEADERS, EXPOSED_AGENT_HEADERS, problemResponse } from '../../src/lib/agent/http.ts';
 
 interface Context {
   next: () => Promise<Response>;
@@ -18,12 +19,55 @@ function hasFileExtension(pathname: string): boolean {
   return dot > 0 && dot < filename.length - 1;
 }
 
+function isAgentMachineFile(pathname: string): boolean {
+  return (
+    pathname === MACHINE_PATHS.openapi ||
+    pathname === MACHINE_PATHS.apiStatus ||
+    pathname === MACHINE_PATHS.homepageMarkdown ||
+    pathname === MACHINE_PATHS.llms ||
+    pathname === MACHINE_PATHS.llmsFull ||
+    pathname === MACHINE_PATHS.mcpServerCard ||
+    pathname === MACHINE_PATHS.mcpEndpointManifest ||
+    pathname.endsWith('.md')
+  );
+}
+
+function withAgentHeaders(response: Response): Response {
+  const headers = new Headers(response.headers);
+  headers.set('Access-Control-Allow-Origin', '*');
+  headers.set('Access-Control-Expose-Headers', EXPOSED_AGENT_HEADERS);
+  for (const [key, value] of Object.entries(API_RESPONSE_HEADERS)) {
+    headers.set(key, value);
+  }
+  return new Response(response.body, {
+    status: response.status,
+    statusText: response.statusText,
+    headers,
+  });
+}
+
 export default async function handler(request: Request, context: Context) {
   const pathname = normalizeIndexHtml(new URL(request.url).pathname);
 
   // Static files, MCP, and well-known discovery must not be rewritten.
-  if (isNegotiatePassthrough(pathname) || hasFileExtension(pathname)) {
-    return context.next();
+  if (
+    isNegotiatePassthrough(pathname) ||
+    pathname === MACHINE_PATHS.apiStatus ||
+    (!pathname.startsWith('/api/') && hasFileExtension(pathname))
+  ) {
+    const response = await context.next();
+    return isAgentMachineFile(pathname) ? withAgentHeaders(response) : response;
+  }
+
+  if (pathname.startsWith('/api/')) {
+    return problemResponse({
+      status: 404,
+      title: 'API route not found',
+      detail: `The requested API path ${pathname} is not published on yannis.dev.`,
+      instance: pathname,
+      code: 'api.not_found',
+      hint: `Read ${MACHINE_PATHS.openapi} and retry a documented path such as ${MACHINE_PATHS.apiStatus}.`,
+    });
   }
 
   const acceptHeader = request.headers.get('accept');
@@ -35,6 +79,8 @@ export default async function handler(request: Request, context: Context) {
       headers: {
         'Content-Type': PLAIN_CONTENT_TYPE,
         Vary: VARY_ACCEPT,
+        'Access-Control-Expose-Headers': EXPOSED_AGENT_HEADERS,
+        ...API_RESPONSE_HEADERS,
       },
     });
   }
@@ -47,6 +93,9 @@ export default async function handler(request: Request, context: Context) {
         'Content-Type': MARKDOWN_CONTENT_TYPE,
         Vary: VARY_ACCEPT,
         Link: homepageLinkHeader(),
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Expose-Headers': EXPOSED_AGENT_HEADERS,
+        ...API_RESPONSE_HEADERS,
       },
     });
   }

@@ -1,0 +1,46 @@
+---
+import PageArticle from '../../components/PageArticle.astro';
+import { ERRORS_DOCS_PAGE } from '../../lib/pages';
+---
+
+<PageArticle page={ERRORS_DOCS_PAGE}>
+  <section aria-labelledby="problem-types-heading">
+    <h2 id="problem-types-heading" class="font-display text-2xl font-semibold text-(--color-text)">
+      Problem types
+    </h2>
+    <dl class="mt-4 space-y-4">
+      <div>
+        <dt id="api.not_found" class="font-mono text-base text-(--color-text)">api.not_found</dt>
+        <dd>Use a documented path from /openapi.json or /api/status.json.</dd>
+      </div>
+      <div>
+        <dt id="http.method_not_allowed" class="font-mono text-base text-(--color-text)">http.method_not_allowed</dt>
+        <dd>Retry with a method listed in the Allow header.</dd>
+      </div>
+      <div>
+        <dt id="http.forbidden_origin" class="font-mono text-base text-(--color-text)">http.forbidden_origin</dt>
+        <dd>Retry from an http or https client origin, or omit Origin for server-to-server MCP calls.</dd>
+      </div>
+      <div>
+        <dt id="http.not_acceptable" class="font-mono text-base text-(--color-text)">http.not_acceptable</dt>
+        <dd>Request text/html, text/markdown, application/json, or application/problem+json as documented.</dd>
+      </div>
+      <div>
+        <dt id="request.invalid_json" class="font-mono text-base text-(--color-text)">request.invalid_json</dt>
+        <dd>Send syntactically valid JSON with the required fields from the OpenAPI schema.</dd>
+      </div>
+      <div>
+        <dt id="mcp.unsupported_protocol_version" class="font-mono text-base text-(--color-text)">mcp.unsupported_protocol_version</dt>
+        <dd>Use a supported MCP-Protocol-Version header from the MCP docs.</dd>
+      </div>
+      <div>
+        <dt id="rate_limit.exceeded" class="font-mono text-base text-(--color-text)">rate_limit.exceeded</dt>
+        <dd>Honor Retry-After first, then the RateLimit response hints.</dd>
+      </div>
+      <div>
+        <dt id="server.error" class="font-mono text-base text-(--color-text)">server.error</dt>
+        <dd>Retry later, then email hello@yannis.dev with the URL and timestamp if it persists.</dd>
+      </div>
+    </dl>
+  </section>
+</PageArticle>

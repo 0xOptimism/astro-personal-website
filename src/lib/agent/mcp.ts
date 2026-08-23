@@ -16,6 +16,14 @@ import {
 import { homepageMarkdown } from './markdown.ts';
 import { llmsTxt } from './llms.ts';
 import { MACHINE_PATHS, absoluteUrl } from './routes.ts';
+import {
+  API_RESPONSE_HEADERS,
+  API_VERSION_HEADER,
+  EXPOSED_AGENT_HEADERS,
+  apiStatusPayload,
+  problemResponse,
+} from './http.ts';
+import { openApiJson } from './openapi.ts';
 
 export const MCP_PROTOCOL_VERSION = '2025-11-25';
 export const MCP_SUPPORTED_PROTOCOL_VERSIONS = ['2025-11-25', '2025-03-26'] as const;
@@ -148,12 +156,18 @@ const TOOLS = {
           url: absoluteUrl(page.path),
         })),
         openapi: absoluteUrl(MACHINE_PATHS.openapi),
+        apiStatus: absoluteUrl(MACHINE_PATHS.apiStatus),
         mcp: absoluteUrl(MACHINE_PATHS.mcp),
         manifests: {
           serverCard: absoluteUrl(MACHINE_PATHS.mcpServerCard),
           endpointManifest: absoluteUrl(MACHINE_PATHS.mcpEndpointManifest),
         },
         llms: absoluteUrl(MACHINE_PATHS.llms),
+        policies: {
+          errors: absoluteUrl('/developers/errors'),
+          versioning: absoluteUrl('/developers/versioning'),
+          rateLimits: absoluteUrl('/developers/rate-limits'),
+        },
       }),
   },
 };
@@ -205,6 +219,22 @@ export const MCP_RESOURCES: readonly McpResourceDefinition[] = [
     description: 'Agent index for yannis.dev.',
     mimeType: 'text/markdown',
     text: llmsTxt,
+  },
+  {
+    uri: absoluteUrl(MACHINE_PATHS.openapi),
+    name: 'openapi.json',
+    title: `${SITE_NAME} OpenAPI`,
+    description: 'OpenAPI 3.1 contract for yannis.dev developer resources.',
+    mimeType: 'application/json',
+    text: openApiJson,
+  },
+  {
+    uri: absoluteUrl(MACHINE_PATHS.apiStatus),
+    name: 'api-status.json',
+    title: `${SITE_NAME} API status`,
+    description: 'Current public API version, rate-limit policy, and discovery links.',
+    mimeType: 'application/json',
+    text: () => JSON.stringify(apiStatusPayload(), null, 2),
   },
 ];
 
@@ -389,25 +419,26 @@ export function corsHeaders(origin?: string | null): Record<string, string> {
     'Access-Control-Allow-Origin': origin && isHttpOrigin(origin) ? origin : '*',
     'Access-Control-Allow-Methods': 'POST, OPTIONS',
     'Access-Control-Allow-Headers':
-      'Content-Type, Accept, MCP-Protocol-Version, Mcp-Protocol-Version, MCP-Session-Id, Mcp-Session-Id, Mcp-Method, Mcp-Name',
+      `Content-Type, Accept, ${API_VERSION_HEADER}, MCP-Protocol-Version, Mcp-Protocol-Version, MCP-Session-Id, Mcp-Session-Id, Mcp-Method, Mcp-Name`,
+    'Access-Control-Expose-Headers': EXPOSED_AGENT_HEADERS,
     'Access-Control-Max-Age': '86400',
+    ...API_RESPONSE_HEADERS,
   };
 }
 
 export function mcpMethodNotAllowed(origin?: string | null): Response {
-  return new Response(
-    JSON.stringify({
-      error: 'Method Not Allowed',
-      allow: ['POST', 'OPTIONS'],
-      docs: absoluteUrl('/developers/mcp'),
-    }),
+  return problemResponse(
     {
       status: 405,
-      headers: {
-        Allow: 'POST, OPTIONS',
-        'Content-Type': 'application/json; charset=utf-8',
-        ...corsHeaders(origin),
-      },
+      title: 'Method not allowed',
+      detail: 'The MCP Streamable HTTP endpoint accepts POST requests and OPTIONS preflight requests.',
+      instance: MACHINE_PATHS.mcp,
+      code: 'http.method_not_allowed',
+      hint: `POST JSON-RPC to ${MACHINE_PATHS.mcp} or read ${absoluteUrl('/developers/mcp')}.`,
+    },
+    {
+      Allow: 'POST, OPTIONS',
+      ...corsHeaders(origin),
     },
   );
 }
@@ -415,9 +446,16 @@ export function mcpMethodNotAllowed(origin?: string | null): Response {
 export async function handleMcpHttp(request: Request): Promise<Response> {
   const origin = request.headers.get('Origin');
   if (origin && !isHttpOrigin(origin)) {
-    return new Response(
-      JSON.stringify({ jsonrpc: '2.0', error: { code: -32000, message: 'Forbidden origin' }, id: null }),
-      { status: 403, headers: { 'Content-Type': 'application/json; charset=utf-8' } },
+    return problemResponse(
+      {
+        status: 403,
+        title: 'Forbidden origin',
+        detail: 'The Origin header must be an http or https origin.',
+        instance: MACHINE_PATHS.mcp,
+        code: 'http.forbidden_origin',
+        hint: 'Retry from an http or https client origin, or omit Origin for a server-to-server request.',
+      },
+      corsHeaders(origin),
     );
   }
 
@@ -430,18 +468,22 @@ export async function handleMcpHttp(request: Request): Promise<Response> {
   }
 
   if (request.method !== 'POST') {
-    return new Response(null, {
-      status: 405,
-      headers: { Allow: 'POST, OPTIONS', ...corsHeaders(origin) },
-    });
+    return mcpMethodNotAllowed(origin);
   }
 
   const protocolVersion = request.headers.get('MCP-Protocol-Version') ?? request.headers.get('Mcp-Protocol-Version');
   if (protocolVersion && !isSupportedProtocolVersion(protocolVersion)) {
-    return new Response('Unsupported MCP-Protocol-Version', {
-      status: 400,
-      headers: { 'Content-Type': 'text/plain; charset=utf-8', ...corsHeaders(origin) },
-    });
+    return problemResponse(
+      {
+        status: 400,
+        title: 'Unsupported MCP protocol version',
+        detail: `MCP-Protocol-Version ${protocolVersion} is not supported by this server.`,
+        instance: MACHINE_PATHS.mcp,
+        code: 'mcp.unsupported_protocol_version',
+        hint: `Use one of: ${MCP_SUPPORTED_PROTOCOL_VERSIONS.join(', ')}.`,
+      },
+      corsHeaders(origin),
+    );
   }
 
   let message: JsonRpcRequest;
