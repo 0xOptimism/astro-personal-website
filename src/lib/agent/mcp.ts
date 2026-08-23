@@ -1,10 +1,8 @@
+import { HTML_PAGES } from '../pages.ts';
 import {
-  ABOUT_AGENTS,
-  ABOUT_WORK,
-  HERO_LEDE,
-  KNOWS_ABOUT,
   SAME_AS,
   SITE_DESCRIPTION,
+  SITE_DOMAIN,
   SITE_EMAIL,
   SITE_EMPLOYER,
   SITE_JOB_TITLE,
@@ -15,315 +13,458 @@ import {
   skills,
   timeline,
 } from '../site.ts';
-import { HTML_PAGES } from '../pages.ts';
-import { pageMarkdown } from '../pages.ts';
 import { homepageMarkdown } from './markdown.ts';
-import { llmsFullTxt, llmsTxt } from './llms.ts';
-import { openApiJson } from './openapi.ts';
+import { llmsTxt } from './llms.ts';
 import { MACHINE_PATHS, absoluteUrl } from './routes.ts';
 
-const JSON_CONTENT_TYPE = 'application/json; charset=utf-8';
-const MCP_PROTOCOL_VERSION = '2025-11-25';
-const SUPPORTED_PROTOCOL_VERSIONS = new Set([MCP_PROTOCOL_VERSION, '2025-03-26']);
+export const MCP_PROTOCOL_VERSION = '2025-11-25';
+export const MCP_SUPPORTED_PROTOCOL_VERSIONS = ['2025-11-25', '2025-03-26'] as const;
+export const MCP_SERVER_VERSION = '1.0.0';
+export const MCP_SERVER_NAME = 'yannis-dev';
 
-interface JsonRpcRequest {
-  jsonrpc?: string;
-  id?: string | number | null;
-  method?: string;
-  params?: Record<string, unknown>;
+const EMPTY_OBJECT_SCHEMA = {
+  type: 'object',
+  additionalProperties: false,
+} as const;
+
+const READ_ONLY_ANNOTATIONS = {
+  readOnlyHint: true,
+  destructiveHint: false,
+  idempotentHint: true,
+  openWorldHint: false,
+} as const;
+
+export type JsonRpcId = string | number | null;
+
+export interface JsonRpcRequest {
+  jsonrpc?: unknown;
+  id?: JsonRpcId;
+  method?: unknown;
+  params?: unknown;
 }
 
-interface McpTool {
-  name: string;
-  title: string;
-  description: string;
-  inputSchema: {
-    type: 'object';
-    properties: Record<string, unknown>;
-    additionalProperties: false;
-  };
+const MCP_METHODS = [
+  'initialize',
+  'ping',
+  'tools/list',
+  'tools/call',
+  'resources/list',
+  'resources/read',
+  'prompts/list',
+  'notifications/initialized',
+] as const;
+
+type McpMethod = (typeof MCP_METHODS)[number];
+
+const MCP_METHOD_SET: ReadonlySet<string> = new Set(MCP_METHODS);
+
+function isMcpMethod(method: string): method is McpMethod {
+  return MCP_METHOD_SET.has(method);
 }
 
-const tools: McpTool[] = [
-  {
-    name: 'get_yannis_profile',
-    title: 'Get Yannis profile',
-    description: 'Return a concise public profile for Yannis.',
-    inputSchema: { type: 'object', properties: {}, additionalProperties: false },
-  },
-  {
-    name: 'get_yannis_contact',
-    title: 'Get Yannis contact',
-    description: 'Return public contact and social links.',
-    inputSchema: { type: 'object', properties: {}, additionalProperties: false },
-  },
-  {
-    name: 'get_yannis_skills',
-    title: 'Get Yannis skills',
-    description: 'Return grouped public skills and tools.',
-    inputSchema: { type: 'object', properties: {}, additionalProperties: false },
-  },
-  {
-    name: 'get_yannis_timeline',
-    title: 'Get Yannis timeline',
-    description: 'Return public career timeline entries.',
-    inputSchema: { type: 'object', properties: {}, additionalProperties: false },
-  },
-  {
-    name: 'list_yannis_developer_resources',
-    title: 'List Yannis developer resources',
-    description: 'Return public HTML, Markdown, OpenAPI, llms.txt, and MCP resource URLs.',
-    inputSchema: { type: 'object', properties: {}, additionalProperties: false },
-  },
-];
+const SUPPORTED_PROTOCOL_VERSION_SET: ReadonlySet<string> = new Set(MCP_SUPPORTED_PROTOCOL_VERSIONS);
 
-function jsonResponse(body: unknown, status = 200, extraHeaders: Record<string, string> = {}): Response {
-  return new Response(JSON.stringify(body), {
-    status,
-    headers: {
-      'Content-Type': JSON_CONTENT_TYPE,
-      'X-Content-Type-Options': 'nosniff',
-      'Access-Control-Allow-Origin': '*',
-      ...extraHeaders,
-    },
-  });
-}
-
-function responseResult(id: JsonRpcRequest['id'], result: unknown): Response {
-  return jsonResponse({ jsonrpc: '2.0', id, result });
-}
-
-function responseError(id: JsonRpcRequest['id'], code: number, message: string): Response {
-  return jsonResponse({ jsonrpc: '2.0', id: id ?? null, error: { code, message } });
+function isSupportedProtocolVersion(
+  value: string,
+): value is (typeof MCP_SUPPORTED_PROTOCOL_VERSIONS)[number] {
+  return SUPPORTED_PROTOCOL_VERSION_SET.has(value);
 }
 
 function toolText(payload: unknown) {
   return {
-    content: [
-      {
-        type: 'text',
-        text: typeof payload === 'string' ? payload : JSON.stringify(payload, null, 2),
-      },
-    ],
+    content: [{ type: 'text' as const, text: JSON.stringify(payload, null, 2) }],
+    structuredContent: payload,
+    isError: false,
   };
 }
 
-function developerResources() {
-  return [
-    { title: 'Homepage', url: SITE_ORIGIN },
-    { title: 'Homepage markdown', url: absoluteUrl(MACHINE_PATHS.homepageMarkdown) },
-    { title: 'llms.txt', url: absoluteUrl(MACHINE_PATHS.llms) },
-    { title: 'llms-full.txt', url: absoluteUrl(MACHINE_PATHS.llmsFull) },
-    { title: 'OpenAPI', url: absoluteUrl(MACHINE_PATHS.openapi) },
-    { title: 'MCP endpoint', url: absoluteUrl(MACHINE_PATHS.mcp) },
-    { title: 'MCP server card', url: absoluteUrl(MACHINE_PATHS.mcpServerCard) },
-    { title: 'MCP endpoint manifest', url: absoluteUrl(MACHINE_PATHS.mcpEndpointManifest) },
-    ...HTML_PAGES.map((page) => ({ title: page.heading, url: absoluteUrl(page.path) })),
-  ];
+const TOOLS = {
+  get_yannis_profile: {
+    title: 'Get Yannis profile',
+    description: `Return the public profile for ${SITE_NAME}, full-stack developer at ${SITE_DOMAIN}.`,
+    run: () =>
+      toolText({
+        name: SITE_NAME,
+        brand: SITE_DOMAIN,
+        url: SITE_ORIGIN,
+        jobTitle: SITE_JOB_TITLE,
+        employer: SITE_EMPLOYER,
+        location: SITE_LOCATION,
+        country: 'Sweden',
+        description: SITE_DESCRIPTION,
+      }),
+  },
+  get_yannis_contact: {
+    title: 'Get Yannis contact',
+    description: `Return public contact details for ${SITE_NAME}, including email and profile URLs.`,
+    run: () =>
+      toolText({
+        name: SITE_NAME,
+        email: SITE_EMAIL,
+        url: SITE_ORIGIN,
+        contactPage: absoluteUrl('/contact'),
+        linkedIn: SAME_AS[0],
+        github: SAME_AS[1],
+      }),
+  },
+  get_yannis_skills: {
+    title: 'Get Yannis skills',
+    description: `Return the public engineering stack for ${SITE_NAME}.`,
+    run: () =>
+      toolText({
+        title: skills.title,
+        description: skills.description,
+        groups: skills.groups.map((group: { title: string; items: { name: string }[] }) => ({
+          title: group.title,
+          items: group.items.map((item) => item.name),
+        })),
+        workflow: {
+          title: agenticWorkflow.title,
+          tools: agenticWorkflow.tools.map((tool: { name: string; role: string }) => ({
+            name: tool.name,
+            role: tool.role,
+          })),
+        },
+      }),
+  },
+  get_yannis_timeline: {
+    title: 'Get Yannis timeline',
+    description: `Return the public career timeline for ${SITE_NAME}.`,
+    run: () =>
+      toolText({
+        title: timeline.title,
+        description: timeline.description,
+        years: timeline.years,
+      }),
+  },
+  list_yannis_developer_resources: {
+    title: 'List Yannis developer resources',
+    description: 'List OpenAPI, auth docs, webhooks docs, MCP, and llms.txt URLs for yannis.dev.',
+    run: () =>
+      toolText({
+        product: `${SITE_NAME} developer resources`,
+        pages: HTML_PAGES.filter((page) => page.path.startsWith('/developers')).map((page) => ({
+          title: page.heading,
+          url: absoluteUrl(page.path),
+        })),
+        openapi: absoluteUrl(MACHINE_PATHS.openapi),
+        mcp: absoluteUrl(MACHINE_PATHS.mcp),
+        manifests: {
+          serverCard: absoluteUrl(MACHINE_PATHS.mcpServerCard),
+          endpointManifest: absoluteUrl(MACHINE_PATHS.mcpEndpointManifest),
+        },
+        llms: absoluteUrl(MACHINE_PATHS.llms),
+      }),
+  },
+};
+
+type ToolName = keyof typeof TOOLS;
+
+export interface McpToolDefinition {
+  name: ToolName;
+  title: string;
+  description: string;
+  inputSchema: typeof EMPTY_OBJECT_SCHEMA;
+  annotations: typeof READ_ONLY_ANNOTATIONS;
 }
 
-function mimeTypeForUrl(url: string): string {
-  if (url.endsWith('.json')) return 'application/json';
-  if (url.endsWith('.txt') || url.endsWith('.md')) return 'text/markdown';
-  return 'text/html';
+export const MCP_TOOLS: readonly McpToolDefinition[] = (Object.keys(TOOLS) as ToolName[]).map((name) => ({
+  name,
+  title: TOOLS[name].title,
+  description: TOOLS[name].description,
+  inputSchema: EMPTY_OBJECT_SCHEMA,
+  annotations: READ_ONLY_ANNOTATIONS,
+}));
+
+function isToolName(name: string): name is ToolName {
+  return Object.hasOwn(TOOLS, name);
 }
 
-function resourceText(url: string): string | null {
-  if (url === SITE_ORIGIN) return homepageMarkdown();
-  if (url === absoluteUrl(MACHINE_PATHS.homepageMarkdown)) return homepageMarkdown();
-  if (url === absoluteUrl(MACHINE_PATHS.llms)) return llmsTxt();
-  if (url === absoluteUrl(MACHINE_PATHS.llmsFull)) return llmsFullTxt();
-  if (url === absoluteUrl(MACHINE_PATHS.openapi)) return openApiJson();
-  if (url === absoluteUrl(MACHINE_PATHS.mcpServerCard)) return JSON.stringify(mcpServerCard());
-  if (url === absoluteUrl(MACHINE_PATHS.mcpEndpointManifest)) return JSON.stringify(mcpEndpointManifest());
-
-  const page = HTML_PAGES.find((entry) => absoluteUrl(entry.path) === url);
-  return page ? pageMarkdown(page) : null;
+export interface McpResourceDefinition {
+  uri: string;
+  name: string;
+  title: string;
+  description: string;
+  mimeType: string;
+  text: () => string;
 }
 
-function profilePayload() {
+export const MCP_RESOURCES: readonly McpResourceDefinition[] = [
+  {
+    uri: absoluteUrl(MACHINE_PATHS.homepageMarkdown),
+    name: 'index.md',
+    title: `${SITE_NAME} homepage markdown`,
+    description: 'Markdown twin of the yannis.dev homepage.',
+    mimeType: 'text/markdown',
+    text: homepageMarkdown,
+  },
+  {
+    uri: absoluteUrl(MACHINE_PATHS.llms),
+    name: 'llms.txt',
+    title: `${SITE_NAME} llms.txt`,
+    description: 'Agent index for yannis.dev.',
+    mimeType: 'text/markdown',
+    text: llmsTxt,
+  },
+];
+
+export function mcpServerInfo() {
   return {
-    name: SITE_NAME,
-    role: SITE_JOB_TITLE,
-    location: SITE_LOCATION,
-    employer: SITE_EMPLOYER,
-    description: SITE_DESCRIPTION,
-    summary: HERO_LEDE,
-    work: ABOUT_WORK,
-    agents: ABOUT_AGENTS,
+    name: MCP_SERVER_NAME,
+    title: `${SITE_NAME} MCP server`,
+    version: MCP_SERVER_VERSION,
+    description: `${SITE_DESCRIPTION} Public read-only tools for profile, contact, skills, timeline, and developer resources.`,
+    websiteUrl: absoluteUrl('/developers/mcp'),
   };
 }
 
-function contactPayload() {
+export function mcpCapabilities() {
   return {
-    email: SITE_EMAIL,
-    social: {
-      linkedin: SAME_AS[0],
-      github: SAME_AS[1],
-    },
+    tools: { listChanged: false },
+    resources: { subscribe: false, listChanged: false },
+    prompts: { listChanged: false },
   };
 }
 
-function skillsPayload() {
-  return {
-    summary: skills.description,
-    knowsAbout: KNOWS_ABOUT,
-    groups: skills.groups,
-    agenticWorkflow,
-  };
-}
-
-function timelinePayload() {
-  return timeline;
-}
-
-function callTool(name: unknown) {
-  if (typeof name !== 'string') {
-    return null;
-  }
-
-  if (name === 'get_yannis_profile') return toolText(profilePayload());
-  if (name === 'get_yannis_contact') return toolText(contactPayload());
-  if (name === 'get_yannis_skills') return toolText(skillsPayload());
-  if (name === 'get_yannis_timeline') return toolText(timelinePayload());
-  if (name === 'list_yannis_developer_resources') return toolText(developerResources());
-  return null;
+function resourceDescriptors() {
+  return MCP_RESOURCES.map(({ uri, name, title, description, mimeType }) => ({
+    uri,
+    name,
+    title,
+    description,
+    mimeType,
+  }));
 }
 
 export function mcpServerCard() {
   return {
-    schema_version: '1.0',
-    name: `${SITE_NAME} MCP server`,
-    description: `Public, read-only MCP server for ${SITE_NAME}'s profile, contact, skills, timeline, and developer resources.`,
-    url: absoluteUrl(MACHINE_PATHS.mcp),
-    protocol: 'mcp',
-    transport: 'streamable-http',
-    protocol_versions: [...SUPPORTED_PROTOCOL_VERSIONS],
-    auth: { type: 'none' },
-    endpoints: {
-      mcp: absoluteUrl(MACHINE_PATHS.mcp),
-      manifest: absoluteUrl(MACHINE_PATHS.mcpEndpointManifest),
-      openapi: absoluteUrl(MACHINE_PATHS.openapi),
+    $schema: 'https://static.modelcontextprotocol.io/schemas/mcp-server-card/v1.json',
+    version: '1.0',
+    protocolVersion: MCP_PROTOCOL_VERSION,
+    serverInfo: mcpServerInfo(),
+    transport: {
+      type: 'streamable-http',
+      endpoint: MACHINE_PATHS.mcp,
     },
-    tools: tools.map(({ name, title, description }) => ({ name, title, description })),
+    capabilities: mcpCapabilities(),
+    authentication: {
+      required: false,
+      schemes: [],
+    },
+    instructions: `Use this server for facts about ${SITE_NAME} (${SITE_DOMAIN}). All tools are read-only. Prefer get_yannis_profile first.`,
+    tools: MCP_TOOLS,
+    resources: resourceDescriptors(),
   };
 }
 
 export function mcpEndpointManifest() {
   return {
-    name: `${SITE_NAME} MCP endpoint manifest`,
-    description: 'Public Streamable HTTP endpoint list for yannis.dev.',
+    mcp_version: MCP_PROTOCOL_VERSION,
     endpoints: [
       {
-        type: 'mcp',
-        transport: 'streamable-http',
         url: absoluteUrl(MACHINE_PATHS.mcp),
-        methods: ['POST'],
+        transport: 'streamable-http',
+        capabilities: ['tools', 'resources', 'prompts'],
         auth: { type: 'none' },
-        protocol_versions: [...SUPPORTED_PROTOCOL_VERSIONS],
       },
     ],
   };
 }
 
-export function mcpOptionsResponse(): Response {
-  return new Response(null, {
-    status: 204,
-    headers: {
-      'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Headers': 'content-type, accept, mcp-protocol-version',
-      'Access-Control-Allow-Methods': 'POST, OPTIONS',
-      'Access-Control-Max-Age': '86400',
-    },
-  });
+function jsonRpcError(id: JsonRpcId, code: number, message: string) {
+  return {
+    jsonrpc: '2.0' as const,
+    id,
+    error: { code, message },
+  };
 }
 
-export async function mcpPostResponse(request: Request): Promise<Response> {
+function jsonRpcResult(id: JsonRpcId, result: unknown) {
+  return {
+    jsonrpc: '2.0' as const,
+    id,
+    result,
+  };
+}
+
+function readString(params: unknown, key: string): string | undefined {
+  if (!params || typeof params !== 'object') {
+    return undefined;
+  }
+  const value = (params as Record<string, unknown>)[key];
+  return value === undefined || value === null ? undefined : String(value);
+}
+
+function handleMethod(method: McpMethod, id: JsonRpcId, params: unknown): { status: number; body: unknown | null } {
+  switch (method) {
+    case 'notifications/initialized':
+      return { status: 202, body: null };
+    case 'initialize': {
+      const requested = readString(params, 'protocolVersion') ?? MCP_PROTOCOL_VERSION;
+      const protocolVersion = isSupportedProtocolVersion(requested) ? requested : MCP_PROTOCOL_VERSION;
+      return {
+        status: 200,
+        body: jsonRpcResult(id, {
+          protocolVersion,
+          capabilities: mcpCapabilities(),
+          serverInfo: mcpServerInfo(),
+          instructions: `Public read-only MCP server for ${SITE_NAME} at ${SITE_DOMAIN}.`,
+        }),
+      };
+    }
+    case 'ping':
+      return { status: 200, body: jsonRpcResult(id, {}) };
+    case 'tools/list':
+      return { status: 200, body: jsonRpcResult(id, { tools: MCP_TOOLS }) };
+    case 'tools/call': {
+      const name = readString(params, 'name') ?? '';
+      if (!isToolName(name)) {
+        return { status: 200, body: jsonRpcError(id, -32602, `Unknown tool: ${name || '(missing)'}`) };
+      }
+      return { status: 200, body: jsonRpcResult(id, TOOLS[name].run()) };
+    }
+    case 'resources/list':
+      return {
+        status: 200,
+        body: jsonRpcResult(id, {
+          resources: resourceDescriptors(),
+        }),
+      };
+    case 'resources/read': {
+      const uri = readString(params, 'uri') ?? '';
+      const resource = MCP_RESOURCES.find((entry) => entry.uri === uri);
+      if (!resource) {
+        return { status: 200, body: jsonRpcError(id, -32002, `Resource not found: ${uri}`) };
+      }
+      return {
+        status: 200,
+        body: jsonRpcResult(id, {
+          contents: [
+            {
+              uri: resource.uri,
+              mimeType: resource.mimeType,
+              text: resource.text(),
+            },
+          ],
+        }),
+      };
+    }
+    case 'prompts/list':
+      return { status: 200, body: jsonRpcResult(id, { prompts: [] }) };
+    default: {
+      const _exhaustive: never = method;
+      return _exhaustive;
+    }
+  }
+}
+
+export function handleJsonRpc(message: JsonRpcRequest): { status: number; body: unknown | null } {
+  if (message.jsonrpc !== '2.0' || typeof message.method !== 'string') {
+    return { status: 400, body: jsonRpcError(message.id ?? null, -32600, 'Invalid Request') };
+  }
+
+  const id = message.id ?? null;
+  if (!isMcpMethod(message.method)) {
+    return { status: 200, body: jsonRpcError(id, -32601, `Method not found: ${message.method}`) };
+  }
+
+  if (message.method.startsWith('notifications/') && message.id !== undefined) {
+    return { status: 400, body: jsonRpcError(id, -32600, 'Notifications must not include an id') };
+  }
+
+  return handleMethod(message.method, id, message.params);
+}
+
+function isHttpOrigin(origin: string): boolean {
+  try {
+    const url = new URL(origin);
+    return url.protocol === 'https:' || url.protocol === 'http:';
+  } catch {
+    return false;
+  }
+}
+
+export function corsHeaders(origin?: string | null): Record<string, string> {
+  return {
+    'Access-Control-Allow-Origin': origin && isHttpOrigin(origin) ? origin : '*',
+    'Access-Control-Allow-Methods': 'POST, OPTIONS',
+    'Access-Control-Allow-Headers':
+      'Content-Type, Accept, MCP-Protocol-Version, Mcp-Protocol-Version, MCP-Session-Id, Mcp-Session-Id, Mcp-Method, Mcp-Name',
+    'Access-Control-Max-Age': '86400',
+  };
+}
+
+export function mcpMethodNotAllowed(origin?: string | null): Response {
+  return new Response(
+    JSON.stringify({
+      error: 'Method Not Allowed',
+      allow: ['POST', 'OPTIONS'],
+      docs: absoluteUrl('/developers/mcp'),
+    }),
+    {
+      status: 405,
+      headers: {
+        Allow: 'POST, OPTIONS',
+        'Content-Type': 'application/json; charset=utf-8',
+        ...corsHeaders(origin),
+      },
+    },
+  );
+}
+
+export async function handleMcpHttp(request: Request): Promise<Response> {
+  const origin = request.headers.get('Origin');
+  if (origin && !isHttpOrigin(origin)) {
+    return new Response(
+      JSON.stringify({ jsonrpc: '2.0', error: { code: -32000, message: 'Forbidden origin' }, id: null }),
+      { status: 403, headers: { 'Content-Type': 'application/json; charset=utf-8' } },
+    );
+  }
+
+  if (request.method === 'OPTIONS') {
+    return new Response(null, { status: 204, headers: corsHeaders(origin) });
+  }
+
+  if (request.method === 'GET' || request.method === 'DELETE') {
+    return mcpMethodNotAllowed(origin);
+  }
+
+  if (request.method !== 'POST') {
+    return new Response(null, {
+      status: 405,
+      headers: { Allow: 'POST, OPTIONS', ...corsHeaders(origin) },
+    });
+  }
+
+  const protocolVersion = request.headers.get('MCP-Protocol-Version') ?? request.headers.get('Mcp-Protocol-Version');
+  if (protocolVersion && !isSupportedProtocolVersion(protocolVersion)) {
+    return new Response('Unsupported MCP-Protocol-Version', {
+      status: 400,
+      headers: { 'Content-Type': 'text/plain; charset=utf-8', ...corsHeaders(origin) },
+    });
+  }
+
   let message: JsonRpcRequest;
   try {
-    message = (await request.json()) as JsonRpcRequest;
+    const raw = await request.text();
+    message = JSON.parse(raw) as JsonRpcRequest;
   } catch {
-    return responseError(null, -32700, 'Parse error');
-  }
-
-  if (message.jsonrpc !== '2.0' || typeof message.method !== 'string') {
-    return responseError(message.id, -32600, 'Invalid Request');
-  }
-
-  if (message.id === undefined) {
-    return new Response(null, {
-      status: 202,
-      headers: { 'Access-Control-Allow-Origin': '*' },
+    return new Response(JSON.stringify(jsonRpcError(null, -32700, 'Parse error')), {
+      status: 400,
+      headers: { 'Content-Type': 'application/json; charset=utf-8', ...corsHeaders(origin) },
     });
   }
 
-  if (message.method === 'initialize') {
-    const requestedVersion =
-      typeof message.params?.protocolVersion === 'string' ? message.params.protocolVersion : MCP_PROTOCOL_VERSION;
-    const protocolVersion = SUPPORTED_PROTOCOL_VERSIONS.has(requestedVersion) ? requestedVersion : MCP_PROTOCOL_VERSION;
-    return responseResult(message.id, {
-      protocolVersion,
-      capabilities: {
-        tools: { listChanged: false },
-        resources: { subscribe: false, listChanged: false },
-        prompts: { listChanged: false },
-      },
-      serverInfo: {
-        name: 'yannis-dev',
-        title: `${SITE_NAME} MCP server`,
-        version: '1.0.0',
-      },
-      instructions: `Use this server for public facts about ${SITE_NAME}. It has no write tools and requires no authentication.`,
-    });
+  const { status, body } = handleJsonRpc(message);
+  if (body === null) {
+    return new Response(null, { status, headers: corsHeaders(origin) });
   }
 
-  if (message.method === 'ping') {
-    return responseResult(message.id, {});
-  }
-
-  if (message.method === 'tools/list') {
-    return responseResult(message.id, { tools });
-  }
-
-  if (message.method === 'tools/call') {
-    const result = callTool(message.params?.name);
-    return result ? responseResult(message.id, result) : responseError(message.id, -32602, 'Unknown tool');
-  }
-
-  if (message.method === 'resources/list') {
-    return responseResult(message.id, {
-      resources: developerResources().map((resource) => ({
-        uri: resource.url,
-        name: resource.title,
-        title: resource.title,
-        description: `Public ${resource.title} resource on yannis.dev.`,
-        mimeType: mimeTypeForUrl(resource.url),
-      })),
-    });
-  }
-
-  if (message.method === 'resources/read') {
-    const uri = typeof message.params?.uri === 'string' ? message.params.uri : '';
-    const resource = developerResources().find((entry) => entry.url === uri);
-    const text = resource ? resourceText(resource.url) : null;
-    if (!resource || text === null) {
-      return responseError(message.id, -32602, 'Unknown resource');
-    }
-
-    return responseResult(message.id, {
-      contents: [
-        {
-          uri: resource.url,
-          mimeType: mimeTypeForUrl(resource.url),
-          text,
-        },
-      ],
-    });
-  }
-
-  if (message.method === 'prompts/list') {
-    return responseResult(message.id, { prompts: [] });
-  }
-
-  return responseError(message.id, -32601, 'Method not found');
+  return new Response(JSON.stringify(body), {
+    status,
+    headers: {
+      'Content-Type': 'application/json; charset=utf-8',
+      ...corsHeaders(origin),
+    },
+  });
 }

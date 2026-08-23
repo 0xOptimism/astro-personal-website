@@ -6,5 +6,21 @@
   NODE_VERSION = "22"
 
 [[edge_functions]]
+  function = "mcp"
+  path = "/mcp"
+
+[[edge_functions]]
   function = "negotiate-markdown"
   path = "/*"
+
+[[redirects]]
+  from = "/.well-known/mcp"
+  to = "/.well-known/mcp/manifest.json"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/.well-known/mcp.json"
+  to = "/.well-known/mcp/server-card.json"
+  status = 200
+  force = true

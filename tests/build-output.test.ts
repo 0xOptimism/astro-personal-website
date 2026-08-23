@@ -121,7 +121,7 @@ describe.skipIf(!distBuilt)('built MCP discovery files', () => {
     const manifest = join(root, 'dist', '.well-known', 'mcp', 'manifest.json');
     expect(existsSync(serverCard)).toBe(true);
     expect(existsSync(manifest)).toBe(true);
-    expect(JSON.parse(readFileSync(serverCard, 'utf8')).url).toBe('https://yannis.dev/mcp');
+    expect(JSON.parse(readFileSync(serverCard, 'utf8')).transport.endpoint).toBe('/mcp');
     expect(JSON.parse(readFileSync(manifest, 'utf8')).endpoints[0].url).toBe('https://yannis.dev/mcp');
   });
 });
