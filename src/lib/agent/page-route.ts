@@ -19,6 +19,19 @@ export function markdownPageRoute(page: PublicPage): APIRoute {
     });
 }
 
-export function jsonPageRoute(body: () => unknown): APIRoute {
-  return async () => new Response(JSON.stringify(body()), { headers: jsonHeaders() });
+interface JsonPageRouteOptions {
+  contentType?: string;
+  includeApiHeaders?: boolean;
+  headers?: Record<string, string>;
+}
+
+export function jsonPageRoute(body: () => unknown, options: JsonPageRouteOptions = {}): APIRoute {
+  const extraHeaders: Record<string, string> = {
+    ...options.headers,
+    ...(options.contentType ? { 'Content-Type': options.contentType } : {}),
+  };
+  return async () =>
+    new Response(JSON.stringify(body()), {
+      headers: jsonHeaders(extraHeaders, options.includeApiHeaders),
+    });
 }

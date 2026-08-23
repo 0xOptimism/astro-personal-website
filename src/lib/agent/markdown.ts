@@ -91,6 +91,7 @@ Email [${SITE_EMAIL}](mailto:${SITE_EMAIL}).
 - [OpenAPI](https://${SITE_DOMAIN}/openapi.json)
 - [API status](https://${SITE_DOMAIN}/api/status.json)
 - [MCP server](https://${SITE_DOMAIN}/mcp)
+- [MCP server card](https://${SITE_DOMAIN}/.well-known/mcp.json)
 - [JSON errors](https://${SITE_DOMAIN}/developers/errors)
 - [API versioning](https://${SITE_DOMAIN}/developers/versioning)
 - [Rate limits](https://${SITE_DOMAIN}/developers/rate-limits)

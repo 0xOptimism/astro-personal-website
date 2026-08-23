@@ -36,7 +36,7 @@ const markdownUrl =
 const llmsUrl = `${SITE_ORIGIN}/llms.txt`;
 const openApiUrl = `${SITE_ORIGIN}/openapi.json`;
 const apiStatusUrl = `${SITE_ORIGIN}/api/status.json`;
-const mcpServerCardUrl = `${SITE_ORIGIN}/.well-known/mcp/server-card.json`;
+const mcpServerCardUrl = `${SITE_ORIGIN}/.well-known/mcp.json`;
 const ogImageUrl = new URL(SITE_OG_IMAGE_PATH, SITE_ORIGIN).href;
 
 // Umami analytics (privacy-friendly, no cookies). Set PUBLIC_UMAMI_WEBSITE_ID in production.
@@ -62,7 +62,7 @@ const umamiWebsiteId = import.meta.env.PUBLIC_UMAMI_WEBSITE_ID ?? '8f97ce4f-3008
     <link rel="alternate" type="text/markdown" href={markdownUrl} />
     <link rel="alternate" type="application/json" title={`${SITE_NAME} OpenAPI spec`} href={openApiUrl} />
     <link rel="alternate" type="application/json" title={`${SITE_NAME} API status`} href={apiStatusUrl} />
-    <link rel="mcp-server-card" type="application/json" href={mcpServerCardUrl} />
+    <link rel="mcp-server-card" type="application/mcp-server-card+json" href={mcpServerCardUrl} />
     <link rel="describedby" href={llmsUrl} />
     <meta property="og:site_name" content={SITE_NAME} />
     <meta property="og:title" content={title} />
