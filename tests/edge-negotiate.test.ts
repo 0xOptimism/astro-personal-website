@@ -75,7 +75,7 @@ describe('Netlify edge markdown negotiation', () => {
   it('does not rewrite the MCP endpoint', async () => {
     const mcpResponse = new Response('mcp', { status: 200 });
     const response = await handler(
-      new Request('https://yannis.dev/mcp', { headers: { Accept: 'application/json, text/event-stream' } }),
+      new Request('https://yannis.dev/mcp', { method: 'GET', headers: { Accept: 'application/json, text/event-stream' } }),
       { next: async () => mcpResponse },
     );
     expect(response.status).toBe(200);

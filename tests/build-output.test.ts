@@ -5,13 +5,14 @@ import { describe, expect, it } from 'vitest';
 import { GET as getIndexMarkdown } from '../src/pages/index.md.ts';
 import { GET as getLlms } from '../src/pages/llms.txt.ts';
 import { GET as getOpenApi } from '../src/pages/openapi.json.ts';
-import { GET as getMcpManifest } from '../src/pages/.well-known/mcp/server-card.json.ts';
+import { GET as getMcpManifest } from '../src/pages/.well-known/mcp/manifest.json.ts';
+import { GET as getMcpServerCard } from '../src/pages/.well-known/mcp/server-card.json.ts';
 import { homepageMarkdown } from '../src/lib/agent/markdown';
 import { llmsTxt } from '../src/lib/agent/llms';
 import { JSON_LD_SCRIPT } from '../src/lib/agent/seo';
 import { HTML_PAGES } from '../src/lib/pages';
 import { openApiJson } from '../src/lib/agent/openapi';
-import { mcpServerCard } from '../src/lib/agent/mcp';
+import { mcpEndpointManifest, mcpServerCard } from '../src/lib/agent/mcp';
 import {
   SITE_OG_IMAGE_ALT,
   SITE_OG_IMAGE_HEIGHT,
@@ -114,6 +115,17 @@ describe.skipIf(!distBuilt)('built trust pages', () => {
   });
 });
 
+describe.skipIf(!distBuilt)('built MCP discovery files', () => {
+  it('includes the well-known MCP discovery JSON files', () => {
+    const serverCard = join(root, 'dist', '.well-known', 'mcp', 'server-card.json');
+    const manifest = join(root, 'dist', '.well-known', 'mcp', 'manifest.json');
+    expect(existsSync(serverCard)).toBe(true);
+    expect(existsSync(manifest)).toBe(true);
+    expect(JSON.parse(readFileSync(serverCard, 'utf8')).transport.endpoint).toBe('/mcp');
+    expect(JSON.parse(readFileSync(manifest, 'utf8')).endpoints[0].url).toBe('https://yannis.dev/mcp');
+  });
+});
+
 describe('public endpoint handlers', () => {
   it('serves homepage markdown from /index.md', async () => {
     const response = await getIndexMarkdown({} as never);
@@ -127,10 +139,15 @@ describe('public endpoint handlers', () => {
     expect(await response.text()).toBe(llmsTxt());
   });
 
-  it('serves OpenAPI and the MCP manifest', async () => {
+  it('serves OpenAPI from /openapi.json', async () => {
     const spec = await getOpenApi({} as never);
-    const manifest = await getMcpManifest({} as never);
     expect(await spec.text()).toBe(openApiJson());
-    expect(await manifest.text()).toBe(JSON.stringify(mcpServerCard()));
+  });
+
+  it('serves MCP discovery JSON', async () => {
+    const serverCard = await getMcpServerCard({} as never);
+    const manifest = await getMcpManifest({} as never);
+    expect(await serverCard.text()).toBe(JSON.stringify(mcpServerCard()));
+    expect(await manifest.text()).toBe(JSON.stringify(mcpEndpointManifest()));
   });
 });
