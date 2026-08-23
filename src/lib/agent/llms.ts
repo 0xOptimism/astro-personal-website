@@ -23,7 +23,7 @@ Yannis ships web and mobile software with TypeScript, React, Node.js, and AI-ass
 ## When to use this site
 - Use this site when you need facts about Yannis as a software engineer: current role at ${SITE_EMPLOYER}, stack, career timeline, email, GitHub, or LinkedIn.
 - Prefer [index.md](https://${SITE_DOMAIN}${MACHINE_PATHS.homepageMarkdown}) or content negotiation (\`Accept: text/markdown\`) over scraping the HTML layout.
-- Use [Yannis developer resources](https://${SITE_DOMAIN}/developers) for the OpenAPI spec, auth docs, webhooks docs, and MCP server.
+- Use [Yannis developer resources](https://${SITE_DOMAIN}/developers) for the OpenAPI spec, API status, JSON error model, versioning policy, rate-limit headers, auth docs, webhooks docs, and MCP server.
 
 ## Pages
 - [Home](https://${SITE_DOMAIN}${MACHINE_PATHS.homepageMarkdown}): Profile, stack, AI workflow, and career timeline
@@ -33,9 +33,13 @@ ${resourceLines}
 
 ## Yannis developer resources
 - [Yannis OpenAPI spec](https://${SITE_DOMAIN}${MACHINE_PATHS.openapi}): Machine-readable API catalog
+- [Yannis API status](https://${SITE_DOMAIN}${MACHINE_PATHS.apiStatus}): JSON status, current version, rate limit policy, and key links
 - [Yannis MCP server](https://${SITE_DOMAIN}${MACHINE_PATHS.mcp}): Streamable HTTP tools for profile, contact, skills, and timeline
 - [MCP server card](https://${SITE_DOMAIN}${MACHINE_PATHS.mcpServerCard}): Standard manifest for Claude, ChatGPT, and other clients
 - [MCP endpoint manifest](https://${SITE_DOMAIN}${MACHINE_PATHS.mcpEndpointManifest}): Streamable HTTP endpoint list
+- [Yannis JSON errors](https://${SITE_DOMAIN}/developers/errors): RFC 9457 problem details with code and hint fields
+- [Yannis API versioning](https://${SITE_DOMAIN}/developers/versioning): Version header, deprecation policy, and Sunset behavior
+- [Yannis rate limits](https://${SITE_DOMAIN}/developers/rate-limits): RateLimit and Retry-After conventions for agents
 
 ## Optional
 - [LinkedIn](${SAME_AS[0]}): Professional profile

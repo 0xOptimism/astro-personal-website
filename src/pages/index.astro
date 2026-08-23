@@ -8,6 +8,18 @@ import Timeline from '../components/Timeline.astro';
 import ContactForm from '../components/ContactForm.astro';
 import Social from '../components/Social.astro';
 import ModelSwitcher from '../components/ModelSwitcher.astro';
+import {
+  ABOUT_AGENTS,
+  ABOUT_WORK,
+  HERO_LEDE_PARAGRAPHS,
+  HERO_NAME,
+  SITE_DOMAIN,
+  SITE_EMAIL,
+  SITE_EMPLOYER,
+  SITE_JOB_TITLE,
+  SITE_LOCATION,
+  SITE_ORIGIN,
+} from '../lib/site';
 ---
 
 <Layout ogType="profile">
@@ -21,6 +33,33 @@ import ModelSwitcher from '../components/ModelSwitcher.astro';
     <header class="site-section site-section--hero px-6 pt-(--space-section) pb-12 md:px-12 lg:px-16" data-site-section="hero">
       <div class="mx-auto max-w-4xl">
         <Header />
+        <noscript>
+          <section class="agent-readable-profile mt-10 rounded-md border border-(--color-surface-elevated) bg-(--color-surface) p-6 font-body text-base leading-relaxed text-(--color-text)" aria-labelledby="agent-readable-profile-heading">
+            <h2 id="agent-readable-profile-heading" class="font-display text-2xl font-semibold">
+              {HERO_NAME} developer profile and agent resources
+            </h2>
+            <p class="mt-4">
+              {HERO_NAME} is a {SITE_LOCATION}-based {SITE_JOB_TITLE} at {SITE_EMPLOYER}. {HERO_LEDE_PARAGRAPHS.join(' ')}
+            </p>
+            <p class="mt-4">
+              {ABOUT_WORK} {ABOUT_AGENTS}
+            </p>
+            <p class="mt-4">
+              Agents and crawlers can read the canonical public resources without JavaScript:
+              <a href="/index.md">/index.md</a>, <a href="/llms.txt">/llms.txt</a>,
+              <a href="/llms-full.txt">/llms-full.txt</a>, <a href="/openapi.json">/openapi.json</a>,
+              <a href="/api/status.json">/api/status.json</a>, and the Streamable HTTP MCP endpoint at
+              <a href="/mcp">/mcp</a>. Developer documentation for {SITE_DOMAIN} is published at
+              <a href="/developers">/developers</a>, including <a href="/developers/auth">auth</a>,
+              <a href="/developers/errors">JSON errors</a>, <a href="/developers/versioning">API versioning</a>,
+              <a href="/developers/rate-limits">rate limits</a>, <a href="/developers/webhooks">webhooks</a>,
+              and <a href="/developers/mcp">MCP connection details</a>.
+            </p>
+            <p class="mt-4">
+              The canonical URL is <a href={SITE_ORIGIN}>{SITE_ORIGIN}</a>. Contact: <a href={`mailto:${SITE_EMAIL}`}>{SITE_EMAIL}</a>.
+            </p>
+          </section>
+        </noscript>
       </div>
     </header>
 

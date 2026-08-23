@@ -48,7 +48,7 @@ export const ABOUT_WORK =
   'Yannis builds production product systems across interfaces, APIs, cloud delivery, payments, and Web3 where it fits. His path runs from Ethereum experiments to Mindler, Anotherblock, and BabyBjörn.';
 
 export const ABOUT_AGENTS =
-  'Yannis developer resources are public and unauthenticated: /llms.txt, /index.md, /openapi.json, /developers, and the Streamable HTTP MCP server at /mcp. Contact: hello@yannis.dev.';
+  'Yannis developer resources are public and unauthenticated: /llms.txt, /index.md, /openapi.json, /api/status.json, /developers, JSON error docs, versioning docs, rate-limit docs, and the Streamable HTTP MCP server at /mcp. Contact: hello@yannis.dev.';
 
 export const skills = data.skills;
 export const agenticWorkflow = data.agenticWorkflow;

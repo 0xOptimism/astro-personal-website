@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest';
 import handler from '../netlify/edge-functions/negotiate-markdown';
 import { homepageMarkdown, notFoundMarkdown } from '../src/lib/agent/markdown';
 import { MARKDOWN_CONTENT_TYPE } from '../src/lib/agent/negotiate';
+import { API_VERSION, API_VERSION_HEADER } from '../src/lib/agent/http';
 import { ABOUT_PAGE, pageMarkdown } from '../src/lib/pages';
 
 async function originHtml(): Promise<Response> {
@@ -43,6 +44,25 @@ describe('Netlify edge markdown negotiation', () => {
     expect(response.headers.get('Content-Type')).toBe(MARKDOWN_CONTENT_TYPE);
     expect(response.headers.get('Vary')?.toLowerCase()).toContain('accept');
     expect(await response.text()).toBe(notFoundMarkdown());
+  });
+
+  it('returns RFC 9457 JSON for unknown API paths', async () => {
+    const response = await handler(
+      new Request('https://yannis.dev/api/unknown-resource', {
+        headers: { Accept: 'application/json' },
+      }),
+      { next: originHtml },
+    );
+
+    expect(response.status).toBe(404);
+    expect(response.headers.get('Content-Type')).toContain('application/problem+json');
+    expect(response.headers.get(API_VERSION_HEADER)).toBe(API_VERSION);
+    expect(response.headers.get('RateLimit')).toContain('"public"');
+    expect(await response.json()).toMatchObject({
+      status: 404,
+      code: 'api.not_found',
+      hint: expect.stringContaining('/openapi.json'),
+    });
   });
 
   it('returns 406 when no produced type is acceptable', async () => {
@@ -92,6 +112,23 @@ describe('Netlify edge markdown negotiation', () => {
       { next: async () => staticResponse },
     );
     expect(response.status).toBe(200);
+    expect(response.headers.get(API_VERSION_HEADER)).toBe(API_VERSION);
+    expect(response.headers.get('RateLimit-Policy')).toContain('q=60');
     expect(await response.text()).toBe('llms body');
+  });
+
+  it('passes through the documented API status JSON endpoint', async () => {
+    const staticResponse = new Response('{"status":"ok"}', {
+      status: 200,
+      headers: { 'Content-Type': 'application/json; charset=utf-8' },
+    });
+    const response = await handler(
+      new Request('https://yannis.dev/api/status.json', { headers: { Accept: 'application/json' } }),
+      { next: async () => staticResponse },
+    );
+    expect(response.status).toBe(200);
+    expect(response.headers.get(API_VERSION_HEADER)).toBe(API_VERSION);
+    expect(response.headers.get('RateLimit')).toContain('"public"');
+    expect(await response.text()).toBe('{"status":"ok"}');
   });
 });

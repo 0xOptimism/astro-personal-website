@@ -89,7 +89,11 @@ Email [${SITE_EMAIL}](mailto:${SITE_EMAIL}).
 - [Privacy](https://${SITE_DOMAIN}/privacy)
 - [Yannis developer resources](https://${SITE_DOMAIN}/developers)
 - [OpenAPI](https://${SITE_DOMAIN}/openapi.json)
+- [API status](https://${SITE_DOMAIN}/api/status.json)
 - [MCP server](https://${SITE_DOMAIN}/mcp)
+- [JSON errors](https://${SITE_DOMAIN}/developers/errors)
+- [API versioning](https://${SITE_DOMAIN}/developers/versioning)
+- [Rate limits](https://${SITE_DOMAIN}/developers/rate-limits)
 - [Markdown twin](https://${SITE_DOMAIN}/index.md)
 - [llms.txt](https://${SITE_DOMAIN}/llms.txt)
 - [Sitemap](https://${SITE_DOMAIN}/sitemap.xml)
@@ -121,7 +125,7 @@ The path you requested does not exist on ${SITE_DOMAIN}.
 
 - [Home](https://${SITE_DOMAIN}/): Profile of ${SITE_NAME}, full-stack developer
 - [About](https://${SITE_DOMAIN}/about): Long-form profile
-- [Yannis developer resources](https://${SITE_DOMAIN}/developers): OpenAPI, auth, webhooks, MCP
+- [Yannis developer resources](https://${SITE_DOMAIN}/developers): OpenAPI, API status, JSON errors, versioning, rate limits, auth, webhooks, MCP
 - [Homepage markdown](https://${SITE_DOMAIN}/index.md): Markdown twin of the homepage
 - [llms.txt](https://${SITE_DOMAIN}/llms.txt): Agent index and key links
 - [Sitemap](https://${SITE_DOMAIN}/sitemap.xml): Public page list

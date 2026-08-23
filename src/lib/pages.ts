@@ -8,6 +8,13 @@ import {
   SITE_NAME,
   SITE_ORIGIN,
 } from './site.ts';
+import {
+  API_VERSION,
+  API_VERSION_HEADER,
+  RATE_LIMIT_POLICY_NAME,
+  RATE_LIMIT_QUOTA,
+  RATE_LIMIT_WINDOW_SECONDS,
+} from './agent/http.ts';
 
 export interface PublicPage {
   path: string;
@@ -92,11 +99,11 @@ export const DEVELOPERS_PAGE: PublicPage = {
   changefreq: 'monthly',
   priority: '0.8',
   navLabel: 'Developers',
-  body: `This site is a personal portfolio, not a product API. The files below are public copies of the same profile already on the homepage: work, stack, timeline, and email. They are read-only. There is nothing to authenticate and nothing to write.
+  body: `This site is a personal portfolio with a small public read API for agents. The files below are public copies of the same profile already on the homepage: work, stack, timeline, and email. They are read-only. There is nothing to authenticate and nothing to write.
 
 OpenAPI lives at [${SITE_ORIGIN}/openapi.json](${SITE_ORIGIN}/openapi.json). A markdown version of the homepage is at [${SITE_ORIGIN}/index.md](${SITE_ORIGIN}/index.md). The short agent index is [${SITE_ORIGIN}/llms.txt](${SITE_ORIGIN}/llms.txt), and the long version is [${SITE_ORIGIN}/llms-full.txt](${SITE_ORIGIN}/llms-full.txt).
 
-There is also an MCP server at [${SITE_ORIGIN}/mcp](${SITE_ORIGIN}/mcp) if you want tools instead of pages. How to connect is on [/developers/mcp](/developers/mcp). Auth is on [/developers/auth](/developers/auth). The short answer on [/developers/webhooks](/developers/webhooks) is that there are none.
+There is also an MCP server at [${SITE_ORIGIN}/mcp](${SITE_ORIGIN}/mcp) if you want tools instead of pages. How to connect is on [/developers/mcp](/developers/mcp). Auth is on [/developers/auth](/developers/auth). Typed JSON errors are documented on [/developers/errors](/developers/errors), API versioning is on [/developers/versioning](/developers/versioning), and rate limits are on [/developers/rate-limits](/developers/rate-limits). The short answer on [/developers/webhooks](/developers/webhooks) is that there are none.
 
 If something here asks you for a password, it is a mistake. Email [${SITE_EMAIL}](${MAILTO}).`,
 };
@@ -115,6 +122,54 @@ The MCP server at [${SITE_ORIGIN}/mcp](${SITE_ORIGIN}/mcp) is public too. Send t
 That is on purpose. The data is a public bio, an email address, and a work history. If a later endpoint needs identity, it will be written up here first.
 
 Questions: [${SITE_EMAIL}](${MAILTO}).`,
+};
+
+export const ERRORS_DOCS_PAGE: PublicPage = {
+  path: '/developers/errors',
+  title: `${SITE_NAME} JSON errors | ${SITE_DOMAIN}`,
+  heading: `${SITE_NAME} JSON errors`,
+  description: `RFC 9457 problem details used by the ${SITE_DOMAIN} public API.`,
+  changefreq: 'monthly',
+  priority: '0.6',
+  body: `JSON API errors on yannis.dev use RFC 9457 problem details with Content-Type: application/problem+json. The core fields are type, title, status, detail, and instance. Yannis also returns code and hint extension fields so agents can branch on a stable machine value and show a practical recovery step without parsing prose.
+
+Problem type URLs live on this page. The current public codes are api.not_found for unknown API routes, http.method_not_allowed when a method is not supported, http.forbidden_origin when an MCP Origin header is not http or https, http.not_acceptable when a requested media type cannot be produced, request.invalid_json when a body cannot be parsed, mcp.unsupported_protocol_version for unsupported MCP protocol headers, rate_limit.exceeded for 429 responses, and server.error for unexpected failures.
+
+A typical response is a JSON object such as {"type":"${SITE_ORIGIN}/developers/errors#api.not_found","title":"API route not found","status":404,"detail":"The requested API path is not published on yannis.dev.","instance":"/api/example","code":"api.not_found","hint":"Read ${SITE_ORIGIN}/openapi.json and retry a documented path."}
+
+HTML pages still return HTML for browsers. API paths and machine-readable resources return structured JSON errors where the site controls the response. If an intermediary or static host produces an error before this code runs, check [/openapi.json](/openapi.json) for the canonical endpoint list and email [${SITE_EMAIL}](${MAILTO}) with the failing URL.`,
+};
+
+export const VERSIONING_DOCS_PAGE: PublicPage = {
+  path: '/developers/versioning',
+  title: `${SITE_NAME} API versioning | ${SITE_DOMAIN}`,
+  heading: `${SITE_NAME} API versioning`,
+  description: `Version and deprecation policy for the ${SITE_DOMAIN} public API.`,
+  changefreq: 'monthly',
+  priority: '0.6',
+  body: `The current yannis.dev public REST surface is version ${API_VERSION}. JSON responses include the ${API_VERSION_HEADER}: ${API_VERSION} response header, and OpenAPI documents the same header as an optional request parameter for clients that want to pin the version they have tested.
+
+Version ${API_VERSION} covers the read-only status endpoint, OpenAPI document, MCP discovery JSON, and related agent resources. HTML pages and markdown twins are content resources, but they are listed in the same OpenAPI document so agents can discover them from one place.
+
+Breaking changes will use a new version value before they replace the current contract. The existing version stays available for at least 90 days after the new contract is documented. If an endpoint is scheduled to stop responding, the API will publish the Sunset HTTP header with an HTTP-date and link back to this policy from the OpenAPI description.
+
+No public endpoint is deprecated right now. Clients should treat missing Sunset headers as no scheduled retirement, not as a lifetime guarantee. For product decisions or private integrations that need stronger guarantees, email [${SITE_EMAIL}](${MAILTO}).`,
+};
+
+export const RATE_LIMITS_DOCS_PAGE: PublicPage = {
+  path: '/developers/rate-limits',
+  title: `${SITE_NAME} rate limits | ${SITE_DOMAIN}`,
+  heading: `${SITE_NAME} rate limits`,
+  description: `RateLimit response headers for ${SITE_DOMAIN} public API clients.`,
+  changefreq: 'monthly',
+  priority: '0.6',
+  body: `The yannis.dev public API is intentionally tiny and read-only, but responses still include rate-limit hints so agents can self-throttle instead of guessing. The default policy is ${RATE_LIMIT_QUOTA} requests per ${RATE_LIMIT_WINDOW_SECONDS} seconds for the ${RATE_LIMIT_POLICY_NAME} policy.
+
+Successful JSON and MCP responses include RateLimit-Policy and RateLimit. The current policy header is RateLimit-Policy: "${RATE_LIMIT_POLICY_NAME}";q=${RATE_LIMIT_QUOTA};w=${RATE_LIMIT_WINDOW_SECONDS}. The live quota hint uses RateLimit with r for remaining quota and t for the effective window in seconds. Compatibility headers RateLimit-Limit, RateLimit-Remaining, and RateLimit-Reset are also returned because many client libraries still inspect those names.
+
+If a client is throttled, the API returns HTTP 429 with application/problem+json, code rate_limit.exceeded, and Retry-After. Retry-After takes precedence over the RateLimit hint when both are present.
+
+These limits protect a personal site, not a metered product. Cache public documents like [/openapi.json](/openapi.json), [/llms.txt](/llms.txt), and [/index.md](/index.md) when possible. Email [${SITE_EMAIL}](${MAILTO}) if you are building a crawler that needs a higher documented budget.`,
 };
 
 export const WEBHOOKS_DOCS_PAGE: PublicPage = {
@@ -157,6 +212,9 @@ export const HTML_PAGES: readonly PublicPage[] = [
   PRIVACY_PAGE,
   DEVELOPERS_PAGE,
   AUTH_DOCS_PAGE,
+  ERRORS_DOCS_PAGE,
+  VERSIONING_DOCS_PAGE,
+  RATE_LIMITS_DOCS_PAGE,
   WEBHOOKS_DOCS_PAGE,
   MCP_DOCS_PAGE,
 ];

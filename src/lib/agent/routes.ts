@@ -7,6 +7,7 @@ export const MACHINE_PATHS = {
   sitemap: '/sitemap.xml',
   robots: '/robots.txt',
   openapi: '/openapi.json',
+  apiStatus: '/api/status.json',
   mcp: '/mcp',
   mcpServerCard: '/.well-known/mcp/server-card.json',
   mcpEndpointManifest: '/.well-known/mcp/manifest.json',

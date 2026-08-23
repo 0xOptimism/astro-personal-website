@@ -11,6 +11,7 @@ import {
 import { mcpDevConnectMiddleware } from '../src/lib/agent/mcp-dev-middleware';
 import { GET as getMcp } from '../src/pages/mcp';
 import { SITE_EMAIL, SITE_NAME } from '../src/lib/site';
+import { API_VERSION, API_VERSION_HEADER } from '../src/lib/agent/http';
 
 describe('MCP manifests', () => {
   it('publishes a Streamable HTTP server card', () => {
@@ -89,6 +90,8 @@ describe('MCP Streamable HTTP', () => {
     );
     expect(response.status).toBe(200);
     expect(response.headers.get('Content-Type')).toContain('application/json');
+    expect(response.headers.get(API_VERSION_HEADER)).toBe(API_VERSION);
+    expect(response.headers.get('RateLimit-Policy')).toContain('q=60');
     const body = (await response.json()) as { result: { serverInfo: { name: string } } };
     expect(body.result.serverInfo.name).toBe('yannis-dev');
   });
@@ -102,9 +105,32 @@ describe('MCP Streamable HTTP', () => {
       }),
     );
     expect(forbidden.status).toBe(403);
+    expect(forbidden.headers.get('Content-Type')).toContain('application/problem+json');
+    expect((await forbidden.json()) as { code: string }).toMatchObject({ code: 'http.forbidden_origin' });
 
     const get = await handleMcpHttp(new Request('https://yannis.dev/mcp', { method: 'GET' }));
     expect(get.status).toBe(405);
+    expect(get.headers.get('Allow')).toBe('POST, OPTIONS');
+    expect(get.headers.get('Content-Type')).toContain('application/problem+json');
+    expect((await get.json()) as { code: string }).toMatchObject({ code: 'http.method_not_allowed' });
+  });
+
+  it('returns problem JSON for unsupported MCP protocol versions', async () => {
+    const response = await handleMcpHttp(
+      new Request('https://yannis.dev/mcp', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'MCP-Protocol-Version': '1900-01-01',
+        },
+        body: '{}',
+      }),
+    );
+    expect(response.status).toBe(400);
+    expect(response.headers.get('Content-Type')).toContain('application/problem+json');
+    expect((await response.json()) as { code: string }).toMatchObject({
+      code: 'mcp.unsupported_protocol_version',
+    });
   });
 });
 
@@ -112,6 +138,7 @@ describe('MCP page route', () => {
   it('exposes GET on /mcp as 405', async () => {
     const get = await getMcp({ request: new Request('http://localhost:4321/mcp') } as never);
     expect(get.status).toBe(405);
+    expect(get.headers.get('Content-Type')).toContain('application/problem+json');
   });
 });
 
