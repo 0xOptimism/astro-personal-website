@@ -7,6 +7,7 @@ import {
   HTML_PAGES,
   MCP_DOCS_PAGE,
   PRIVACY_PAGE,
+  SITE_NAV,
   WEBHOOKS_DOCS_PAGE,
   pageMarkdown,
   pagePlainText,
@@ -32,6 +33,11 @@ describe('trust and developer pages', () => {
     expect(AUTH_DOCS_PAGE.path).toBe('/developers/auth');
     expect(WEBHOOKS_DOCS_PAGE.path).toBe('/developers/webhooks');
     expect(MCP_DOCS_PAGE.path).toBe('/developers/mcp');
+    expect(SITE_NAV).toEqual([
+      { href: '/', label: 'Home' },
+      { href: '/about', label: 'About' },
+      { href: '/contact', label: 'Contact' },
+    ]);
   });
 
   it('writes emails and social names as markdown links', () => {
