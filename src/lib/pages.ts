@@ -81,7 +81,6 @@ export const PRIVACY_PAGE: PublicPage = {
   description: `How ${SITE_DOMAIN} handles information.`,
   changefreq: 'monthly',
   priority: '0.6',
-  navLabel: 'Privacy',
   body: `This is a personal site. There is no login, no checkout, and no ads. I do not sell or rent personal data.
 
 The site is hosted on Netlify. Netlify may keep standard request logs (IP address, user agent, URL, and time) to run the service and deal with abuse. I do not use those logs to build a marketing profile.
@@ -100,7 +99,6 @@ export const DEVELOPERS_PAGE: PublicPage = {
   description: `OpenAPI, markdown, and MCP endpoints for ${SITE_DOMAIN}.`,
   changefreq: 'monthly',
   priority: '0.8',
-  navLabel: 'Developers',
   body: `This site is a personal portfolio with a small public read API for agents. The files below are public copies of the same profile already on the homepage: work, stack, timeline, and email. They are read-only. There is nothing to authenticate and nothing to write.
 
 OpenAPI lives at [${SITE_ORIGIN}/openapi.json](${SITE_ORIGIN}/openapi.json). A markdown version of the homepage is at [${SITE_ORIGIN}/index.md](${SITE_ORIGIN}/index.md). The short agent index is [${SITE_ORIGIN}/llms.txt](${SITE_ORIGIN}/llms.txt), and the long version is [${SITE_ORIGIN}/llms-full.txt](${SITE_ORIGIN}/llms-full.txt). The canonical Yannis MCP server card is [${SITE_ORIGIN}/.well-known/mcp.json](${SITE_ORIGIN}/.well-known/mcp.json).
