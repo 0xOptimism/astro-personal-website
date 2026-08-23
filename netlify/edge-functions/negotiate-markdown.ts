@@ -7,6 +7,7 @@ import {
 import { homepageLinkHeader } from '../../src/lib/agent/seo.ts';
 import { markdownForPath, notAcceptableBody, notFoundMarkdown } from '../../src/lib/agent/markdown.ts';
 import { isNegotiatePassthrough, normalizeIndexHtml } from '../../src/lib/agent/routes.ts';
+import { mcpOptionsResponse, mcpPostResponse } from '../../src/lib/agent/mcp.ts';
 
 interface Context {
   next: () => Promise<Response>;
@@ -20,6 +21,24 @@ function hasFileExtension(pathname: string): boolean {
 
 export default async function handler(request: Request, context: Context) {
   const pathname = normalizeIndexHtml(new URL(request.url).pathname);
+
+  if (pathname === '/mcp') {
+    if (request.method === 'OPTIONS') {
+      return mcpOptionsResponse();
+    }
+
+    if (request.method === 'POST') {
+      return mcpPostResponse(request);
+    }
+
+    return new Response('Method Not Allowed', {
+      status: 405,
+      headers: {
+        Allow: 'POST, OPTIONS',
+        'Access-Control-Allow-Origin': '*',
+      },
+    });
+  }
 
   // Static files, MCP, and well-known discovery must not be rewritten.
   if (isNegotiatePassthrough(pathname) || hasFileExtension(pathname)) {

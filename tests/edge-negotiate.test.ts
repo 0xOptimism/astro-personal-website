@@ -73,13 +73,68 @@ describe('Netlify edge markdown negotiation', () => {
   });
 
   it('does not rewrite the MCP endpoint', async () => {
-    const mcpResponse = new Response('mcp', { status: 200 });
     const response = await handler(
-      new Request('https://yannis.dev/mcp', { headers: { Accept: 'application/json, text/event-stream' } }),
-      { next: async () => mcpResponse },
+      new Request('https://yannis.dev/mcp', { method: 'GET', headers: { Accept: 'application/json, text/event-stream' } }),
+      { next: originHtml },
     );
+    expect(response.status).toBe(405);
+    expect(response.headers.get('Allow')).toContain('POST');
+  });
+
+  it('serves MCP initialize over POST', async () => {
+    const response = await handler(
+      new Request('https://yannis.dev/mcp', {
+        method: 'POST',
+        headers: { Accept: 'application/json, text/event-stream', 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          jsonrpc: '2.0',
+          id: 1,
+          method: 'initialize',
+          params: { protocolVersion: '2025-11-25' },
+        }),
+      }),
+      { next: originHtml },
+    );
+    const body = await response.json();
     expect(response.status).toBe(200);
-    expect(await response.text()).toBe('mcp');
+    expect(body.result.protocolVersion).toBe('2025-11-25');
+    expect(body.result.serverInfo.name).toBe('yannis-dev');
+  });
+
+  it('serves read-only MCP tools over POST', async () => {
+    const response = await handler(
+      new Request('https://yannis.dev/mcp', {
+        method: 'POST',
+        headers: { Accept: 'application/json, text/event-stream', 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          jsonrpc: '2.0',
+          id: 'tools',
+          method: 'tools/list',
+        }),
+      }),
+      { next: originHtml },
+    );
+    const body = await response.json();
+    expect(body.result.tools.map((tool: { name: string }) => tool.name)).toContain('get_yannis_profile');
+  });
+
+  it('serves MCP resources over POST', async () => {
+    const response = await handler(
+      new Request('https://yannis.dev/mcp', {
+        method: 'POST',
+        headers: { Accept: 'application/json, text/event-stream', 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          jsonrpc: '2.0',
+          id: 'resource',
+          method: 'resources/read',
+          params: { uri: 'https://yannis.dev/index.md' },
+        }),
+      }),
+      { next: originHtml },
+    );
+    const body = await response.json();
+    expect(body.result.contents[0].mimeType).toBe('text/markdown');
+    expect(body.result.contents[0].text).toContain('# Yannis');
   });
 
   it('passes through static files like llms.txt even when Accept prefers markdown', async () => {
