@@ -5,9 +5,8 @@ import {
   VARY_ACCEPT,
 } from '../../src/lib/agent/negotiate.ts';
 import { homepageLinkHeader } from '../../src/lib/agent/seo.ts';
-import { homepageMarkdown, notAcceptableBody, notFoundMarkdown } from '../../src/lib/agent/markdown.ts';
-
-const MARKDOWN_PATHS = new Set(['/', '/index.html']);
+import { markdownForPath, notAcceptableBody, notFoundMarkdown } from '../../src/lib/agent/markdown.ts';
+import { isNegotiatePassthrough, normalizeIndexHtml } from '../../src/lib/agent/routes.ts';
 
 interface Context {
   next: () => Promise<Response>;
@@ -20,11 +19,10 @@ function hasFileExtension(pathname: string): boolean {
 }
 
 export default async function handler(request: Request, context: Context) {
-  const pathname = new URL(request.url).pathname;
+  const pathname = normalizeIndexHtml(new URL(request.url).pathname);
 
-  // Static files (llms.txt, sitemap.xml, robots.txt, assets) should not be
-  // rewritten by content negotiation. Pass them to Netlify's static server.
-  if (hasFileExtension(pathname) && !MARKDOWN_PATHS.has(pathname)) {
+  // Static files, MCP, and well-known discovery must not be rewritten.
+  if (isNegotiatePassthrough(pathname) || hasFileExtension(pathname)) {
     return context.next();
   }
 
@@ -42,9 +40,9 @@ export default async function handler(request: Request, context: Context) {
   }
 
   if (mediaType === 'text/markdown') {
-    const isHome = MARKDOWN_PATHS.has(pathname);
-    return new Response(isHome ? homepageMarkdown() : notFoundMarkdown(), {
-      status: isHome ? 200 : 404,
+    const markdown = markdownForPath(pathname);
+    return new Response(markdown ?? notFoundMarkdown(), {
+      status: markdown ? 200 : 404,
       headers: {
         'Content-Type': MARKDOWN_CONTENT_TYPE,
         Vary: VARY_ACCEPT,

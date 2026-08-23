@@ -32,6 +32,11 @@ describe('llms.txt', () => {
     expect(text).toContain('## When to use this site');
     expect(text).toContain(`https://${SITE_DOMAIN}/index.md`);
     expect(text).toContain(`https://${SITE_DOMAIN}/sitemap.xml`);
+    expect(text).toContain('Yannis developer resources');
+    expect(text).toContain(`https://${SITE_DOMAIN}/openapi.json`);
+    expect(text).toContain(`https://${SITE_DOMAIN}/mcp`);
+    expect(text).toContain(`https://${SITE_DOMAIN}/.well-known/mcp/server-card.json`);
+    expect(text).toContain(`https://${SITE_DOMAIN}/.well-known/mcp/manifest.json`);
   });
 
   it('full version concatenates llms.txt and homepage markdown', () => {
