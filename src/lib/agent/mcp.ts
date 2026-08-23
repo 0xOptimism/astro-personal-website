@@ -1,4 +1,4 @@
-import { HTML_PAGES } from '../pages';
+import { HTML_PAGES } from '../pages.ts';
 import {
   SAME_AS,
   SITE_DESCRIPTION,
@@ -12,10 +12,10 @@ import {
   agenticWorkflow,
   skills,
   timeline,
-} from '../site';
-import { homepageMarkdown } from './markdown';
-import { llmsTxt } from './llms';
-import { MACHINE_PATHS, absoluteUrl } from './routes';
+} from '../site.ts';
+import { homepageMarkdown } from './markdown.ts';
+import { llmsTxt } from './llms.ts';
+import { MACHINE_PATHS, absoluteUrl } from './routes.ts';
 
 export const MCP_PROTOCOL_VERSION = '2025-11-25';
 export const MCP_SUPPORTED_PROTOCOL_VERSIONS = ['2025-11-25', '2025-03-26'] as const;

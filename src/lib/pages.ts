@@ -7,7 +7,7 @@ import {
   SITE_LOCATION,
   SITE_NAME,
   SITE_ORIGIN,
-} from './site';
+} from './site.ts';
 
 export interface PublicPage {
   path: string;

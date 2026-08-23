@@ -1,6 +1,6 @@
-import { HTML_PAGES } from '../pages';
-import { SITE_DESCRIPTION, SITE_EMAIL, SITE_NAME, SITE_ORIGIN } from '../site';
-import { MACHINE_PATHS, absoluteUrl } from './routes';
+import { HTML_PAGES } from '../pages.ts';
+import { SITE_DESCRIPTION, SITE_EMAIL, SITE_NAME, SITE_ORIGIN } from '../site.ts';
+import { MACHINE_PATHS, absoluteUrl } from './routes.ts';
 
 const HTML_RESPONSE = {
   '200': {

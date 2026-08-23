@@ -1,6 +1,6 @@
 import type { IncomingMessage, ServerResponse } from 'node:http';
-import { handleMcpHttp } from './mcp';
-import { MACHINE_PATHS } from './routes';
+import { handleMcpHttp } from './mcp.ts';
+import { MACHINE_PATHS } from './routes.ts';
 
 type NextFunction = (error?: unknown) => void;
 
