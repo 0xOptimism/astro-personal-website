@@ -40,17 +40,19 @@ export const ABOUT_PAGE: PublicPage = {
   path: '/about',
   title: `About ${SITE_NAME} | ${SITE_JOB_TITLE} at ${SITE_DOMAIN}`,
   heading: `About ${SITE_NAME}`,
-  description: `${SITE_NAME} is a ${SITE_LOCATION}-based ${SITE_JOB_TITLE} at ${SITE_EMPLOYER}.`,
+  description: `${SITE_NAME} grew up in Antibes and lives in ${SITE_LOCATION}.`,
   changefreq: 'monthly',
   priority: '0.8',
   navLabel: 'About',
-  body: `I live in Stockholm and write full-stack software. TypeScript, React, and Node.js are what I reach for first. At ${SITE_EMPLOYER} that means commerce work, storefronts and payments, plus the APIs and internal tools behind them.
+  body: `Born in Antibes, I live in Stockholm with my family.
 
-Programming started in 2017 after I found Ethereum. HashDrop was the first real site, a tracker for token launches. The year after I co-founded OnChain Jobs, a hiring product for blockchain companies, and learned JavaScript by keeping that product alive.
+Ethereum is how I started writing code. In 2017 I wanted to understand it, then I wanted things to exist, and HashDrop was the first site that felt like mine. After that I kept building until the work became a job. The companies and years are on the homepage.
 
-SALT in Stockholm put me on production teams. I interned at Podme and Redmind, then joined Mindler early and led the psychologist dashboard more than 200 professionals used. Bonsai started as an Ethereum and NFT dashboard in 2022 and later became a wider portfolio tracker for crypto, stocks, real estate, and collectibles. In 2023 I built React surfaces for Anotherblock's music NFT marketplace and won the ETH Denver DAO and Community track among 600+ teams.
+Product work is more interesting when the brief is still fuzzy, and when an interface has to talk to a real system behind it. Agents are useful for scoped work, and I keep the last call.
 
-I've been at ${SITE_EMPLOYER} since 2024. I was born in Antibes. Email [${SITE_EMAIL}](${MAILTO}) if you want to talk.`,
+I take photographs when I can get outside. Time with my daughters is the better part of the week.
+
+Email [${SITE_EMAIL}](${MAILTO}) if you want to talk.`,
 };
 
 export const CONTACT_PAGE: PublicPage = {
