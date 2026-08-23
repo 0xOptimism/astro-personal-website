@@ -3,6 +3,7 @@ import { MACHINE_PATHS, absoluteUrl } from './routes.ts';
 
 export const API_VERSION = '1';
 export const API_VERSION_HEADER = 'Yannis-API-Version';
+export const MCP_SERVER_CARD_CONTENT_TYPE = 'application/mcp-server-card+json; charset=utf-8';
 
 export const RATE_LIMIT_POLICY_NAME = 'public';
 export const RATE_LIMIT_QUOTA = 60;
@@ -63,14 +64,21 @@ export function problemDetails(input: ProblemDetailsInput): ProblemDetails {
   };
 }
 
-export function jsonHeaders(extra: Record<string, string> = {}): Record<string, string> {
+export function jsonHeaders(
+  extra: Record<string, string> = {},
+  includeApiHeaders = true,
+): Record<string, string> {
   return {
     'Content-Type': 'application/json; charset=utf-8',
     'X-Content-Type-Options': 'nosniff',
     'Cache-Control': 'public, max-age=3600',
     'Access-Control-Allow-Origin': '*',
-    'Access-Control-Expose-Headers': EXPOSED_AGENT_HEADERS,
-    ...API_RESPONSE_HEADERS,
+    ...(includeApiHeaders
+      ? {
+          'Access-Control-Expose-Headers': EXPOSED_AGENT_HEADERS,
+          ...API_RESPONSE_HEADERS,
+        }
+      : {}),
     ...extra,
   };
 }
@@ -105,6 +113,7 @@ export function apiStatusPayload() {
       homepageMarkdown: absoluteUrl(MACHINE_PATHS.homepageMarkdown),
       llms: absoluteUrl(MACHINE_PATHS.llms),
       mcp: absoluteUrl(MACHINE_PATHS.mcp),
+      mcpServerCard: absoluteUrl(MACHINE_PATHS.mcpServerCard),
       errors: absoluteUrl('/developers/errors'),
       versioning: absoluteUrl('/developers/versioning'),
       rateLimits: absoluteUrl('/developers/rate-limits'),

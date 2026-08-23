@@ -13,12 +13,15 @@ describe('OpenAPI', () => {
     expect(paths['/openapi.json']).toBeTruthy();
     expect(paths['/api/status.json']).toBeTruthy();
     expect(paths['/mcp']).toBeTruthy();
+    expect(paths['/.well-known/mcp.json']).toBeTruthy();
     expect(paths['/about']).toBeTruthy();
     expect(paths['/developers']).toBeTruthy();
     expect(paths['/developers/errors']).toBeTruthy();
     expect(paths['/developers/versioning']).toBeTruthy();
     expect(paths['/developers/rate-limits']).toBeTruthy();
-    expect(paths['/.well-known/mcp/server-card.json']).toBeTruthy();
+    expect(paths['/mcp/server-card']).toBeUndefined();
+    expect(paths['/.well-known/mcp/server-card.json']).toBeUndefined();
+    expect(paths['/.well-known/ai-catalog.json']).toBeUndefined();
     expect(paths['/.well-known/mcp/manifest.json']).toBeTruthy();
   });
 
@@ -32,6 +35,8 @@ describe('OpenAPI', () => {
       expect.arrayContaining(['type', 'title', 'status', 'detail', 'instance', 'code', 'hint']),
     );
     expect(spec.components.schemas.ProblemDetails.properties?.code).toBeTruthy();
+    expect(spec.components.schemas.McpServerCard).toBeUndefined();
+    expect(spec.components.schemas.AiCatalog).toBeUndefined();
     expect(spec.paths['/mcp']?.post?.responses['405'].content?.['application/problem+json']).toBeTruthy();
     expect(JSON.stringify(spec)).toContain('application/problem+json');
   });
@@ -65,6 +70,26 @@ describe('OpenAPI', () => {
       [API_VERSION_HEADER]: { $ref: '#/components/headers/ApiVersion' },
       RateLimit: { $ref: '#/components/headers/RateLimit' },
       'RateLimit-Policy': { $ref: '#/components/headers/RateLimitPolicy' },
+    });
+  });
+
+  it('keeps discovery JSON schemas generic and omits rate-limit headers from the MCP card', () => {
+    const spec = openApiSpec() as {
+      paths: Record<
+        string,
+        { get?: { responses: Record<string, { content?: Record<string, { schema?: unknown }>; headers?: unknown }> } }
+      >;
+    };
+
+    expect(spec.paths['/openapi.json']?.get?.responses['200'].content?.['application/json'].schema).toEqual({
+      type: 'object',
+    });
+    expect(spec.paths['/.well-known/mcp.json']?.get?.responses['200']).toMatchObject({
+      headers: {},
+      content: { 'application/json': { schema: { type: 'object' } } },
+    });
+    expect(spec.paths['/.well-known/mcp/manifest.json']?.get?.responses['200'].content?.['application/json'].schema).toEqual({
+      type: 'object',
     });
   });
 });

@@ -113,6 +113,7 @@ function jsonGet(
   summary: string,
   description: string,
   schema: Record<string, unknown> = { type: 'object' },
+  headers: Record<string, unknown> = AGENT_RESPONSE_HEADERS,
 ) {
   return {
     get: {
@@ -123,7 +124,7 @@ function jsonGet(
       responses: {
         '200': {
           description,
-          headers: AGENT_RESPONSE_HEADERS,
+          headers,
           content: { 'application/json': { schema } },
         },
         ...COMMON_ERROR_RESPONSES,
@@ -309,6 +310,7 @@ export function openApiSpec() {
               properties: {
                 code: { type: 'integer' },
                 message: { type: 'string' },
+                data: { type: 'object', additionalProperties: true },
               },
             },
           },
@@ -339,7 +341,14 @@ export function openApiSpec() {
         'Read-only status, API version, rate-limit policy, and discovery links.',
         { $ref: '#/components/schemas/ApiStatus' },
       ),
-      [MACHINE_PATHS.mcpServerCard]: jsonGet('mcp', 'getMcpServerCard', 'MCP server card', 'SEP-1649 server card'),
+      [MACHINE_PATHS.mcpServerCard]: jsonGet(
+        'mcp',
+        'getMcpServerCard',
+        `${SITE_NAME} MCP server card`,
+        'Canonical MCP Server Card for yannis.dev.',
+        { type: 'object' },
+        {},
+      ),
       [MACHINE_PATHS.mcpEndpointManifest]: jsonGet(
         'mcp',
         'getMcpEndpointManifest',
@@ -380,6 +389,13 @@ export function openApiSpec() {
               },
             },
             '403': FORBIDDEN_ERROR_RESPONSE,
+            '404': {
+              description: 'JSON-RPC method not found for modern MCP clients.',
+              headers: AGENT_RESPONSE_HEADERS,
+              content: {
+                'application/json': { schema: { $ref: '#/components/schemas/JsonRpcResponse' } },
+              },
+            },
             '405': COMMON_ERROR_RESPONSES['405'],
             '429': COMMON_ERROR_RESPONSES['429'],
             '500': COMMON_ERROR_RESPONSES['500'],

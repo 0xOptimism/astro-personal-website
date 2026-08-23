@@ -35,7 +35,7 @@ describe('llms.txt', () => {
     expect(text).toContain('Yannis developer resources');
     expect(text).toContain(`https://${SITE_DOMAIN}/openapi.json`);
     expect(text).toContain(`https://${SITE_DOMAIN}/mcp`);
-    expect(text).toContain(`https://${SITE_DOMAIN}/.well-known/mcp/server-card.json`);
+    expect(text).toContain(`https://${SITE_DOMAIN}/.well-known/mcp.json`);
     expect(text).toContain(`https://${SITE_DOMAIN}/.well-known/mcp/manifest.json`);
   });
 

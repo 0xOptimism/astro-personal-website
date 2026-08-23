@@ -101,7 +101,7 @@ export const DEVELOPERS_PAGE: PublicPage = {
   navLabel: 'Developers',
   body: `This site is a personal portfolio with a small public read API for agents. The files below are public copies of the same profile already on the homepage: work, stack, timeline, and email. They are read-only. There is nothing to authenticate and nothing to write.
 
-OpenAPI lives at [${SITE_ORIGIN}/openapi.json](${SITE_ORIGIN}/openapi.json). A markdown version of the homepage is at [${SITE_ORIGIN}/index.md](${SITE_ORIGIN}/index.md). The short agent index is [${SITE_ORIGIN}/llms.txt](${SITE_ORIGIN}/llms.txt), and the long version is [${SITE_ORIGIN}/llms-full.txt](${SITE_ORIGIN}/llms-full.txt).
+OpenAPI lives at [${SITE_ORIGIN}/openapi.json](${SITE_ORIGIN}/openapi.json). A markdown version of the homepage is at [${SITE_ORIGIN}/index.md](${SITE_ORIGIN}/index.md). The short agent index is [${SITE_ORIGIN}/llms.txt](${SITE_ORIGIN}/llms.txt), and the long version is [${SITE_ORIGIN}/llms-full.txt](${SITE_ORIGIN}/llms-full.txt). The canonical Yannis MCP server card is [${SITE_ORIGIN}/.well-known/mcp.json](${SITE_ORIGIN}/.well-known/mcp.json).
 
 There is also an MCP server at [${SITE_ORIGIN}/mcp](${SITE_ORIGIN}/mcp) if you want tools instead of pages. How to connect is on [/developers/mcp](/developers/mcp). Auth is on [/developers/auth](/developers/auth). Typed JSON errors are documented on [/developers/errors](/developers/errors), API versioning is on [/developers/versioning](/developers/versioning), and rate limits are on [/developers/rate-limits](/developers/rate-limits). The short answer on [/developers/webhooks](/developers/webhooks) is that there are none.
 
@@ -195,13 +195,13 @@ export const MCP_DOCS_PAGE: PublicPage = {
   description: `How to connect to the ${SITE_DOMAIN} MCP server over Streamable HTTP.`,
   changefreq: 'monthly',
   priority: '0.7',
-  body: `The MCP endpoint is [${SITE_ORIGIN}/mcp](${SITE_ORIGIN}/mcp). It uses Streamable HTTP. Discovery files are at [${SITE_ORIGIN}/.well-known/mcp/server-card.json](${SITE_ORIGIN}/.well-known/mcp/server-card.json) and [${SITE_ORIGIN}/.well-known/mcp/manifest.json](${SITE_ORIGIN}/.well-known/mcp/manifest.json).
+  body: `The MCP endpoint is [${SITE_ORIGIN}/mcp](${SITE_ORIGIN}/mcp). It uses Streamable HTTP. The canonical server card is [${SITE_ORIGIN}/.well-known/mcp.json](${SITE_ORIGIN}/.well-known/mcp.json), and the endpoint manifest is [${SITE_ORIGIN}/.well-known/mcp/manifest.json](${SITE_ORIGIN}/.well-known/mcp/manifest.json).
 
-POST JSON-RPC to [/mcp](/mcp) with Accept: application/json, text/event-stream and an MCP-Protocol-Version header. The server handles initialize, ping, tools/list, tools/call, resources/list, resources/read, and prompts/list. It is stateless. GET and DELETE are not used.
+POST JSON-RPC to [/mcp](/mcp) with Accept: application/json, text/event-stream and an MCP-Protocol-Version header. The server handles server/discover, initialize, ping, tools/list, tools/call, resources/list, resources/read, and prompts/list. It is stateless. GET and DELETE are not used.
 
 The tools are read-only: get_yannis_profile, get_yannis_contact, get_yannis_skills, get_yannis_timeline, and list_yannis_developer_resources. They return the same facts as the HTML pages. There is no write tool.
 
-Add [${SITE_ORIGIN}/mcp](${SITE_ORIGIN}/mcp) as a custom connector in Claude, ChatGPT, or Cursor. Protocol version 2025-11-25 is the default; 2025-03-26 also works.
+Add [${SITE_ORIGIN}/mcp](${SITE_ORIGIN}/mcp) as a custom connector in Claude, ChatGPT, or Cursor. Protocol version 2026-07-28 is the default; legacy clients using 2025-11-25 or 2025-03-26 also work.
 
 Auth notes are on [/developers/auth](/developers/auth). The OpenAPI file is [/openapi.json](/openapi.json). Email [${SITE_EMAIL}](${MAILTO}) if initialize fails.`,
 };

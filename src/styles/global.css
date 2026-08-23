@@ -1339,7 +1339,7 @@ body[data-model-skin="gpt-56-sol-high"] .sol56-label {
   text-transform: uppercase;
 }
 
-body[data-model-skin="gpt-56-sol-high"] .sol56-workbench__identity h1 {
+body[data-model-skin="gpt-56-sol-high"] .sol56-workbench__name {
   max-width: none;
   margin-top: auto;
   color: var(--sol56-ink);
@@ -4125,7 +4125,7 @@ body[data-model-skin="claude-opus-5"] .model-frame__corner.is-br {
     grid-template-columns: minmax(0, 1fr) minmax(19rem, 0.9fr);
   }
 
-  body[data-model-skin="gpt-56-sol-high"] .sol56-workbench__identity h1 {
+  body[data-model-skin="gpt-56-sol-high"] .sol56-workbench__name {
     font-size: 5rem;
   }
 
@@ -4266,7 +4266,7 @@ body[data-model-skin="claude-opus-5"] .model-frame__corner.is-br {
     padding: 1.5rem 1.2rem;
   }
 
-  body[data-model-skin="gpt-56-sol-high"] .sol56-workbench__identity h1 {
+  body[data-model-skin="gpt-56-sol-high"] .sol56-workbench__name {
     font-size: 3.5rem;
   }
 

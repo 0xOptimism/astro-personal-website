@@ -7,13 +7,18 @@ import { GET as getLlms } from '../src/pages/llms.txt.ts';
 import { GET as getOpenApi } from '../src/pages/openapi.json.ts';
 import { GET as getApiStatus } from '../src/pages/api/status.json.ts';
 import { GET as getMcpManifest } from '../src/pages/.well-known/mcp/manifest.json.ts';
-import { GET as getMcpServerCard } from '../src/pages/.well-known/mcp/server-card.json.ts';
+import { GET as getMcpServerCard } from '../src/pages/.well-known/mcp.json.ts';
 import { homepageMarkdown } from '../src/lib/agent/markdown';
 import { llmsTxt } from '../src/lib/agent/llms';
 import { JSON_LD_SCRIPT } from '../src/lib/agent/seo';
 import { HTML_PAGES } from '../src/lib/pages';
 import { openApiJson } from '../src/lib/agent/openapi';
-import { API_VERSION, API_VERSION_HEADER, apiStatusPayload } from '../src/lib/agent/http';
+import {
+  API_VERSION,
+  API_VERSION_HEADER,
+  MCP_SERVER_CARD_CONTENT_TYPE,
+  apiStatusPayload,
+} from '../src/lib/agent/http';
 import { mcpEndpointManifest, mcpServerCard } from '../src/lib/agent/mcp';
 import {
   SITE_OG_IMAGE_ALT,
@@ -60,7 +65,9 @@ describe.skipIf(!distBuilt)('built homepage HTML', () => {
   it('includes no-JS agent-readable profile content and links', () => {
     const noScript = html.match(/<noscript>[\s\S]*?<\/noscript>/i)?.[0] ?? '';
     expect(stripHtml(noScript).length).toBeGreaterThanOrEqual(500);
+    expect(noScript).toMatch(/<h1\b[^>]*>\s*Yannis developer profile and agent resources\s*<\/h1>/i);
     expect(noScript).toContain('/api/status.json');
+    expect(noScript).toContain('/.well-known/mcp.json');
     expect(noScript).toContain('/developers/errors');
     expect(noScript).toContain('/developers/versioning');
     expect(noScript).toContain('/developers/rate-limits');
@@ -82,7 +89,7 @@ describe.skipIf(!distBuilt)('built homepage HTML', () => {
     expect(html).toContain('name="application-name" content="Yannis developer resources"');
     expect(html).toContain('href="https://yannis.dev/openapi.json"');
     expect(html).toContain('href="https://yannis.dev/api/status.json"');
-    expect(html).toContain('rel="mcp-server-card"');
+    expect(html).toContain('rel="mcp-server-card" type="application/mcp-server-card+json" href="https://yannis.dev/.well-known/mcp.json"');
   });
 
   it('includes social preview metadata', () => {
@@ -131,13 +138,32 @@ describe.skipIf(!distBuilt)('built trust pages', () => {
 });
 
 describe.skipIf(!distBuilt)('built MCP discovery files', () => {
-  it('includes the well-known MCP discovery JSON files', () => {
-    const serverCard = join(root, 'dist', '.well-known', 'mcp', 'server-card.json');
+  it('builds one canonical MCP server card and the endpoint manifest', () => {
+    const serverCard = join(root, 'dist', '.well-known', 'mcp.json');
+    const serverCardAlias = join(root, 'dist', '.well-known', 'mcp', 'server-card.json');
+    const aiCatalog = join(root, 'dist', '.well-known', 'ai-catalog.json');
     const manifest = join(root, 'dist', '.well-known', 'mcp', 'manifest.json');
     expect(existsSync(serverCard)).toBe(true);
+    expect(existsSync(serverCardAlias)).toBe(false);
+    expect(existsSync(aiCatalog)).toBe(false);
     expect(existsSync(manifest)).toBe(true);
-    expect(JSON.parse(readFileSync(serverCard, 'utf8')).transport.endpoint).toBe('/mcp');
+    expect(JSON.parse(readFileSync(serverCard, 'utf8')).remotes[0].url).toBe('https://yannis.dev/mcp');
     expect(JSON.parse(readFileSync(manifest, 'utf8')).endpoints[0].url).toBe('https://yannis.dev/mcp');
+  });
+});
+
+describe('MCP compatibility rewrites', () => {
+  const config = readFileSync(join(root, 'netlify.toml'), 'utf8');
+
+  it.each(['/mcp/server-card', '/.well-known/mcp/server-card.json'])('%s rewrites to the canonical card', (alias) => {
+    const escapedAlias = alias.replaceAll('.', '\\.');
+    expect(config).toMatch(new RegExp(`from = "${escapedAlias}"[\\s\\S]*?to = "/\\.well-known/mcp\\.json"`));
+  });
+
+  it('sets the canonical static card media type without edge rewriting', () => {
+    expect(config).toMatch(
+      /for = "\/\.well-known\/mcp\.json"[\s\S]*?Content-Type = "application\/mcp-server-card\+json; charset=utf-8"/,
+    );
   });
 });
 
@@ -172,6 +198,11 @@ describe('public endpoint handlers', () => {
   it('serves MCP discovery JSON', async () => {
     const serverCard = await getMcpServerCard({} as never);
     const manifest = await getMcpManifest({} as never);
+    expect(serverCard.headers.get('Content-Type')).toContain(MCP_SERVER_CARD_CONTENT_TYPE.split(';')[0]);
+    expect(serverCard.headers.get(API_VERSION_HEADER)).toBeNull();
+    expect(serverCard.headers.get('RateLimit-Policy')).toBeNull();
+    expect(serverCard.headers.get('Access-Control-Allow-Methods')).toBe('GET');
+    expect(serverCard.headers.get('Access-Control-Allow-Headers')).toContain('If-None-Match');
     expect(await serverCard.text()).toBe(JSON.stringify(mcpServerCard()));
     expect(await manifest.text()).toBe(JSON.stringify(mcpEndpointManifest()));
   });

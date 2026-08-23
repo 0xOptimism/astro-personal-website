@@ -19,33 +19,6 @@ function hasFileExtension(pathname: string): boolean {
   return dot > 0 && dot < filename.length - 1;
 }
 
-function isAgentMachineFile(pathname: string): boolean {
-  return (
-    pathname === MACHINE_PATHS.openapi ||
-    pathname === MACHINE_PATHS.apiStatus ||
-    pathname === MACHINE_PATHS.homepageMarkdown ||
-    pathname === MACHINE_PATHS.llms ||
-    pathname === MACHINE_PATHS.llmsFull ||
-    pathname === MACHINE_PATHS.mcpServerCard ||
-    pathname === MACHINE_PATHS.mcpEndpointManifest ||
-    pathname.endsWith('.md')
-  );
-}
-
-function withAgentHeaders(response: Response): Response {
-  const headers = new Headers(response.headers);
-  headers.set('Access-Control-Allow-Origin', '*');
-  headers.set('Access-Control-Expose-Headers', EXPOSED_AGENT_HEADERS);
-  for (const [key, value] of Object.entries(API_RESPONSE_HEADERS)) {
-    headers.set(key, value);
-  }
-  return new Response(response.body, {
-    status: response.status,
-    statusText: response.statusText,
-    headers,
-  });
-}
-
 export default async function handler(request: Request, context: Context) {
   const pathname = normalizeIndexHtml(new URL(request.url).pathname);
 
@@ -55,8 +28,7 @@ export default async function handler(request: Request, context: Context) {
     pathname === MACHINE_PATHS.apiStatus ||
     (!pathname.startsWith('/api/') && hasFileExtension(pathname))
   ) {
-    const response = await context.next();
-    return isAgentMachineFile(pathname) ? withAgentHeaders(response) : response;
+    return context.next();
   }
 
   if (pathname.startsWith('/api/')) {

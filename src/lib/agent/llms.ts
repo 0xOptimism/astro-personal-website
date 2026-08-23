@@ -35,7 +35,7 @@ ${resourceLines}
 - [Yannis OpenAPI spec](https://${SITE_DOMAIN}${MACHINE_PATHS.openapi}): Machine-readable API catalog
 - [Yannis API status](https://${SITE_DOMAIN}${MACHINE_PATHS.apiStatus}): JSON status, current version, rate limit policy, and key links
 - [Yannis MCP server](https://${SITE_DOMAIN}${MACHINE_PATHS.mcp}): Streamable HTTP tools for profile, contact, skills, and timeline
-- [MCP server card](https://${SITE_DOMAIN}${MACHINE_PATHS.mcpServerCard}): Standard manifest for Claude, ChatGPT, and other clients
+- [Yannis MCP server card](https://${SITE_DOMAIN}${MACHINE_PATHS.mcpServerCard}): Canonical Server Card for Claude, ChatGPT, Cursor, and other clients
 - [MCP endpoint manifest](https://${SITE_DOMAIN}${MACHINE_PATHS.mcpEndpointManifest}): Streamable HTTP endpoint list
 - [Yannis JSON errors](https://${SITE_DOMAIN}/developers/errors): RFC 9457 problem details with code and hint fields
 - [Yannis API versioning](https://${SITE_DOMAIN}/developers/versioning): Version header, deprecation policy, and Sunset behavior

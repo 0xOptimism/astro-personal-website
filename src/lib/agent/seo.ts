@@ -55,6 +55,7 @@ export const JSON_LD_SCRIPT = JSON.stringify({
       name: SITE_NAME,
       legalName: SITE_NAME,
       alternateName: [
+        'Yannis.dev',
         SITE_DOMAIN,
         `${SITE_NAME} full-stack developer`,
         `${SITE_NAME} developer resources`,
@@ -75,6 +76,7 @@ export const JSON_LD_SCRIPT = JSON.stringify({
       '@id': `https://${SITE_DOMAIN}/#website`,
       name: SITE_NAME,
       alternateName: [
+        'Yannis.dev',
         SITE_DOMAIN,
         `${SITE_NAME} full-stack developer`,
         `${SITE_NAME} developer resources`,

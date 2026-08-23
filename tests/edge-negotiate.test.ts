@@ -102,7 +102,7 @@ describe('Netlify edge markdown negotiation', () => {
     expect(await response.text()).toBe('mcp');
   });
 
-  it('passes through static files like llms.txt even when Accept prefers markdown', async () => {
+  it('passes static files through unchanged even when Accept prefers markdown', async () => {
     const staticResponse = new Response('llms body', {
       status: 200,
       headers: { 'Content-Type': 'text/markdown; charset=utf-8' },
@@ -112,8 +112,8 @@ describe('Netlify edge markdown negotiation', () => {
       { next: async () => staticResponse },
     );
     expect(response.status).toBe(200);
-    expect(response.headers.get(API_VERSION_HEADER)).toBe(API_VERSION);
-    expect(response.headers.get('RateLimit-Policy')).toContain('q=60');
+    expect(response.headers.get(API_VERSION_HEADER)).toBeNull();
+    expect(response.headers.get('RateLimit-Policy')).toBeNull();
     expect(await response.text()).toBe('llms body');
   });
 
@@ -127,8 +127,25 @@ describe('Netlify edge markdown negotiation', () => {
       { next: async () => staticResponse },
     );
     expect(response.status).toBe(200);
-    expect(response.headers.get(API_VERSION_HEADER)).toBe(API_VERSION);
-    expect(response.headers.get('RateLimit')).toContain('"public"');
+    expect(response.headers.get(API_VERSION_HEADER)).toBeNull();
+    expect(response.headers.get('RateLimit')).toBeNull();
     expect(await response.text()).toBe('{"status":"ok"}');
+  });
+
+  it('does not restamp MCP server card headers', async () => {
+    const mcpResponse = new Response('{"name":"dev.yannis/profile"}', {
+      status: 200,
+      headers: { 'Content-Type': 'application/mcp-server-card+json; charset=utf-8' },
+    });
+    const mcp = await handler(
+      new Request('https://yannis.dev/.well-known/mcp.json', {
+        headers: { Accept: 'application/mcp-server-card+json' },
+      }),
+      { next: async () => mcpResponse },
+    );
+    expect(mcp.status).toBe(200);
+    expect(mcp.headers.get(API_VERSION_HEADER)).toBeNull();
+    expect(mcp.headers.get('RateLimit-Policy')).toBeNull();
+    expect(mcp.headers.get('Content-Type')).toContain('application/mcp-server-card+json');
   });
 });

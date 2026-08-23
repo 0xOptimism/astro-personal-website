@@ -20,7 +20,25 @@
   force = true
 
 [[redirects]]
-  from = "/.well-known/mcp.json"
-  to = "/.well-known/mcp/server-card.json"
+  from = "/mcp/server-card"
+  to = "/.well-known/mcp.json"
   status = 200
   force = true
+
+[[redirects]]
+  from = "/.well-known/mcp/server-card.json"
+  to = "/.well-known/mcp.json"
+  status = 200
+  force = true
+
+[[headers]]
+  for = "/.well-known/mcp.json"
+
+  [headers.values]
+    Content-Type = "application/mcp-server-card+json; charset=utf-8"
+    Cache-Control = "public, max-age=3600"
+    X-Content-Type-Options = "nosniff"
+    Access-Control-Allow-Origin = "*"
+    Access-Control-Allow-Methods = "GET"
+    Access-Control-Allow-Headers = "Content-Type, If-None-Match"
+    Access-Control-Expose-Headers = "ETag"

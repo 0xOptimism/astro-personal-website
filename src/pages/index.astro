@@ -35,9 +35,9 @@ import {
         <Header />
         <noscript>
           <section class="agent-readable-profile mt-10 rounded-md border border-(--color-surface-elevated) bg-(--color-surface) p-6 font-body text-base leading-relaxed text-(--color-text)" aria-labelledby="agent-readable-profile-heading">
-            <h2 id="agent-readable-profile-heading" class="font-display text-2xl font-semibold">
+            <h1 id="agent-readable-profile-heading" class="font-display text-2xl font-semibold">
               {HERO_NAME} developer profile and agent resources
-            </h2>
+            </h1>
             <p class="mt-4">
               {HERO_NAME} is a {SITE_LOCATION}-based {SITE_JOB_TITLE} at {SITE_EMPLOYER}. {HERO_LEDE_PARAGRAPHS.join(' ')}
             </p>
@@ -48,8 +48,9 @@ import {
               Agents and crawlers can read the canonical public resources without JavaScript:
               <a href="/index.md">/index.md</a>, <a href="/llms.txt">/llms.txt</a>,
               <a href="/llms-full.txt">/llms-full.txt</a>, <a href="/openapi.json">/openapi.json</a>,
-              <a href="/api/status.json">/api/status.json</a>, and the Streamable HTTP MCP endpoint at
-              <a href="/mcp">/mcp</a>. Developer documentation for {SITE_DOMAIN} is published at
+              <a href="/api/status.json">/api/status.json</a>, <a href="/.well-known/mcp.json">/.well-known/mcp.json</a>,
+              and the Streamable HTTP MCP endpoint at
+              <a href="/mcp">/mcp</a>. Yannis developer documentation for {SITE_DOMAIN} is published at
               <a href="/developers">/developers</a>, including <a href="/developers/auth">auth</a>,
               <a href="/developers/errors">JSON errors</a>, <a href="/developers/versioning">API versioning</a>,
               <a href="/developers/rate-limits">rate limits</a>, <a href="/developers/webhooks">webhooks</a>,
