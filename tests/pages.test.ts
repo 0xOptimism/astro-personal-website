@@ -33,6 +33,9 @@ describe('trust and developer pages', () => {
     expect(AUTH_DOCS_PAGE.path).toBe('/developers/auth');
     expect(WEBHOOKS_DOCS_PAGE.path).toBe('/developers/webhooks');
     expect(MCP_DOCS_PAGE.path).toBe('/developers/mcp');
+  });
+
+  it('keeps human navigation focused on the primary pages', () => {
     expect(SITE_NAV).toEqual([
       { href: '/', label: 'Home' },
       { href: '/about', label: 'About' },
