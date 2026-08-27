@@ -20,6 +20,7 @@ import {
   apiStatusPayload,
 } from '../src/lib/agent/http';
 import { mcpEndpointManifest, mcpServerCard } from '../src/lib/agent/mcp';
+import { AGENTIC_REPORT_COPY, AGENTIC_REPORT_URL } from '../src/lib/agentic-report';
 import {
   SITE_OG_IMAGE_ALT,
   SITE_OG_IMAGE_HEIGHT,
@@ -134,6 +135,14 @@ describe.skipIf(!distBuilt)('built trust pages', () => {
     const html = readFileSync(distHtmlPath(page.path), 'utf8');
     expect(html).toMatch(new RegExp(`<h1\\b[^>]*>\\s*${page.heading}\\s*</h1>`, 'i'));
     expect(stripHtml(html).length).toBeGreaterThanOrEqual(500);
+  });
+
+  it('renders the agent-readiness card on About', () => {
+    const html = readFileSync(distHtmlPath('/about'), 'utf8');
+    expect(html).toContain('id="agentic-score-heading"');
+    expect(html).toContain(AGENTIC_REPORT_COPY.heading);
+    expect(html).toContain('data-agentic-score');
+    expect(html).toContain(`href="${AGENTIC_REPORT_URL}"`);
   });
 });
 

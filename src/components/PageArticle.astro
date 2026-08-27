@@ -43,8 +43,14 @@ const sameAs = new Set<string>(SAME_AS);
             </p>
           ))
         }
-        <slot />
       </div>
+      {
+        Astro.slots.has('default') && (
+          <div class="mt-8">
+            <slot />
+          </div>
+        )
+      }
       <SiteNav currentPath={page.path} />
     </article>
   </main>
