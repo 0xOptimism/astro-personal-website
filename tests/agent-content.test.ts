@@ -1,8 +1,16 @@
 import { describe, expect, it } from 'vitest';
-import { homepageMarkdown, notFoundMarkdown } from '../src/lib/agent/markdown';
+import { homepageMarkdown, markdownForPath, notFoundMarkdown } from '../src/lib/agent/markdown';
 import { llmsFullTxt, llmsTxt } from '../src/lib/agent/llms';
 import { JSON_LD_SCRIPT, robotsTxt, sitemapXml } from '../src/lib/agent/seo';
 import { SITE_DOMAIN, SITE_EMAIL, SITE_NAME } from '../src/lib/site';
+import {
+  WRITING_INDEX,
+  visibleWritingPosts,
+  writingIndexMarkdown,
+  writingMarkdownPath,
+  writingPath,
+  writingPostMarkdown,
+} from '../src/lib/writing';
 
 describe('homepage markdown', () => {
   it('has an H1, nested headings, and substantial copy', () => {
@@ -12,6 +20,7 @@ describe('homepage markdown', () => {
     expect(markdown).toContain('### Work');
     expect(markdown.length).toBeGreaterThan(500);
     expect(markdown).toContain(SITE_DOMAIN);
+    expect(markdown).toContain(`https://${SITE_DOMAIN}${WRITING_INDEX.markdownPath}`);
   });
 });
 
@@ -37,12 +46,30 @@ describe('llms.txt', () => {
     expect(text).toContain(`https://${SITE_DOMAIN}/mcp`);
     expect(text).toContain(`https://${SITE_DOMAIN}/.well-known/mcp.json`);
     expect(text).toContain(`https://${SITE_DOMAIN}/.well-known/mcp/manifest.json`);
+    expect(text).toContain(`https://${SITE_DOMAIN}${WRITING_INDEX.markdownPath}`);
+    for (const post of visibleWritingPosts()) {
+      expect(text).toContain(`https://${SITE_DOMAIN}${writingMarkdownPath(post.id)}`);
+      expect(text).toContain(post.title);
+    }
   });
 
-  it('full version concatenates llms.txt and homepage markdown', () => {
+  it('full version concatenates llms.txt, homepage markdown, and writing', () => {
     const full = llmsFullTxt();
     expect(full).toContain(`# ${SITE_NAME}`);
     expect(full).toContain(homepageMarkdown().trim());
+    expect(full).toContain(writingIndexMarkdown().trim());
+    for (const post of visibleWritingPosts()) {
+      expect(full).toContain(writingPostMarkdown(post).trim());
+    }
+  });
+});
+
+describe('writing markdown negotiation', () => {
+  it('serves the writing index and published posts', () => {
+    expect(markdownForPath(WRITING_INDEX.path)).toBe(writingIndexMarkdown());
+    for (const post of visibleWritingPosts()) {
+      expect(markdownForPath(writingPath(post.id))).toBe(writingPostMarkdown(post));
+    }
   });
 });
 
@@ -53,13 +80,25 @@ describe('robots and sitemap', () => {
     expect(robots).toContain(`Sitemap: https://${SITE_DOMAIN}/sitemap.xml`);
   });
 
-  it('includes the canonical homepage and trust pages', () => {
-    const sitemap = sitemapXml();
+  it('includes the canonical homepage, trust pages, and writing', () => {
+    const sitemap = sitemapXml([
+      { path: WRITING_INDEX.path, changefreq: 'monthly', priority: '0.8' },
+      ...visibleWritingPosts().map((post) => ({
+        path: writingPath(post.id),
+        changefreq: 'yearly' as const,
+        priority: '0.7',
+        lastmod: post.pubDate,
+      })),
+    ]);
     expect(sitemap).toContain(`https://${SITE_DOMAIN}/`);
     expect(sitemap).toContain(`https://${SITE_DOMAIN}/about`);
     expect(sitemap).toContain(`https://${SITE_DOMAIN}/contact`);
     expect(sitemap).toContain(`https://${SITE_DOMAIN}/privacy`);
     expect(sitemap).toContain(`https://${SITE_DOMAIN}/developers`);
+    expect(sitemap).toContain(`https://${SITE_DOMAIN}${WRITING_INDEX.path}`);
+    for (const post of visibleWritingPosts()) {
+      expect(sitemap).toContain(`https://${SITE_DOMAIN}${writingPath(post.id)}`);
+    }
   });
 });
 

@@ -1,0 +1,62 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import ModelSwitcher from '../../components/ModelSwitcher.astro';
+import SiteNav from '../../components/SiteNav.astro';
+import { getVisiblePosts, postPath } from '../../lib/posts';
+import { WRITING_INDEX, formatPostDate } from '../../lib/writing';
+import '../../styles/posts.css';
+
+const posts = await getVisiblePosts();
+---
+
+<Layout
+  title={WRITING_INDEX.title}
+  description={WRITING_INDEX.description}
+  canonicalPath={WRITING_INDEX.path}
+>
+  <ModelSwitcher />
+  <main class="site-shell min-h-screen px-6 py-(--space-section) md:px-12 lg:px-16">
+    <section class="mx-auto max-w-3xl" aria-labelledby="posts-title">
+      <p class="font-display text-sm font-semibold text-(--color-text-muted)">Writing</p>
+      <h1 id="posts-title" class="mt-3 font-display text-5xl font-semibold tracking-tight sm:text-7xl">
+        Posts
+      </h1>
+      <p class="mt-6 max-w-2xl font-body text-lg leading-relaxed text-(--color-text-muted)">
+        {WRITING_INDEX.description}
+      </p>
+
+      {
+        posts.length > 0 ? (
+          <ol class="post-list mt-14">
+            {posts.map((post) => (
+              <li>
+                <article>
+                  <div class="post-list__meta">
+                    <time datetime={post.data.pubDate.toISOString()}>
+                      {formatPostDate(post.data.pubDate)}
+                    </time>
+                  </div>
+                  <h2>
+                    <a href={postPath(post)}>{post.data.title}</a>
+                  </h2>
+                  <p>{post.data.description}</p>
+                  {post.data.tags.length > 0 && (
+                    <ul class="post-list__tags" aria-label={`Topics for ${post.data.title}`}>
+                      {post.data.tags.map((tag) => <li>{tag}</li>)}
+                    </ul>
+                  )}
+                </article>
+              </li>
+            ))}
+          </ol>
+        ) : (
+          <p class="mt-14 border-t border-(--color-border) pt-8 text-(--color-text-muted)">
+            No posts published yet.
+          </p>
+        )
+      }
+
+      <SiteNav currentPath={WRITING_INDEX.path} />
+    </section>
+  </main>
+</Layout>

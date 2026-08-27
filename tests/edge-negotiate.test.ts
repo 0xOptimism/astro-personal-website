@@ -4,6 +4,13 @@ import { homepageMarkdown, notFoundMarkdown } from '../src/lib/agent/markdown';
 import { MARKDOWN_CONTENT_TYPE } from '../src/lib/agent/negotiate';
 import { API_VERSION, API_VERSION_HEADER } from '../src/lib/agent/http';
 import { ABOUT_PAGE, pageMarkdown } from '../src/lib/pages';
+import {
+  WRITING_INDEX,
+  visibleWritingPosts,
+  writingIndexMarkdown,
+  writingPath,
+  writingPostMarkdown,
+} from '../src/lib/writing';
 
 async function originHtml(): Promise<Response> {
   return new Response('<html>ok</html>', {
@@ -90,6 +97,24 @@ describe('Netlify edge markdown negotiation', () => {
     );
     expect(response.status).toBe(200);
     expect(await response.text()).toBe(pageMarkdown(ABOUT_PAGE));
+  });
+
+  it('serves writing markdown for Accept: text/markdown', async () => {
+    const index = await handler(
+      new Request(`https://yannis.dev${WRITING_INDEX.path}`, { headers: { Accept: 'text/markdown' } }),
+      { next: originHtml },
+    );
+    expect(index.status).toBe(200);
+    expect(await index.text()).toBe(writingIndexMarkdown());
+
+    for (const post of visibleWritingPosts()) {
+      const response = await handler(
+        new Request(`https://yannis.dev${writingPath(post.id)}`, { headers: { Accept: 'text/markdown' } }),
+        { next: originHtml },
+      );
+      expect(response.status).toBe(200);
+      expect(await response.text()).toBe(writingPostMarkdown(post));
+    }
   });
 
   it('does not rewrite the MCP endpoint', async () => {

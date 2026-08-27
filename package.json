@@ -6,9 +6,13 @@
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
+    "sync:writing": "node scripts/generate-agent-writing.mjs",
+    "predev": "yarn sync:writing",
+    "prebuild": "yarn sync:writing",
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
+    "pretest": "yarn sync:writing",
     "test": "vitest run"
   },
   "dependencies": {

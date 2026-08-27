@@ -1,4 +1,10 @@
 import { HTML_PAGES, pageMarkdown } from '../pages.ts';
+import {
+  WRITING_INDEX,
+  writingIndexMarkdown,
+  writingPostById,
+  writingPostMarkdown,
+} from '../writing.ts';
 import { normalizeIndexHtml } from './routes.ts';
 import {
   ABOUT_AGENTS,
@@ -87,6 +93,7 @@ Email [${SITE_EMAIL}](mailto:${SITE_EMAIL}).
 - [About](https://${SITE_DOMAIN}/about)
 - [Contact](https://${SITE_DOMAIN}/contact)
 - [Privacy](https://${SITE_DOMAIN}/privacy)
+- [Posts](https://${SITE_DOMAIN}${WRITING_INDEX.markdownPath})
 - [Yannis developer resources](https://${SITE_DOMAIN}/developers)
 - [OpenAPI](https://${SITE_DOMAIN}/openapi.json)
 - [API status](https://${SITE_DOMAIN}/api/status.json)
@@ -111,6 +118,13 @@ export function markdownForPath(pathname: string): string | null {
   const path = normalizeIndexHtml(pathname);
   if (path === '/') {
     return homepageMarkdown();
+  }
+  if (path === WRITING_INDEX.path) {
+    return writingIndexMarkdown();
+  }
+  if (path.startsWith(`${WRITING_INDEX.path}/`)) {
+    const post = writingPostById(path.slice(WRITING_INDEX.path.length + 1));
+    return post ? writingPostMarkdown(post) : null;
   }
 
   const page = HTML_PAGES.find((entry) => entry.path === path);

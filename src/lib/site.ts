@@ -30,8 +30,9 @@ export const HERO_ROLE = SITE_JOB_TITLE;
 export const HERO_LEDE_PARAGRAPHS = [
   'I work on commerce and payments at BabyBjörn in Stockholm.',
 ] as const;
+export const HERO_WRITING = 'I occasionally write about agents and building software.';
 
-export const HERO_LEDE = HERO_LEDE_PARAGRAPHS.join('\n\n');
+export const HERO_LEDE = [...HERO_LEDE_PARAGRAPHS, HERO_WRITING].join('\n\n');
 
 export const PROOF_POINTS = [
   'BabyBjörn · commerce',

@@ -129,15 +129,23 @@ Sitemap: https://${SITE_DOMAIN}/sitemap.xml
 `;
 }
 
-export function sitemapXml(): string {
+export interface SitemapEntry {
+  path: string;
+  changefreq: 'monthly' | 'yearly';
+  priority: string;
+  lastmod?: string;
+}
+
+export function sitemapXml(additionalEntries: readonly SitemapEntry[] = []): string {
   const lastmod = new Date().toISOString().slice(0, 10);
-  const urls = [
+  const urls: SitemapEntry[] = [
     { path: '/', changefreq: 'monthly', priority: '1.0' },
     ...HTML_PAGES.map((page) => ({
       path: page.path,
       changefreq: page.changefreq,
       priority: page.priority,
     })),
+    ...additionalEntries,
   ];
   const body = urls
     .map(
@@ -145,7 +153,7 @@ export function sitemapXml(): string {
     <loc>https://${SITE_DOMAIN}${entry.path}</loc>
     <changefreq>${entry.changefreq}</changefreq>
     <priority>${entry.priority}</priority>
-    <lastmod>${lastmod}</lastmod>
+    <lastmod>${entry.lastmod ?? lastmod}</lastmod>
   </url>`,
     )
     .join('\n');
