@@ -71,6 +71,18 @@ describe('writing markdown negotiation', () => {
       expect(markdownForPath(writingPath(post.id))).toBe(writingPostMarkdown(post));
     }
   });
+
+  it('keeps discussion links and nested ids in the catalog markdown', () => {
+    for (const post of visibleWritingPosts()) {
+      if (post.xPostUrl) {
+        expect(writingPostMarkdown(post)).toContain(post.xPostUrl);
+      }
+    }
+
+    expect(writingPath('notes/example')).toBe('/posts/notes/example');
+    expect(writingMarkdownPath('notes/example')).toBe('/posts/notes/example.md');
+    expect(markdownForPath('/posts/notes/example')).toBeNull();
+  });
 });
 
 describe('robots and sitemap', () => {

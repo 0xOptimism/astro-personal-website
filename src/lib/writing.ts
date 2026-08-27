@@ -10,6 +10,7 @@ export interface WritingPost {
   tags: readonly string[];
   draft: boolean;
   body: string;
+  xPostUrl?: string;
 }
 
 const POSTS: readonly WritingPost[] = WRITING_POSTS;
@@ -54,8 +55,11 @@ export function formatPostDate(date: Date | string): string {
 
 export function writingPostMarkdown(post: WritingPost): string {
   const tags = post.tags.length > 0 ? `\n\nTags: ${post.tags.join(', ')}` : '';
+  const discussion = post.xPostUrl
+    ? `\n\nComments or questions: [Join the conversation on X](${post.xPostUrl})`
+    : '';
 
-  return `# ${post.title}\n\n${post.description}\n\nPublished ${formatPostDate(post.pubDate)}.${tags}\n\n${post.body.trim()}\n`;
+  return `# ${post.title}\n\n${post.description}\n\nPublished ${formatPostDate(post.pubDate)}.${tags}\n\n${post.body.trim()}${discussion}\n`;
 }
 
 export function writingIndexMarkdown(posts: readonly WritingPost[] = visibleWritingPosts()): string {

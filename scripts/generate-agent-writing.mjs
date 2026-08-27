@@ -1,5 +1,5 @@
 import { readdir, readFile, writeFile } from 'node:fs/promises';
-import { basename, join } from 'node:path';
+import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const postsDir = fileURLToPath(new URL('../src/content/posts', import.meta.url));
@@ -45,7 +45,8 @@ function parseFrontmatter(block) {
       currentKey === 'title' ||
       currentKey === 'description' ||
       currentKey === 'pubDate' ||
-      currentKey === 'updatedDate'
+      currentKey === 'updatedDate' ||
+      currentKey === 'xPostUrl'
     ) {
       data[currentKey] = unquote(raw);
     }
@@ -54,19 +55,37 @@ function parseFrontmatter(block) {
   return data;
 }
 
-function parsePost(source, filename) {
+async function listPostFiles(dir, relative = '') {
+  const entries = await readdir(dir, { withFileTypes: true });
+  const files = [];
+
+  for (const entry of entries) {
+    const name = relative ? `${relative}/${entry.name}` : entry.name;
+    if (entry.isDirectory()) {
+      files.push(...(await listPostFiles(join(dir, entry.name), name)));
+      continue;
+    }
+    if (entry.isFile() && entry.name.endsWith('.md')) {
+      files.push(name);
+    }
+  }
+
+  return files.sort();
+}
+
+function parsePost(source, relativePath) {
   const match = source.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n([\s\S]*)$/);
   if (!match) {
-    throw new Error(`Missing frontmatter in ${filename}`);
+    throw new Error(`Missing frontmatter in ${relativePath}`);
   }
 
   const data = parseFrontmatter(match[1] ?? '');
   if (!data.title || !data.description || !data.pubDate) {
-    throw new Error(`Post ${filename} needs title, description, and pubDate`);
+    throw new Error(`Post ${relativePath} needs title, description, and pubDate`);
   }
 
   const record = {
-    id: basename(filename, '.md'),
+    id: relativePath.replace(/\\/g, '/').replace(/\.md$/i, ''),
     title: data.title,
     description: data.description,
     pubDate: data.pubDate,
@@ -78,11 +97,14 @@ function parsePost(source, filename) {
   if (data.updatedDate) {
     record.updatedDate = data.updatedDate;
   }
+  if (data.xPostUrl) {
+    record.xPostUrl = data.xPostUrl;
+  }
 
   return record;
 }
 
-const filenames = (await readdir(postsDir)).filter((name) => name.endsWith('.md')).sort();
+const filenames = await listPostFiles(postsDir);
 const posts = await Promise.all(
   filenames.map(async (filename) => {
     const source = await readFile(join(postsDir, filename), 'utf8');

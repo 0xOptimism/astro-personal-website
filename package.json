@@ -5,7 +5,7 @@
   "private": true,
   "scripts": {
     "dev": "astro dev",
-    "start": "astro dev",
+    "start": "yarn dev",
     "sync:writing": "node scripts/generate-agent-writing.mjs",
     "predev": "yarn sync:writing",
     "prebuild": "yarn sync:writing",
