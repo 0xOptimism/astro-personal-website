@@ -13,7 +13,7 @@ import {
   pagePlainText,
   splitMarkdownLinks,
 } from '../src/lib/pages';
-import { SAME_AS, SITE_EMAIL } from '../src/lib/site';
+import { SOCIAL_PROFILES, SITE_EMAIL } from '../src/lib/site';
 import { AGENTIC_REPORT_COPY, AGENTIC_REPORT_URL } from '../src/lib/agentic-report';
 
 describe('trust and developer pages', () => {
@@ -54,12 +54,16 @@ describe('trust and developer pages', () => {
 
     const social = splitMarkdownLinks(CONTACT_PAGE.body.split('\n\n')[3] ?? '');
     expect(social).toContainEqual({
+      text: 'X',
+      href: SOCIAL_PROFILES.x,
+    });
+    expect(social).toContainEqual({
       text: 'LinkedIn',
-      href: SAME_AS[0],
+      href: SOCIAL_PROFILES.linkedIn,
     });
     expect(social).toContainEqual({
       text: 'GitHub',
-      href: SAME_AS[1],
+      href: SOCIAL_PROFILES.github,
     });
 
     expect(DEVELOPERS_PAGE.body).toContain('[https://yannis.dev/openapi.json](https://yannis.dev/openapi.json)');

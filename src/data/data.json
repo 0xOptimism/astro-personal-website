@@ -289,6 +289,11 @@
   },
   "socials": [
     {
+      "icon": "x",
+      "logo": "/x-logo.svg",
+      "link": "https://x.com/yannisbuilds"
+    },
+    {
       "icon": "linkedin",
       "link": "https://www.linkedin.com/in/yannis-b-713090179/"
     },

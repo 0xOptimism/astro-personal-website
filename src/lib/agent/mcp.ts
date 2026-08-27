@@ -1,6 +1,6 @@
 import { HTML_PAGES } from '../pages.ts';
 import {
-  SAME_AS,
+  SOCIAL_PROFILES,
   SITE_DESCRIPTION,
   SITE_DOMAIN,
   SITE_EMAIL,
@@ -122,8 +122,9 @@ const TOOLS = {
         email: SITE_EMAIL,
         url: SITE_ORIGIN,
         contactPage: absoluteUrl('/contact'),
-        linkedIn: SAME_AS[0],
-        github: SAME_AS[1],
+        x: SOCIAL_PROFILES.x,
+        linkedIn: SOCIAL_PROFILES.linkedIn,
+        github: SOCIAL_PROFILES.github,
       }),
   },
   get_yannis_skills: {
