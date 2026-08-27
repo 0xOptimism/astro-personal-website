@@ -15,9 +15,16 @@ export const SITE_OG_IMAGE_HEIGHT = 630;
 export const SITE_OG_IMAGE_ALT =
   'Yannis portfolio, full-stack developer in Stockholm';
 
+export const SOCIAL_PROFILES = {
+  x: 'https://x.com/yannisbuilds',
+  linkedIn: 'https://www.linkedin.com/in/yannis-b-713090179/',
+  github: 'https://github.com/0xOptimism',
+} as const;
+
 export const SAME_AS = [
-  'https://www.linkedin.com/in/yannis-b-713090179/',
-  'https://github.com/0xOptimism',
+  SOCIAL_PROFILES.linkedIn,
+  SOCIAL_PROFILES.github,
+  SOCIAL_PROFILES.x,
 ] as const;
 
 export const SITE_DESCRIPTION =

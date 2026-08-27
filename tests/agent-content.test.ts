@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest';
 import { homepageMarkdown, markdownForPath, notFoundMarkdown } from '../src/lib/agent/markdown';
 import { llmsFullTxt, llmsTxt } from '../src/lib/agent/llms';
 import { JSON_LD_SCRIPT, robotsTxt, sitemapXml } from '../src/lib/agent/seo';
-import { SITE_DOMAIN, SITE_EMAIL, SITE_NAME } from '../src/lib/site';
+import { SOCIAL_PROFILES, SITE_DOMAIN, SITE_EMAIL, SITE_NAME } from '../src/lib/site';
 import {
   WRITING_INDEX,
   visibleWritingPosts,
@@ -20,6 +20,7 @@ describe('homepage markdown', () => {
     expect(markdown).toContain('### Work');
     expect(markdown.length).toBeGreaterThan(500);
     expect(markdown).toContain(SITE_DOMAIN);
+    expect(markdown).toContain(SOCIAL_PROFILES.x);
     expect(markdown).toContain(`https://${SITE_DOMAIN}${WRITING_INDEX.markdownPath}`);
   });
 });
@@ -46,6 +47,7 @@ describe('llms.txt', () => {
     expect(text).toContain(`https://${SITE_DOMAIN}/mcp`);
     expect(text).toContain(`https://${SITE_DOMAIN}/.well-known/mcp.json`);
     expect(text).toContain(`https://${SITE_DOMAIN}/.well-known/mcp/manifest.json`);
+    expect(text).toContain(SOCIAL_PROFILES.x);
     expect(text).toContain(`https://${SITE_DOMAIN}${WRITING_INDEX.markdownPath}`);
     for (const post of visibleWritingPosts()) {
       expect(text).toContain(`https://${SITE_DOMAIN}${writingMarkdownPath(post.id)}`);

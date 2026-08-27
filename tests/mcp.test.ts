@@ -110,8 +110,9 @@ describe('MCP JSON-RPC', () => {
       method: 'tools/call',
       params: { name: 'get_yannis_contact', arguments: {} },
     });
-    const result = (call.body as { result: { structuredContent: { email: string } } }).result;
+    const result = (call.body as { result: { structuredContent: { email: string; x: string } } }).result;
     expect(result.structuredContent.email).toBe(SITE_EMAIL);
+    expect(result.structuredContent.x).toBe('https://x.com/yannisbuilds');
   });
 
   it('lists and reads writing resources from the catalog', () => {

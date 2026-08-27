@@ -14,7 +14,7 @@ import {
   HERO_LEDE,
   HERO_NAME,
   HERO_ROLE,
-  SAME_AS,
+  SOCIAL_PROFILES,
   SITE_DOMAIN,
   SITE_EMAIL,
   SITE_NAME,
@@ -105,8 +105,9 @@ Email [${SITE_EMAIL}](mailto:${SITE_EMAIL}).
 - [Markdown twin](https://${SITE_DOMAIN}/index.md)
 - [llms.txt](https://${SITE_DOMAIN}/llms.txt)
 - [Sitemap](https://${SITE_DOMAIN}/sitemap.xml)
-- [LinkedIn](${SAME_AS[0]})
-- [GitHub](${SAME_AS[1]})
+- [X](${SOCIAL_PROFILES.x})
+- [LinkedIn](${SOCIAL_PROFILES.linkedIn})
+- [GitHub](${SOCIAL_PROFILES.github})
 `;
 }
 

@@ -1,5 +1,5 @@
 import {
-  SAME_AS,
+  SOCIAL_PROFILES,
   SITE_DOMAIN,
   SITE_EMAIL,
   SITE_EMPLOYER,
@@ -35,8 +35,9 @@ export interface PageLinkPart {
 }
 
 const MAILTO = `mailto:${SITE_EMAIL}`;
-const linkedIn = SAME_AS[0];
-const github = SAME_AS[1];
+const x = SOCIAL_PROFILES.x;
+const linkedIn = SOCIAL_PROFILES.linkedIn;
+const github = SOCIAL_PROFILES.github;
 
 export const ABOUT_PAGE: PublicPage = {
   path: '/about',
@@ -62,7 +63,7 @@ export const CONTACT_PAGE: PublicPage = {
   path: '/contact',
   title: `Contact ${SITE_NAME} | ${SITE_EMAIL} | ${SITE_DOMAIN}`,
   heading: `Contact ${SITE_NAME}`,
-  description: `Contact ${SITE_NAME} at ${SITE_EMAIL}. ${SITE_JOB_TITLE} in ${SITE_LOCATION}. LinkedIn and GitHub are public.`,
+  description: `Contact ${SITE_NAME} at ${SITE_EMAIL}. ${SITE_JOB_TITLE} in ${SITE_LOCATION}. X, LinkedIn, and GitHub are public.`,
   changefreq: 'monthly',
   priority: '0.8',
   navLabel: 'Contact',
@@ -72,7 +73,7 @@ A few sentences is plenty. Say who you are and what you want, and add a link if 
 
 Recruiting is welcome when you name the role and why it looks like a fit. Cold pitches that ignore the stack or ${SITE_LOCATION} usually get nothing back.
 
-I'm in ${SITE_LOCATION}, at ${SITE_EMPLOYER}, doing full-stack work on commerce and the tools around it. [LinkedIn](${linkedIn}) and [GitHub](${github}) are public if you want the longer trail.
+I'm in ${SITE_LOCATION}, at ${SITE_EMPLOYER}, doing full-stack work on commerce and the tools around it. [X](${x}), [LinkedIn](${linkedIn}), and [GitHub](${github}) are public if you want the longer trail.
 
 I reply when the mail looks like it was written to a person. Timing depends on the week.`,
 };
@@ -90,7 +91,7 @@ The site is hosted on Netlify. Netlify may keep standard request logs (IP addres
 
 When analytics are on, they run through Umami. It does not set advertising cookies. You can still use the site if the script fails to load. The design-skin switch, if you use it, stays in localStorage on your device and is not sent to me as an account.
 
-If you email [${SITE_EMAIL}](${MAILTO}), I use your address and the message only to reply. [LinkedIn](${linkedIn}) and [GitHub](${github}) are separate sites with their own policies. There is no contact form that stores submissions on a server I run.
+If you email [${SITE_EMAIL}](${MAILTO}), I use your address and the message only to reply. [X](${x}), [LinkedIn](${linkedIn}), and [GitHub](${github}) are separate sites with their own policies. There is no contact form that stores submissions on a server I run.
 
 Questions about this: [${SITE_EMAIL}](${MAILTO}).`,
 };

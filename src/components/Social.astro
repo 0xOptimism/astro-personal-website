@@ -7,8 +7,15 @@ const { socials } = data;
 
 interface SocialItem {
   icon: string;
+  logo?: string;
   link: string;
 }
+
+const socialLabels: Record<string, string> = {
+  github: 'GitHub',
+  linkedin: 'LinkedIn',
+  x: 'X',
+};
 ---
 
 <div class="flex flex-col items-center">
@@ -20,7 +27,7 @@ interface SocialItem {
           target="_blank"
           rel="me noopener noreferrer"
           class="flex h-12 w-12 items-center justify-center rounded-full border border-(--color-surface-elevated) text-(--color-text-muted) transition-all hover:border-(--color-accent) hover:text-(--color-accent) hover:scale-110"
-          aria-label={item.icon === 'linkedin' ? 'LinkedIn' : 'GitHub'}
+          aria-label={socialLabels[item.icon] ?? item.icon}
         >
           <Icon item={item} size="lg" />
         </a>

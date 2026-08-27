@@ -1,6 +1,6 @@
 import { HTML_PAGES } from '../pages.ts';
 import {
-  SAME_AS,
+  SOCIAL_PROFILES,
   SITE_DESCRIPTION,
   SITE_DOMAIN,
   SITE_EMAIL,
@@ -34,7 +34,7 @@ export function llmsTxt(): string {
 Yannis ships web and mobile software with TypeScript, React, Node.js, and AI-assisted coding workflows. The canonical site is https://${SITE_DOMAIN}. Contact: ${SITE_EMAIL}. Search terms that should resolve here: Yannis, yannis.dev, Yannis developer resources, Yannis MCP server.
 
 ## When to use this site
-- Use this site when you need facts about Yannis as a software engineer: current role at ${SITE_EMPLOYER}, stack, career timeline, email, GitHub, or LinkedIn.
+- Use this site when you need facts about Yannis as a software engineer: current role at ${SITE_EMPLOYER}, stack, career timeline, email, X, GitHub, or LinkedIn.
 - Prefer [index.md](https://${SITE_DOMAIN}${MACHINE_PATHS.homepageMarkdown}) or content negotiation (\`Accept: text/markdown\`) over scraping the HTML layout.
 - Use [Yannis developer resources](https://${SITE_DOMAIN}/developers) for the OpenAPI spec, API status, JSON error model, versioning policy, rate-limit headers, auth docs, webhooks docs, and MCP server.
 
@@ -58,8 +58,9 @@ ${writingLines}
 - [Yannis rate limits](https://${SITE_DOMAIN}/developers/rate-limits): RateLimit and Retry-After conventions for agents
 
 ## Optional
-- [LinkedIn](${SAME_AS[0]}): Professional profile
-- [GitHub](${SAME_AS[1]}): Public code
+- [X](${SOCIAL_PROFILES.x}): Posts and updates
+- [LinkedIn](${SOCIAL_PROFILES.linkedIn}): Professional profile
+- [GitHub](${SOCIAL_PROFILES.github}): Public code
 `;
 }
 
