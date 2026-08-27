@@ -2,6 +2,7 @@ import { Readable } from 'node:stream';
 import { describe, expect, it } from 'vitest';
 import {
   MCP_PROTOCOL_VERSION,
+  MCP_RESOURCES,
   MCP_TOOLS,
   handleJsonRpc,
   handleMcpHttp,
@@ -12,6 +13,13 @@ import { mcpDevConnectMiddleware } from '../src/lib/agent/mcp-dev-middleware';
 import { GET as getMcp } from '../src/pages/mcp';
 import { SITE_EMAIL, SITE_NAME } from '../src/lib/site';
 import { API_VERSION, API_VERSION_HEADER } from '../src/lib/agent/http';
+import {
+  WRITING_INDEX,
+  visibleWritingPosts,
+  writingIndexMarkdown,
+  writingMarkdownPath,
+  writingPostMarkdown,
+} from '../src/lib/writing';
 
 const LEGACY_PROTOCOL_VERSION = '2025-11-25';
 
@@ -104,6 +112,41 @@ describe('MCP JSON-RPC', () => {
     });
     const result = (call.body as { result: { structuredContent: { email: string } } }).result;
     expect(result.structuredContent.email).toBe(SITE_EMAIL);
+  });
+
+  it('lists and reads writing resources from the catalog', () => {
+    const list = handleJsonRpc({ jsonrpc: '2.0', id: 4, method: 'resources/list' });
+    const resources = (list.body as { result: { resources: { uri: string }[] } }).result.resources;
+    const uris = resources.map((resource) => resource.uri);
+    const indexUri = `https://yannis.dev${WRITING_INDEX.markdownPath}`;
+
+    expect(uris).toContain(indexUri);
+
+    const indexRead = handleJsonRpc({
+      jsonrpc: '2.0',
+      id: 5,
+      method: 'resources/read',
+      params: { uri: indexUri },
+    });
+    expect((indexRead.body as { result: { contents: { text: string }[] } }).result.contents[0]?.text).toBe(
+      writingIndexMarkdown(),
+    );
+
+    for (const post of visibleWritingPosts()) {
+      const articleUri = `https://yannis.dev${writingMarkdownPath(post.id)}`;
+      expect(uris).toContain(articleUri);
+      expect(MCP_RESOURCES.some((resource) => resource.uri === articleUri)).toBe(true);
+
+      const read = handleJsonRpc({
+        jsonrpc: '2.0',
+        id: 6,
+        method: 'resources/read',
+        params: { uri: articleUri },
+      });
+      expect((read.body as { result: { contents: { text: string }[] } }).result.contents[0]?.text).toBe(
+        writingPostMarkdown(post),
+      );
+    }
   });
 
   it('accepts initialized notifications', () => {

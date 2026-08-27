@@ -1,0 +1,79 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import Layout from './Layout.astro';
+import ModelSwitcher from '../components/ModelSwitcher.astro';
+import SiteNav from '../components/SiteNav.astro';
+import { SITE_NAME } from '../lib/site';
+import { postJsonLd, postPath } from '../lib/posts';
+import { formatPostDate } from '../lib/writing';
+import '../styles/posts.css';
+
+interface Props {
+  post: CollectionEntry<'posts'>;
+}
+
+const { post } = Astro.props;
+const canonicalPath = postPath(post);
+const publishedDate = post.data.pubDate.toISOString();
+const updated = post.data.updatedDate;
+---
+
+<Layout
+  title={`${post.data.title} | ${SITE_NAME}`}
+  description={post.data.description}
+  canonicalPath={canonicalPath}
+  ogType="article"
+>
+  <Fragment slot="head">
+    <meta property="article:published_time" content={publishedDate} />
+    {updated && <meta property="article:modified_time" content={updated.toISOString()} />}
+    {post.data.tags.map((tag) => <meta property="article:tag" content={tag} />)}
+    <script type="application/ld+json" set:html={postJsonLd(post)} />
+  </Fragment>
+
+  <ModelSwitcher />
+  <main class="site-shell min-h-screen px-6 py-(--space-section) md:px-12 lg:px-16">
+    <article class="mx-auto max-w-3xl" aria-labelledby="post-title">
+      <header>
+        <a class="link-accent font-display text-sm font-semibold" href="/posts">Posts</a>
+        <h1 id="post-title" class="mt-4 font-display text-4xl font-semibold tracking-tight sm:text-6xl">
+          {post.data.title}
+        </h1>
+        <p class="mt-6 max-w-2xl font-body text-lg leading-relaxed text-(--color-text-muted) sm:text-xl">
+          {post.data.description}
+        </p>
+        <div class="mt-6 flex flex-wrap items-center gap-x-3 gap-y-2 text-sm text-(--color-text-muted)">
+          <time datetime={publishedDate}>{formatPostDate(post.data.pubDate)}</time>
+          {updated && <span class="post-meta__divider" aria-hidden="true"></span>}
+          {updated && <span>Updated {formatPostDate(updated)}</span>}
+        </div>
+        {
+          post.data.tags.length > 0 && (
+            <ul class="post-tags mt-5" aria-label="Topics">
+              {post.data.tags.map((tag) => <li>{tag}</li>)}
+            </ul>
+          )
+        }
+      </header>
+
+      <div class="post-prose mt-12">
+        <slot />
+      </div>
+
+      <footer class="mt-16 border-t border-(--color-border) pt-8">
+        {
+          post.data.xPostUrl && (
+            <div class="post-discussion mb-10">
+              <p>Comments or questions?</p>
+              <a href={post.data.xPostUrl} target="_blank" rel="noopener noreferrer">
+                Join the conversation on X ↗
+              </a>
+            </div>
+          )
+        }
+        <a class="link-accent font-body text-sm" href="/posts">← All posts</a>
+        <SiteNav currentPath="/posts" compact />
+      </footer>
+    </article>
+  </main>
+</Layout>

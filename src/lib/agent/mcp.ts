@@ -13,6 +13,13 @@ import {
   skills,
   timeline,
 } from '../site.ts';
+import {
+  WRITING_INDEX,
+  visibleWritingPosts,
+  writingIndexMarkdown,
+  writingMarkdownPath,
+  writingPostMarkdown,
+} from '../writing.ts';
 import { homepageMarkdown } from './markdown.ts';
 import { llmsTxt } from './llms.ts';
 import { MACHINE_PATHS, absoluteUrl } from './routes.ts';
@@ -225,6 +232,22 @@ export const MCP_RESOURCES: readonly McpResourceDefinition[] = [
     text: llmsTxt,
   },
   {
+    uri: absoluteUrl(WRITING_INDEX.markdownPath),
+    name: 'posts.md',
+    title: WRITING_INDEX.title,
+    description: WRITING_INDEX.description,
+    mimeType: 'text/markdown',
+    text: writingIndexMarkdown,
+  },
+  ...visibleWritingPosts().map((post) => ({
+    uri: absoluteUrl(writingMarkdownPath(post.id)),
+    name: `${post.id}.md`,
+    title: post.title,
+    description: post.description,
+    mimeType: 'text/markdown',
+    text: () => writingPostMarkdown(post),
+  })),
+  {
     uri: absoluteUrl(MACHINE_PATHS.openapi),
     name: 'openapi.json',
     title: `${SITE_NAME} OpenAPI`,
@@ -247,7 +270,7 @@ export function mcpServerInfo() {
     name: MCP_SERVER_NAME,
     title: `${SITE_NAME} MCP server`,
     version: MCP_SERVER_VERSION,
-    description: `${SITE_DESCRIPTION} Public read-only tools for profile, contact, skills, timeline, and developer resources.`,
+    description: `${SITE_DESCRIPTION} Public read-only tools and resources for profile, writing, contact, skills, timeline, and developer resources.`,
     websiteUrl: absoluteUrl('/developers/mcp'),
   };
 }
@@ -278,7 +301,7 @@ export function mcpServerCard() {
     $schema: 'https://static.modelcontextprotocol.io/schemas/v1/server-card.schema.json',
     name: serverInfo.name,
     title: serverInfo.title,
-    description: 'Read-only profile, contact, skills, timeline, and developer resources for Yannis.',
+    description: 'Read-only profile, writing, contact, skills, timeline, and developer resources for Yannis.',
     version: serverInfo.version,
     websiteUrl: serverInfo.websiteUrl,
     remotes: [

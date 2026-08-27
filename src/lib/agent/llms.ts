@@ -7,6 +7,12 @@ import {
   SITE_EMPLOYER,
   SITE_NAME,
 } from '../site.ts';
+import {
+  WRITING_INDEX,
+  visibleWritingPosts,
+  writingCollectionMarkdown,
+  writingMarkdownPath,
+} from '../writing.ts';
 import { homepageMarkdown, pageCollectionMarkdown } from './markdown.ts';
 import { MACHINE_PATHS } from './routes.ts';
 
@@ -14,6 +20,13 @@ export function llmsTxt(): string {
   const resourceLines = HTML_PAGES.map(
     (page) => `- [${page.heading}](https://${SITE_DOMAIN}${page.path}): ${page.description}`,
   ).join('\n');
+  const writingLines = [
+    `- [${WRITING_INDEX.title}](https://${SITE_DOMAIN}${WRITING_INDEX.markdownPath}): ${WRITING_INDEX.description}`,
+    ...visibleWritingPosts().map(
+      (post) =>
+        `- [${post.title}](https://${SITE_DOMAIN}${writingMarkdownPath(post.id)}): ${post.description}`,
+    ),
+  ].join('\n');
 
   return `# ${SITE_NAME}
 > ${SITE_DESCRIPTION}
@@ -30,6 +43,9 @@ Yannis ships web and mobile software with TypeScript, React, Node.js, and AI-ass
 - [llms-full.txt](https://${SITE_DOMAIN}${MACHINE_PATHS.llmsFull}): Markdown for public pages
 - [Sitemap](https://${SITE_DOMAIN}${MACHINE_PATHS.sitemap}): Canonical URL list
 ${resourceLines}
+
+## Writing
+${writingLines}
 
 ## Yannis developer resources
 - [Yannis OpenAPI spec](https://${SITE_DOMAIN}${MACHINE_PATHS.openapi}): Machine-readable API catalog
@@ -57,5 +73,9 @@ ${homepageMarkdown().trim()}
 ---
 
 ${pageCollectionMarkdown().trim()}
+
+---
+
+${writingCollectionMarkdown()}
 `;
 }

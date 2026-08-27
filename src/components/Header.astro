@@ -1,5 +1,5 @@
 ---
-import { HERO_KICKER, HERO_LEDE_PARAGRAPHS, HERO_NAME, HERO_ROLE, PROOF_POINTS, SITE_EMAIL } from '../lib/site';
+import { HERO_KICKER, HERO_LEDE_PARAGRAPHS, HERO_NAME, HERO_ROLE, HERO_WRITING, PROOF_POINTS, SITE_EMAIL } from '../lib/site';
 
 const sol56Evidence = [
   { index: '01', claim: 'Product range', proof: 'Web, backend, mobile, payments' },
@@ -72,6 +72,7 @@ const grokChannels = PROOF_POINTS.map((point, index) => ({
         <p>{paragraph}</p>
       ))
     }
+    <p><a class="link-accent" href="/posts">{HERO_WRITING}</a></p>
   </div>
   <a class="hero-email link-accent reveal reveal-delay-3 mt-6 inline-block font-body text-lg" href={`mailto:${SITE_EMAIL}`}>
     {SITE_EMAIL}

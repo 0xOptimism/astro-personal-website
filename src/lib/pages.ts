@@ -224,6 +224,7 @@ export const HTML_PAGES: readonly PublicPage[] = [
 
 export const SITE_NAV = [
   { href: '/', label: 'Home' },
+  { href: '/posts', label: 'Posts' },
   ...HTML_PAGES.flatMap((page) => (page.navLabel ? [{ href: page.path, label: page.navLabel }] : [])),
 ];
 

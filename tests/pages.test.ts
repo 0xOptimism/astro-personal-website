@@ -39,6 +39,7 @@ describe('trust and developer pages', () => {
   it('keeps human navigation focused on the primary pages', () => {
     expect(SITE_NAV).toEqual([
       { href: '/', label: 'Home' },
+      { href: '/posts', label: 'Posts' },
       { href: '/about', label: 'About' },
       { href: '/contact', label: 'Contact' },
     ]);
