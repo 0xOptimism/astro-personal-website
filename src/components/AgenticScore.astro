@@ -1,0 +1,103 @@
+---
+import { AGENTIC_REPORT_COPY, AGENTIC_REPORT_URL } from '../lib/agentic-report';
+---
+
+<section
+  class="rounded-md border border-(--color-surface-elevated) bg-(--color-surface) p-5 text-base text-(--color-text)"
+  data-agentic-score-card
+  aria-busy="true"
+  aria-labelledby="agentic-score-heading"
+>
+  <h2 id="agentic-score-heading" class="font-display text-2xl font-semibold tracking-tight">
+    {AGENTIC_REPORT_COPY.heading}
+  </h2>
+  <p class="mt-3 leading-relaxed text-(--color-text-muted)">
+    {AGENTIC_REPORT_COPY.summary}
+  </p>
+  <p class="mt-6 font-display text-4xl font-semibold tracking-tight">
+    <span data-agentic-score>—</span>
+    <span class="ml-2 font-mono text-xs font-medium text-(--color-text-muted)">/ 100</span>
+  </p>
+  <p class="mt-2 font-display text-lg font-semibold" data-agentic-score-label>
+    Latest public report
+  </p>
+  <p class="mt-2 font-mono text-xs text-(--color-text-muted)">
+    <time data-agentic-scan-time>Checking current score…</time>
+  </p>
+  <dl class="mt-6 grid gap-3 sm:grid-cols-3" aria-label="Score breakdown">
+    <div>
+      <dt class="font-mono text-xs uppercase tracking-[0.05em] text-(--color-text-muted)">Essential</dt>
+      <dd class="mt-1 font-mono text-sm font-semibold" data-agentic-row="essential">—</dd>
+    </div>
+    <div>
+      <dt class="font-mono text-xs uppercase tracking-[0.05em] text-(--color-text-muted)">Recommended</dt>
+      <dd class="mt-1 font-mono text-sm font-semibold" data-agentic-row="recommended">—</dd>
+    </div>
+    <div>
+      <dt class="font-mono text-xs uppercase tracking-[0.05em] text-(--color-text-muted)">Bonus</dt>
+      <dd class="mt-1 font-mono text-sm font-semibold" data-agentic-row="bonus">—</dd>
+    </div>
+  </dl>
+  <p class="mt-6 flex flex-wrap items-baseline justify-between gap-3">
+    <span class="text-sm text-(--color-text-muted)">{AGENTIC_REPORT_COPY.footer}</span>
+    <a
+      class="link-accent font-display text-sm font-semibold"
+      href={AGENTIC_REPORT_URL}
+      target="_blank"
+      rel="external noopener noreferrer"
+    >
+      {AGENTIC_REPORT_COPY.cta}
+    </a>
+  </p>
+  <p class="sr-only" data-agentic-announcement aria-live="polite"></p>
+</section>
+
+<script>
+  import { AGENTIC_REPORT_API_URL, parseAgenticReport } from '../lib/agentic-report';
+
+  const setText = (card: HTMLElement, selector: string, value: string) => {
+    const element = card.querySelector<HTMLElement>(selector);
+    if (element) element.textContent = value;
+  };
+
+  const loadReport = async (card: HTMLElement) => {
+    const controller = new AbortController();
+    const timeout = window.setTimeout(() => controller.abort(), 7000);
+
+    try {
+      const response = await fetch(AGENTIC_REPORT_API_URL, {
+        credentials: 'omit',
+        headers: { Accept: 'application/json' },
+        mode: 'cors',
+        signal: controller.signal,
+      });
+      if (!response.ok) throw new Error(`Report request failed: ${response.status}`);
+
+      const report = parseAgenticReport(await response.json());
+      if (!report) throw new Error('Invalid report response');
+
+      setText(card, '[data-agentic-score]', String(report.score));
+      setText(card, '[data-agentic-score-label]', report.scoreLabel);
+      setText(card, '[data-agentic-scan-time]', `Scanned ${report.scannedLabel}`);
+      report.rows.forEach((row) => setText(card, `[data-agentic-row="${row.id}"]`, row.value));
+      setText(
+        card,
+        '[data-agentic-announcement]',
+        `Latest agent-readiness score: ${report.score} out of 100.`,
+      );
+
+      const time = card.querySelector<HTMLTimeElement>('[data-agentic-scan-time]');
+      if (time && report.scannedAt) time.dateTime = report.scannedAt;
+    } catch {
+      setText(card, '[data-agentic-score-label]', 'Live score temporarily unavailable');
+      setText(card, '[data-agentic-scan-time]', 'View the full public report');
+    } finally {
+      window.clearTimeout(timeout);
+      card.setAttribute('aria-busy', 'false');
+    }
+  };
+
+  document.querySelectorAll<HTMLElement>('[data-agentic-score-card]').forEach((card) => {
+    void loadReport(card);
+  });
+</script>

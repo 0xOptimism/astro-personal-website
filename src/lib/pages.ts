@@ -8,6 +8,7 @@ import {
   SITE_NAME,
   SITE_ORIGIN,
 } from './site.ts';
+import { agenticReportMarkdown } from './agentic-report.ts';
 import {
   API_VERSION,
   API_VERSION_HEADER,
@@ -25,6 +26,7 @@ export interface PublicPage {
   priority: string;
   navLabel?: string;
   body: string;
+  appendix?: string;
 }
 
 export interface PageLinkPart {
@@ -53,6 +55,7 @@ Product work is more interesting when the brief is still fuzzy, and when an inte
 I take photographs when I can get outside. Time with my daughters is the better part of the week.
 
 Email [${SITE_EMAIL}](${MAILTO}) if you want to talk.`,
+  appendix: agenticReportMarkdown(),
 };
 
 export const CONTACT_PAGE: PublicPage = {
@@ -245,14 +248,14 @@ export function splitMarkdownLinks(text: string): PageLinkPart[] {
 }
 
 export function pagePlainText(page: PublicPage): string {
-  const body = page.body.replace(/\[([^\]]+)\]\([^)]+\)/g, '$1').replace(/\s+/g, ' ').trim();
+  const body = pageContent(page).replace(/\[([^\]]+)\]\([^)]+\)/g, '$1').replace(/\s+/g, ' ').trim();
   return `${page.heading} ${body}`;
 }
 
 export function pageMarkdown(page: PublicPage): string {
   return `# ${page.heading}
 
-${page.body}
+${pageContent(page)}
 
 ## Links
 
@@ -263,4 +266,8 @@ ${page.body}
 - [llms.txt](${SITE_ORIGIN}/llms.txt)
 - [Contact](${SITE_ORIGIN}/contact)
 `;
+}
+
+function pageContent(page: PublicPage): string {
+  return page.appendix ? `${page.body}\n\n${page.appendix}` : page.body;
 }

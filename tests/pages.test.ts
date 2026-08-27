@@ -14,6 +14,7 @@ import {
   splitMarkdownLinks,
 } from '../src/lib/pages';
 import { SAME_AS, SITE_EMAIL } from '../src/lib/site';
+import { AGENTIC_REPORT_COPY, AGENTIC_REPORT_URL } from '../src/lib/agentic-report';
 
 describe('trust and developer pages', () => {
   it.each(HTML_PAGES)('$heading has an H1 title and 500+ characters', (page) => {
@@ -62,5 +63,10 @@ describe('trust and developer pages', () => {
 
     expect(DEVELOPERS_PAGE.body).toContain('[https://yannis.dev/openapi.json](https://yannis.dev/openapi.json)');
     expect(pageMarkdown(ABOUT_PAGE)).toContain(`[${SITE_EMAIL}](mailto:${SITE_EMAIL})`);
+  });
+
+  it('includes the agent-readiness appendix in About markdown', () => {
+    expect(pageMarkdown(ABOUT_PAGE)).toContain(AGENTIC_REPORT_COPY.heading);
+    expect(pageMarkdown(ABOUT_PAGE)).toContain(AGENTIC_REPORT_URL);
   });
 });
