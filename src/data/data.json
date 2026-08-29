@@ -139,7 +139,7 @@
       {
         "name": "Codex",
         "mark": "CX",
-        "logo": "/assets/agentic-stack/codex-logo.webp",
+        "logo": "/assets/agentic-stack/codex-logo-96.webp",
         "alt": "Codex logo",
         "role": "Implementation",
         "description": "Codebase-aware changes, fixes, tests, and PR-ready iterations in real repositories.",
@@ -148,7 +148,7 @@
       {
         "name": "Claude Code",
         "mark": "CC",
-        "logo": "/assets/agentic-stack/claude-code-logo.png",
+        "logo": "/assets/agentic-stack/claude-code-logo-96.webp",
         "alt": "Claude Code logo",
         "role": "Architecture",
         "description": "Architecture passes, refactors, reviews, and long-context debugging.",
@@ -157,7 +157,7 @@
       {
         "name": "Hermes",
         "mark": "HM",
-        "logo": "/assets/agentic-stack/hermes-agent-logo.webp",
+        "logo": "/assets/agentic-stack/hermes-agent-logo-96.webp",
         "alt": "Hermes logo",
         "role": "Coordination",
         "description": "Project memory and handoffs so agent work stays tied to the brief.",
@@ -166,7 +166,7 @@
       {
         "name": "Cursor Cloud Automations",
         "mark": "CA",
-        "logo": "/assets/agentic-stack/cursor-cloud-automations-logo.webp",
+        "logo": "/assets/agentic-stack/cursor-cloud-automations-logo-96.webp",
         "alt": "Cursor Cloud Automations logo",
         "role": "Background work",
         "description": "Queued fixes and background tasks while I review the decisions that matter.",

@@ -6,6 +6,9 @@ import { attachMcpDevMiddleware } from './src/lib/agent/mcp-dev-middleware';
 export default defineConfig({
   site: 'https://yannis.dev',
   compressHTML: true,
+  build: {
+    inlineStylesheets: 'always',
+  },
   integrations: [
     react(),
     {

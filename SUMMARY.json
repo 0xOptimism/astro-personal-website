@@ -1,0 +1,35 @@
+{
+  "url": "https://yannis.dev/",
+  "analyzed_at": "2026-08-29T22:49:51Z",
+  "source_report_fetch_time": "2026-08-26T18:57:37.681Z",
+  "data_source": "PageSpeed Insights Lighthouse mobile lab data",
+  "field_data_available": false,
+  "baseline": {
+    "performance_score": 88,
+    "fcp_ms": 3016.8933375,
+    "lcp_ms": 3016.8933375,
+    "speed_index_ms": 3066.224329,
+    "tbt_ms": 0,
+    "cls": 0,
+    "inp_ms": null,
+    "total_transfer_bytes": 497279
+  },
+  "fixes": {
+    "render_blocking_stylesheets": "removed from built homepage",
+    "devicon_transfer_bytes_removed": 278563,
+    "workflow_logo_bytes_before": 164584,
+    "workflow_logo_bytes_after": 5404,
+    "estimated_initial_transfer_bytes_after": 59536
+  },
+  "verification": {
+    "build": "passed",
+    "tests": "104 passed",
+    "built_homepage_stylesheet_links": 0,
+    "built_homepage_gzip_bytes": 28363
+  },
+  "limitations": [
+    "No real-user CrUX sample was available in the supplied report.",
+    "The PageSpeed API quota was exhausted during verification.",
+    "A post-fix live score requires deployment."
+  ]
+}

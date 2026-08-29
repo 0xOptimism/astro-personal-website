@@ -108,6 +108,20 @@ describe.skipIf(!distBuilt)('built homepage HTML', () => {
     const h1 = html.match(/<h1\b[^>]*>[\s\S]*?<\/h1>/i)?.[0] ?? '';
     expect(h1).not.toMatch(/class="[^"]*reveal[^"]*"/);
   });
+
+  it('keeps stylesheets and icon fonts off the initial render path', () => {
+    expect(html).not.toContain('cdn.jsdelivr.net/gh/devicons');
+    expect(html).not.toMatch(/<link\b[^>]*rel="stylesheet"[^>]*fonts\.googleapis\.com/i);
+    expect(html).not.toMatch(/<link\b[^>]*rel="stylesheet"[^>]*\/_astro\//i);
+  });
+
+  it('serves right-sized workflow logos', () => {
+    expect(html).toContain('/assets/agentic-stack/codex-logo-96.webp');
+    expect(html).toContain('/assets/agentic-stack/claude-code-logo-96.webp');
+    expect(html).toContain('/assets/agentic-stack/hermes-agent-logo-96.webp');
+    expect(html).toContain('/assets/agentic-stack/cursor-cloud-automations-logo-96.webp');
+    expect(html).not.toContain('/assets/agentic-stack/claude-code-logo.png');
+  });
 });
 
 describe.skipIf(!existsSync(dist404))('built 404 HTML', () => {
