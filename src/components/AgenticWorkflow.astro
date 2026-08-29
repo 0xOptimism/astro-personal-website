@@ -45,8 +45,11 @@ const { agenticWorkflow } = data as {
                 <img
                   src={tool.logo}
                   alt={tool.alt ?? `${tool.name} logo`}
+                  width="96"
+                  height="96"
                   loading="lazy"
                   decoding="async"
+                  fetchpriority="low"
                   class="h-full w-full object-contain"
                 />
               ) : (

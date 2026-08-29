@@ -108,6 +108,19 @@ const models = [
   const activation = document.querySelector<HTMLElement>('.model-activation');
   const activationCore = document.querySelector<HTMLElement>('[data-model-activation-core]');
   const storageKey = 'selected-model-skin';
+  const modelFontsHref = 'https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,400..600;1,14..32,400..600&family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..700&family=IBM+Plex+Mono:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400..600;1,6..72,400..600&family=Sora:wght@400;500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,500;0,8..60,700;1,8..60,400&family=Space+Grotesk:wght@400;500;600;700&family=Syne:wght@400;500;600;700;800&family=Unbounded:wght@500;600;700;800&display=swap';
+
+  const loadModelFonts = () => {
+    if (document.querySelector<HTMLLinkElement>('link[data-model-fonts]')) {
+      return;
+    }
+
+    const stylesheet = document.createElement('link');
+    stylesheet.rel = 'stylesheet';
+    stylesheet.href = modelFontsHref;
+    stylesheet.dataset.modelFonts = '';
+    document.head.appendChild(stylesheet);
+  };
 
   const setMenuOpen = (isOpen: boolean) => {
     switcher?.classList.toggle('is-open', isOpen);
@@ -164,6 +177,9 @@ const models = [
     option.addEventListener('click', () => {
       const skinId = option.dataset.modelSkin || '';
       const isChanging = root.dataset.modelSkin !== skinId;
+      if (skinId) {
+        loadModelFonts();
+      }
       setActiveSkin(skinId, isChanging && Boolean(skinId));
       setMenuOpen(false);
     });
@@ -173,6 +189,9 @@ const models = [
   const savedSkin = storedSkin === 'gpt-55-sol-high' ? 'gpt-56-sol-high' : storedSkin;
   if (savedSkin && options.some((option) => option.dataset.modelSkin === savedSkin)) {
     setActiveSkin(savedSkin);
+    window.requestAnimationFrame(() => {
+      window.requestAnimationFrame(loadModelFonts);
+    });
   } else {
     setActiveSkin('');
   }

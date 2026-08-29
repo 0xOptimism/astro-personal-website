@@ -2,6 +2,7 @@
 dist/
 .output/
 .astro/
+.seo-cache/
 
 # dependencies
 node_modules/
