@@ -2,6 +2,11 @@
 import '../styles/global.css';
 import { JSON_LD_SCRIPT } from '../lib/agent/seo';
 import {
+  MODEL_FONT_STYLESHEETS,
+  MODEL_SKIN_ALIASES,
+  MODEL_SKIN_STORAGE_KEY,
+} from '../lib/model-skins';
+import {
   SITE_DESCRIPTION,
   SITE_NAME,
   SITE_OG_IMAGE_ALT,
@@ -48,6 +53,29 @@ const umamiWebsiteId = import.meta.env.PUBLIC_UMAMI_WEBSITE_ID ?? '8f97ce4f-3008
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <script is:inline define:vars={{ skinAliases: MODEL_SKIN_ALIASES, fontStylesheets: MODEL_FONT_STYLESHEETS, skinStorageKey: MODEL_SKIN_STORAGE_KEY }}>
+      // Restore before content is parsed, and start only the selected design's fonts.
+      try {
+        var storedSkin = localStorage.getItem(skinStorageKey);
+        var savedSkin = Object.prototype.hasOwnProperty.call(skinAliases, storedSkin)
+          ? skinAliases[storedSkin]
+          : '';
+        if (savedSkin) document.documentElement.dataset.modelSkin = savedSkin;
+        if (fontStylesheets[savedSkin]) {
+          var fontStylesheet = document.createElement('link');
+          fontStylesheet.rel = 'stylesheet';
+          fontStylesheet.href = fontStylesheets[savedSkin];
+          fontStylesheet.dataset.modelFonts = savedSkin;
+          document.head.appendChild(fontStylesheet);
+        }
+        if (storedSkin !== savedSkin) {
+          if (savedSkin) localStorage.setItem(skinStorageKey, savedSkin);
+          else localStorage.removeItem(skinStorageKey);
+        }
+      } catch (error) {
+        // A private or restricted browser can still use the design switcher.
+      }
+    </script>
     <meta name="viewport" content="width=device-width" />
     <title>{title}</title>
     <link rel="canonical" href={canonicalUrl} />
@@ -85,17 +113,9 @@ const umamiWebsiteId = import.meta.env.PUBLIC_UMAMI_WEBSITE_ID ?? '8f97ce4f-3008
   </head>
   <body class="grain">
     <script is:inline>
-      try {
-        var skin = localStorage.getItem('selected-model-skin');
-        if (skin === 'gpt-55-sol-high') {
-          skin = 'gpt-56-sol-high';
-          localStorage.setItem('selected-model-skin', skin);
-        }
-        if (skin) {
-          document.documentElement.dataset.modelSkin = skin;
-          document.body.dataset.modelSkin = skin;
-        }
-      } catch (error) {}
+      if (document.documentElement.dataset.modelSkin) {
+        document.body.dataset.modelSkin = document.documentElement.dataset.modelSkin;
+      }
     </script>
     <slot />
   </body>

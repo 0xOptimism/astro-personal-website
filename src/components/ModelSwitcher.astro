@@ -1,46 +1,5 @@
 ---
-const models = [
-  {
-    id: 'brand-default',
-    label: 'Yannis',
-    skin: '',
-    accent: '#0f766e',
-    pulse: '#e4a02b',
-    activationLabel: 'Yannis',
-  },
-  {
-    id: 'grok-46',
-    label: 'Grok 4.6',
-    skin: 'grok-46',
-    accent: '#c8ff4d',
-    pulse: '#ff3d7a',
-    activationLabel: 'grok 4.6',
-  },
-  {
-    id: 'claude-opus-5',
-    label: 'Claude Opus 5',
-    skin: 'claude-opus-5',
-    accent: '#a34a28',
-    pulse: '#3f5468',
-    activationLabel: 'Claude Opus 5',
-  },
-  {
-    id: 'kimi-k3',
-    label: 'Kimi K3',
-    skin: 'kimi-k3',
-    accent: '#9db8ff',
-    pulse: '#ffb86b',
-    activationLabel: 'kimi k3',
-  },
-  {
-    id: 'gpt-56-sol-high',
-    label: 'GPT-5.6 Sol High',
-    skin: 'gpt-56-sol-high',
-    accent: '#1746d1',
-    pulse: '#ffcf3f',
-    activationLabel: 'GPT-5.6 Sol High',
-  },
-];
+import { MODEL_SKINS } from '../lib/model-skins';
 ---
 
 <div class="model-switcher" data-model-switcher>
@@ -48,6 +7,7 @@ const models = [
     type="button"
     class="model-switcher__trigger"
     data-model-menu-trigger
+    aria-controls="model-design-menu"
     aria-haspopup="menu"
     aria-expanded="false"
   >
@@ -55,24 +15,23 @@ const models = [
     <span class="model-switcher__chevron" aria-hidden="true" />
   </button>
 
-  <div class="model-switcher__menu" data-model-menu role="menu" aria-label="Design switcher">
+  <div id="model-design-menu" class="model-switcher__menu" data-model-menu role="menu" aria-label="Design switcher" hidden inert>
     {
-      models.map((model) => (
-      <button
-        type="button"
-        class="model-switcher__option"
-        data-model-option={model.id}
-        data-model-skin={model.skin}
-        data-model-label={model.label}
-        data-model-activation-label={model.activationLabel}
-        style={`--model-accent: ${model.accent}; --model-pulse: ${model.pulse};`}
-        aria-checked="false"
-        aria-pressed="false"
-        role="menuitemradio"
-      >
-        <span class="model-switcher__check" aria-hidden="true"></span>
-        <span>{model.label}</span>
-      </button>
+      MODEL_SKINS.map((model) => (
+        <button
+          type="button"
+          class="model-switcher__option"
+          data-model-option={model.id}
+          data-model-skin={model.skin}
+          data-model-label={model.label}
+          style={`--model-accent: ${model.accent}; --model-pulse: ${model.pulse};`}
+          aria-checked={model.skin === '' ? 'true' : 'false'}
+          tabindex="-1"
+          role="menuitemradio"
+        >
+          <span class="model-switcher__check" aria-hidden="true"></span>
+          <span>{model.label}</span>
+        </button>
       ))
     }
   </div>
@@ -96,129 +55,151 @@ const models = [
   <span class="model-frame__corner is-br"></span>
 </div>
 
+<style>
+  .model-switcher__menu[hidden] {
+    display: none;
+  }
+</style>
+
 <script>
+  import {
+    MODEL_FONT_STYLESHEETS,
+    MODEL_SKIN_CHANGE_EVENT,
+    normalizeModelSkin,
+    persistModelSkin,
+    type ModelSkin,
+  } from '../lib/model-skins';
+
   const root = document.documentElement;
-  const body = document.body;
   const switcher = document.querySelector<HTMLElement>('[data-model-switcher]');
-  const trigger = document.querySelector<HTMLButtonElement>('[data-model-menu-trigger]');
-  const currentLabel = document.querySelector<HTMLElement>('[data-model-current]');
+  const trigger = switcher?.querySelector<HTMLButtonElement>('[data-model-menu-trigger]');
+  const menu = switcher?.querySelector<HTMLElement>('[data-model-menu]');
+  const currentLabel = switcher?.querySelector<HTMLElement>('[data-model-current]');
   const options = Array.from(
-    document.querySelectorAll<HTMLButtonElement>('[data-model-option]'),
+    switcher?.querySelectorAll<HTMLButtonElement>('[data-model-option]') ?? [],
   );
   const activation = document.querySelector<HTMLElement>('.model-activation');
   const activationCore = document.querySelector<HTMLElement>('[data-model-activation-core]');
-  const storageKey = 'selected-model-skin';
-  const modelFontsHref = 'https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,400..600;1,14..32,400..600&family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..700&family=IBM+Plex+Mono:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400..600;1,6..72,400..600&family=Sora:wght@400;500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,500;0,8..60,700;1,8..60,400&family=Space+Grotesk:wght@400;500;600;700&family=Syne:wght@400;500;600;700;800&family=Unbounded:wght@500;600;700;800&display=swap';
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  let activationFrame = 0;
 
-  const loadModelFonts = () => {
-    if (document.querySelector<HTMLLinkElement>('link[data-model-fonts]')) {
-      return;
-    }
-
+  const loadModelFonts = (skin: ModelSkin) => {
+    const href = MODEL_FONT_STYLESHEETS[skin];
+    if (!href || document.querySelector(`link[data-model-fonts="${skin}"]`)) return;
     const stylesheet = document.createElement('link');
     stylesheet.rel = 'stylesheet';
-    stylesheet.href = modelFontsHref;
-    stylesheet.dataset.modelFonts = '';
+    stylesheet.href = href;
+    stylesheet.dataset.modelFonts = skin;
     document.head.appendChild(stylesheet);
   };
 
   const setMenuOpen = (isOpen: boolean) => {
     switcher?.classList.toggle('is-open', isOpen);
     trigger?.setAttribute('aria-expanded', String(isOpen));
+    if (menu) {
+      menu.hidden = !isOpen;
+      menu.inert = !isOpen;
+    }
   };
 
-  const setActiveSkin = (skinId: string, animate = false) => {
-    const nextSkin = skinId || '';
+  const focusOption = (index: number) => {
+    options[(index + options.length) % options.length]?.focus();
+  };
 
-    if (nextSkin) {
-      root.dataset.modelSkin = nextSkin;
-      body.dataset.modelSkin = nextSkin;
-    } else {
-      delete root.dataset.modelSkin;
-      delete body.dataset.modelSkin;
+  const stopActivation = () => {
+    window.cancelAnimationFrame(activationFrame);
+    activation?.classList.remove('is-firing');
+  };
+
+  const setActiveSkin = (skin: ModelSkin, animate = false) => {
+    const previousSkin = normalizeModelSkin(root.dataset.modelSkin);
+    for (const element of [root, document.body]) {
+      if (skin) element.dataset.modelSkin = skin;
+      else delete element.dataset.modelSkin;
     }
 
-    options.forEach((option) => {
-      const optionSkin = option.dataset.modelSkin || '';
-      const isPressed = optionSkin === nextSkin;
-      option.setAttribute('aria-checked', String(isPressed));
-      option.setAttribute('aria-pressed', String(isPressed));
-
-      if (isPressed && currentLabel) {
-        currentLabel.textContent = option.dataset.modelLabel || 'Yannis';
+    for (const option of options) {
+      const isActive = option.dataset.modelSkin === skin;
+      option.setAttribute('aria-checked', String(isActive));
+      if (isActive) {
+        const label = option.dataset.modelLabel || 'Yannis';
+        if (currentLabel) currentLabel.textContent = label;
+        if (activationCore) activationCore.textContent = label;
       }
-
-      if (isPressed && activationCore) {
-        activationCore.textContent =
-          option.dataset.modelActivationLabel || option.dataset.modelLabel || '';
-      }
-    });
-
-    if (nextSkin) {
-      localStorage.setItem(storageKey, nextSkin);
-    } else {
-      localStorage.removeItem(storageKey);
     }
 
-    if (animate && activation) {
-      activation.classList.remove('is-firing');
-      window.requestAnimationFrame(() => {
-        activation.classList.add('is-firing');
+    persistModelSkin(skin);
+    loadModelFonts(skin);
+    stopActivation();
+    if (animate && skin && !reducedMotion.matches) {
+      activationFrame = window.requestAnimationFrame(() => {
+        activation?.classList.add('is-firing');
       });
+    }
+    if (skin !== previousSkin) {
+      window.dispatchEvent(new CustomEvent(MODEL_SKIN_CHANGE_EVENT, {
+        detail: { skin, previousSkin },
+      }));
     }
   };
 
   trigger?.addEventListener('click', () => {
-    const isOpen = trigger.getAttribute('aria-expanded') === 'true';
-    setMenuOpen(!isOpen);
+    const opening = trigger.getAttribute('aria-expanded') !== 'true';
+    setMenuOpen(opening);
+    if (opening) {
+      focusOption(Math.max(0, options.findIndex((option) => option.getAttribute('aria-checked') === 'true')));
+    }
   });
 
   options.forEach((option) => {
     option.addEventListener('click', () => {
-      const skinId = option.dataset.modelSkin || '';
-      const isChanging = root.dataset.modelSkin !== skinId;
-      if (skinId) {
-        loadModelFonts();
-      }
-      setActiveSkin(skinId, isChanging && Boolean(skinId));
+      const skin = normalizeModelSkin(option.dataset.modelSkin);
+      setActiveSkin(skin, normalizeModelSkin(root.dataset.modelSkin) !== skin);
       setMenuOpen(false);
+      trigger?.focus();
     });
   });
 
-  const storedSkin = localStorage.getItem(storageKey);
-  const savedSkin = storedSkin === 'gpt-55-sol-high' ? 'gpt-56-sol-high' : storedSkin;
-  if (savedSkin && options.some((option) => option.dataset.modelSkin === savedSkin)) {
-    setActiveSkin(savedSkin);
-    window.requestAnimationFrame(() => {
-      window.requestAnimationFrame(loadModelFonts);
-    });
-  } else {
-    setActiveSkin('');
-  }
+  switcher?.addEventListener('keydown', (event) => {
+    const isOpen = trigger?.getAttribute('aria-expanded') === 'true';
+    const onTrigger = document.activeElement === trigger;
+    if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
+      event.preventDefault();
+      setMenuOpen(true);
+      const direction = event.key === 'ArrowDown' ? 1 : -1;
+      const currentIndex = options.findIndex((option) => option === document.activeElement);
+      focusOption(onTrigger ? (direction === 1 ? 0 : options.length - 1) : currentIndex + direction);
+    } else if (isOpen && (event.key === 'Home' || event.key === 'End')) {
+      event.preventDefault();
+      focusOption(event.key === 'Home' ? 0 : options.length - 1);
+    } else if (isOpen && event.key === 'Escape') {
+      event.preventDefault();
+      setMenuOpen(false);
+      trigger?.focus();
+    } else if (isOpen && event.key === 'Tab') {
+      // Restore the trigger as the tab origin, then let the browser move focus.
+      setMenuOpen(false);
+      trigger?.focus();
+    }
+  });
 
-  activation?.addEventListener('animationend', (event) => {
-    if (event.target === activation) {
-      activation.classList.remove('is-firing');
+  switcher?.addEventListener('focusout', (event) => {
+    if (!(event.relatedTarget instanceof Node) || !switcher.contains(event.relatedTarget)) {
+      setMenuOpen(false);
     }
   });
 
   document.addEventListener('click', (event) => {
-    const target = event.target;
-    if (!(target instanceof Node) || !switcher?.contains(target)) {
-      setMenuOpen(false);
-    }
+    if (!(event.target instanceof Node) || !switcher?.contains(event.target)) setMenuOpen(false);
   });
 
-  document.addEventListener('keydown', (event) => {
-    if (event.key === 'Escape') {
-      setMenuOpen(false);
-      trigger?.focus();
-    }
-
-    if (event.key === 'ArrowDown' && trigger === document.activeElement) {
-      event.preventDefault();
-      setMenuOpen(true);
-      options[0]?.focus();
-    }
+  activation?.addEventListener('animationend', (event) => {
+    if (event.target === activation) stopActivation();
   });
+  reducedMotion.addEventListener('change', () => {
+    if (reducedMotion.matches) stopActivation();
+  });
+
+  // Layout already restored the validated selection before the first paint.
+  setActiveSkin(normalizeModelSkin(root.dataset.modelSkin));
 </script>

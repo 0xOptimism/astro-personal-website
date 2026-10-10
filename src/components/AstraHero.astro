@@ -1,0 +1,54 @@
+---
+import { HERO_NAME, SITE_EMAIL, SITE_EMPLOYER, SITE_LOCATION } from '../lib/site';
+---
+
+<div class="astra-hero astra-only">
+  <div class="astra-masthead">
+    <a class="astra-wordmark" href="/" aria-label="Yannis home">{HERO_NAME}<span aria-hidden="true">.</span></a>
+    <nav aria-label="On this page" class="astra-nav">
+      <a href="#skills-heading">Stack</a>
+      <a href="#agentic-workflow-heading">Agents</a>
+      <a href="#timeline-heading">Work</a>
+      <a href="/posts">Writing <span aria-hidden="true">↗</span></a>
+    </nav>
+    <span class="astra-location"><span aria-hidden="true"></span>{SITE_LOCATION}, SE</span>
+  </div>
+
+  <div class="astra-hero__body">
+    <div class="astra-hero__copy">
+      <p class="astra-eyebrow">Full-stack developer · Stockholm</p>
+      <h1 id="astra-title">{HERO_NAME}<span>.</span></h1>
+      <p class="astra-hero__statement">Built with care.<br /><em>From end to end.</em></p>
+      <p class="astra-hero__description">I build interfaces, the systems behind them, and the connections in between. Currently working on commerce and payments at {SITE_EMPLOYER}.</p>
+      <div class="astra-hero__actions">
+        <a class="astra-button" href={`mailto:${SITE_EMAIL}`}>Let’s talk <span aria-hidden="true">↗</span></a>
+        <a class="astra-text-link" href="#timeline-heading">Explore my work <span aria-hidden="true">↓</span></a>
+      </div>
+    </div>
+
+    <div class="astra-figure" aria-hidden="true">
+      <div class="astra-figure__caption"><span>THE FULL PICTURE</span><span>FIG. 01</span></div>
+      <svg viewBox="0 0 420 420" fill="none" class="astra-orbit">
+        <path d="M210 16v388M16 210h388" stroke="currentColor" stroke-opacity=".15" stroke-dasharray="3 7" />
+        <circle cx="210" cy="210" r="160" stroke="currentColor" stroke-opacity=".22" />
+        <circle cx="210" cy="210" r="110" stroke="currentColor" stroke-opacity=".12" />
+        <ellipse cx="210" cy="210" rx="77" ry="160" transform="rotate(45 210 210)" stroke="currentColor" stroke-opacity=".5" />
+        <ellipse cx="210" cy="210" rx="77" ry="160" transform="rotate(-45 210 210)" stroke="currentColor" stroke-opacity=".5" />
+        <path d="M210 158c0 37-15 52-52 52 37 0 52 15 52 52 0-37 15-52 52-52-37 0-52-15-52-52Z" fill="currentColor" />
+        <circle cx="96.86" cy="96.86" r="7" fill="currentColor" />
+        <circle cx="370" cy="210" r="7" fill="currentColor" />
+        <circle cx="210" cy="370" r="7" fill="currentColor" />
+      </svg>
+      <span class="astra-figure__label astra-figure__label--one">Interface</span>
+      <span class="astra-figure__label astra-figure__label--two">System</span>
+      <span class="astra-figure__label astra-figure__label--three">Human</span>
+      <p class="astra-figure__note">Good software connects all three.</p>
+    </div>
+  </div>
+
+  <dl class="astra-facts">
+    <div><dt>Currently</dt><dd>{SITE_EMPLOYER}<span>Commerce & payments</span></dd></div>
+    <div><dt>Building since</dt><dd>2017<span>From Ethereum to everyday products</span></dd></div>
+    <div><dt>A highlight</dt><dd>ETH Denver ’23<span>DAO & Community track winner</span></dd></div>
+  </dl>
+</div>

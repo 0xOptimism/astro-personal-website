@@ -22,6 +22,7 @@ const { agenticWorkflow } = data as {
 
 <div class="workflow-layout grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
   <div class="workflow-intro">
+    <p class="astra-only astra-eyebrow">02 / The process</p>
     <h2 id="agentic-workflow-heading" class="reveal font-display text-2xl font-bold tracking-tight sm:text-3xl">
       {agenticWorkflow.title}
     </h2>
@@ -65,6 +66,7 @@ const { agenticWorkflow } = data as {
               </p>
             </div>
           </div>
+          <p class="astra-only workflow-card__body">{tool.description}</p>
         </article>
       ))
     }

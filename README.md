@@ -17,7 +17,9 @@ The homepage is one HTML page: hero, stack, how I use coding agents, career time
 
 Skills, workflow, timeline, and socials live in `src/data/data.json`. Titles, bio, email, OG image, and related constants live in `src/lib/site.ts`. HTML, markdown, JSON-LD, and `llms.txt` all read from there.
 
-The control in the corner switches visual skins: default, Grok 4.6, Claude Opus 5, Kimi K3, GPT-5.6 Sol High. The choice is stored as `selected-model-skin` in `localStorage`.
+The design switcher offers Yannis (default), Grok 4.6, Claude Opus 5, Kimi K3, and Astra 6 Ultra. The choice is stored as `selected-model-skin` in `localStorage` and restored before the page paints. Previous GPT selections migrate to Astra. The switcher works with arrow keys, Home, End, Escape, and Tab, including when browser storage is blocked.
+
+Astra uses system fonts and a brief CSS intro when selected. The design switcher stays at the top across all themes. Other designs load only their own font families, and activation animations respect reduced-motion preferences. Skin definitions, migration aliases, and font URLs live in `src/lib/model-skins.ts`; switching designs emits `model-skin-change` on `window` with `{ skin, previousSkin }` in the event detail.
 
 ## Agent endpoints
 
